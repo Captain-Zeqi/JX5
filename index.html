@@ -1,1566 +1,355 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>太阳能安防摄像头 · 加拿大/澳大利亚站市场可行性分析报告</title>
-
-<!-- ============================================================
-  依赖说明(便于维护):
-  1. Tailwind CSS 2.2.19(cdnjs)—— 提供响应式栅格与间距工具类
-  2. Chart.js 4.4.1(cdnjs)—— 所有数据可视化图表
-  3. 自定义CSS变量集中在 :root,改主题色只需改这里
-============================================================ -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-
-<style>
-/* ================= 主题令牌(全站唯一改色入口) ================= */
-:root{
-  --ink:#1B2733;        /* 主墨色:标题/正文 */
-  --ink-2:#4A5865;      /* 次级文字 */
-  --paper:#F5F6F2;      /* 页面底色 */
-  --card:#FFFFFF;       /* 卡片底色 */
-  --line:#E2E4DC;       /* 分隔线 */
-  --amber:#E8A020;      /* 太阳能琥珀 · 全局强调色 */
-  --amber-soft:#FBF1DC;
-  --ca:#3A6FB0;         /* 加拿大站 · 冬蓝 */
-  --ca-soft:#EAF1F8;
-  --au:#C2622E;         /* 澳大利亚站 · 赭石 */
-  --au-soft:#F9EFE7;
-  --green:#3E8E5A;      /* 正向/机会 */
-  --red:#C0392B;        /* 风险/预警 */
-  --red-soft:#FAECEA;
-  --font-display:"Songti SC","Noto Serif SC","STSong","SimSun",serif;
-  --font-mono:ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,monospace;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--ink);font-family:-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;line-height:1.65;margin:0}
-
-/* ================= 排版体系 ================= */
-.display{font-family:var(--font-display);font-weight:700;letter-spacing:.02em}
-.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
-.eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-2);font-family:var(--font-mono)}
-.section-title{font-family:var(--font-display);font-size:clamp(22px,3vw,30px);font-weight:700;margin:0}
-.section-no{font-family:var(--font-mono);font-size:12px;color:var(--amber);letter-spacing:.2em}
-
-/* ================= 布局与卡片 ================= */
-.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px}
-.card-pad{padding:22px}
-section{padding:56px 0 8px}
-.divider-note{border-top:1px dashed var(--line);margin-top:14px;padding-top:10px;font-size:12px;color:var(--ink-2)}
-
-/* ================= 封面 ================= */
-.cover{background:linear-gradient(160deg,#152230 0%,#1B2733 55%,#233648 100%);color:#F2EFE6;position:relative;overflow:hidden}
-.cover::after{ /* 太阳能光斑装饰 */
-  content:"";position:absolute;right:-140px;top:-140px;width:460px;height:460px;border-radius:50%;
-  background:radial-gradient(circle,rgba(232,160,32,.28),rgba(232,160,32,0) 65%);pointer-events:none}
-.cover-grid{position:relative;z-index:1}
-.cover h1{font-family:var(--font-display);font-size:clamp(30px,4.6vw,52px);line-height:1.25;margin:14px 0 10px;color:#FBF6EA}
-.cover .kicker{color:var(--amber);font-family:var(--font-mono);letter-spacing:.3em;font-size:12px}
-.meta-line{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:26px;font-size:13px;color:#C7CDCE}
-.meta-line b{color:#FBF6EA;font-weight:600}
-.stamp-row{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
-/* 签名元素①:海关章式站点徽章 */
-.stamp{border:2px solid rgba(251,246,234,.5);border-radius:8px;padding:10px 16px;transform:rotate(-1.5deg);font-family:var(--font-mono);font-size:12px;letter-spacing:.12em}
-.stamp small{display:block;font-size:10px;opacity:.7;letter-spacing:.25em}
-.stamp.ca{color:#9FC3E8;border-color:rgba(122,168,215,.6)}
-.stamp.au{color:#EDB58C;border-color:rgba(226,152,98,.6);transform:rotate(1.6deg)}
-.data-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(232,160,32,.14);border:1px solid rgba(232,160,32,.45);color:#F0C878;border-radius:999px;padding:5px 14px;font-size:12px;font-family:var(--font-mono)}
-
-/* ================= 吸顶导航 ================= */
-.topnav{position:sticky;top:0;z-index:50;background:rgba(245,246,242,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.topnav-inner{display:flex;align-items:center;gap:6px;overflow-x:auto;padding:10px 0;-webkit-overflow-scrolling:touch}
-.topnav a{white-space:nowrap;font-size:13px;color:var(--ink-2);text-decoration:none;padding:6px 12px;border-radius:999px}
-.topnav a:hover,.topnav a:focus-visible{background:var(--amber-soft);color:var(--ink);outline:2px solid var(--amber);outline-offset:1px}
-.topnav .brand{font-family:var(--font-mono);font-size:12px;color:var(--amber);margin-right:8px;letter-spacing:.15em}
-
-/* ================= 签名元素②:环形可行性评分 ================= */
-.gauge{--v:70;--c:var(--amber);width:118px;height:118px;border-radius:50%;
-  background:conic-gradient(var(--c) calc(var(--v)*1%),#EAECE4 0);
-  display:grid;place-items:center;margin:0 auto}
-.gauge>div{width:88px;height:88px;border-radius:50%;background:var(--card);display:grid;place-items:center;text-align:center}
-.gauge b{font-family:var(--font-mono);font-size:24px;display:block;line-height:1}
-.gauge span{font-size:10px;color:var(--ink-2)}
-.gauge-label{text-align:center;font-size:13px;margin-top:10px;font-weight:600}
-.gauge-sub{text-align:center;font-size:11px;color:var(--ink-2)}
-
-/* ================= 站点切换 & 产品下拉 ================= */
-.site-tabs{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card)}
-.site-tabs button{padding:10px 22px;font-size:14px;font-weight:600;border:0;background:transparent;cursor:pointer;color:var(--ink-2);display:flex;align-items:center;gap:8px}
-.site-tabs button .dot{width:9px;height:9px;border-radius:50%;background:currentColor;opacity:.5}
-.site-tabs button.active[data-site="ca"]{background:var(--ca);color:#fff}
-.site-tabs button.active[data-site="au"]{background:var(--au);color:#fff}
-.site-tabs button:focus-visible{outline:2px solid var(--amber);outline-offset:-2px}
-.select-wrap{position:relative;display:inline-block}
-.select-wrap select{appearance:none;-webkit-appearance:none;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 40px 10px 14px;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer}
-.select-wrap::after{content:"▾";position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--amber);pointer-events:none}
-.controls-bar{position:sticky;top:46px;z-index:40;background:rgba(245,246,242,.95);backdrop-filter:blur(6px);padding:12px 0;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.controls-hint{font-size:12px;color:var(--ink-2)}
-
-/* ================= 表格 ================= */
-.tbl{width:100%;border-collapse:collapse;font-size:13px}
-.tbl th{text-align:left;font-size:11px;letter-spacing:.08em;color:var(--ink-2);border-bottom:2px solid var(--ink);padding:8px 10px;white-space:nowrap}
-.tbl td{border-bottom:1px solid var(--line);padding:9px 10px;vertical-align:top}
-.tbl tr:last-child td{border-bottom:0}
-.tbl .num{font-family:var(--font-mono);white-space:nowrap}
-.tbl-scroll{overflow-x:auto}
-.tag{display:inline-block;font-size:11px;border-radius:4px;padding:1px 8px;font-weight:600}
-.tag.blue{background:var(--ca-soft);color:var(--ca)}
-.tag.ochre{background:var(--au-soft);color:var(--au)}
-.tag.green{background:#E8F3EC;color:var(--green)}
-.tag.amber{background:var(--amber-soft);color:#A56F0F}
-.tag.red{background:var(--red-soft);color:var(--red)}
-
-/* ================= 风险卡 & 策略卡 ================= */
-.risk-card{border-left:4px solid var(--red);border-radius:8px}
-.risk-card.mid{border-left-color:var(--amber)}
-.risk-card.low{border-left-color:var(--green)}
-.risk-level{font-family:var(--font-mono);font-size:11px;letter-spacing:.15em}
-.strategy-card{border-top:3px solid var(--amber)}
-.strategy-card h4{font-family:var(--font-display);font-size:17px;margin:0 0 8px}
-.strategy-card ul{margin:0;padding-left:18px;font-size:13px;color:var(--ink-2)}
-.strategy-card li{margin-bottom:6px}
-.strategy-card li b{color:var(--ink)}
-
-/* ================= 图表容器 ================= */
-.chart-box{position:relative;height:300px}
-.chart-box.tall{height:340px}
-@media (max-width:640px){.chart-box{height:250px}.chart-box.tall{height:280px}}
-
-/* ================= 本地化洞察条目 ================= */
-.insight{display:flex;gap:14px;padding:14px 0;border-bottom:1px dashed var(--line)}
-.insight:last-child{border-bottom:0}
-.insight .ic{flex:0 0 40px;height:40px;border-radius:8px;display:grid;place-items:center;font-size:18px}
-.insight h5{margin:0 0 4px;font-size:14px;font-weight:700}
-.insight p{margin:0;font-size:13px;color:var(--ink-2)}
-.stat-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
-.stat-strip .cell{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
-.stat-strip .cell b{font-family:var(--font-mono);font-size:20px;display:block}
-.stat-strip .cell span{font-size:11px;color:var(--ink-2)}
-
-/* ================= 无障碍 & 动效克制 ================= */
-:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-[hidden]{display:none!important}
-footer{border-top:1px solid var(--line);margin-top:60px;padding:26px 0 40px;font-size:12px;color:var(--ink-2)}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>加拿大 vs 澳大利亚 Amazon 安防摄像头市场进入与选品分析报告</title>
+  <style>
+    :root{--ink:#17212b;--muted:#5b6673;--line:#d9e2ea;--bg:#f3f6f9;--panel:#fff;--blue:#2667c9;--green:#147a52;--orange:#b86419;--red:#b33a32}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);font-family:Arial,"Microsoft YaHei",sans-serif;color:var(--ink);line-height:1.55}
+    main{max-width:1200px;margin:0 auto;background:var(--panel);box-shadow:0 10px 34px rgba(20,34,50,.12)}
+    header{padding:44px 50px 32px;background:linear-gradient(135deg,#142b42,#1f5b77);color:#fff}
+    h1{margin:0 0 12px;font-size:30px;line-height:1.25;letter-spacing:0}
+    header p{margin:6px 0;color:#e6eef6}
+    section{padding:32px 50px;border-bottom:1px solid var(--line)}
+    h2{margin:0 0 16px;font-size:23px}
+    h3{margin:24px 0 10px;font-size:18px}
+    p{margin:9px 0}
+    table{width:100%;border-collapse:collapse;margin:12px 0 22px;font-size:13px}
+    th,td{border:1px solid var(--line);padding:8px 9px;text-align:left;vertical-align:top}
+    th{background:#eef4fa;font-weight:700}
+    .right{text-align:right}.center{text-align:center}
+    .good{color:var(--green);font-weight:700}.warn{color:var(--orange);font-weight:700}.risk{color:var(--red);font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .metric{background:#f7f9fb;border:1px solid var(--line);border-radius:6px;padding:13px}
+    .metric .k{font-size:12px;color:var(--muted)}
+    .metric .v{font-size:21px;font-weight:700;margin-top:4px}
+    .note{background:#fff7e7;border:1px solid #eed08b;border-radius:6px;padding:12px 14px;color:#5f4514;margin:12px 0}
+    .decision{background:#eef8f3;border:1px solid #b9dccb;color:#123f2b;border-radius:6px;padding:12px 14px}
+    .section-kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .barrow{display:grid;grid-template-columns:205px 1fr 78px;gap:10px;align-items:center;margin:9px 0;font-size:13px}
+    .bar{height:18px;background:#e7edf3;border-radius:3px;overflow:hidden}
+    .bar span{display:block;height:100%;background:var(--blue)}
+    .bar.green span{background:var(--green)}.bar.orange span{background:var(--orange)}
+    .chartbox{border:1px solid var(--line);background:#fbfcfd;border-radius:6px;padding:14px;margin:12px 0 22px}
+    .panel{border:1px solid var(--line);border-radius:6px;background:#fff;padding:16px;margin:12px 0}
+    .mutedband{background:#f6f8fa;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .score{display:inline-block;min-width:34px;padding:2px 6px;border-radius:4px;text-align:center;font-weight:700}
+    .s1{background:#e6f4ee;color:#116143}.s2{background:#fff4dc;color:#8a520e}.s3{background:#fde8e6;color:#9d2f27}
+    .mini{font-size:12px;color:var(--muted)}
+    ul{margin:8px 0 14px 20px;padding:0}li{margin:6px 0}
+    footer{padding:22px 50px 38px;color:var(--muted);font-size:13px}
+    @media(max-width:880px){header,section,footer{padding-left:20px;padding-right:20px}.grid,.split{grid-template-columns:1fr}.barrow{grid-template-columns:150px 1fr 62px}table{font-size:12px}}
+  </style>
 </head>
 <body>
+<main>
+  <header>
+    <h1>加拿大 vs 澳大利亚 Amazon 安防摄像头市场进入与选品分析报告</h1>
+    <p>目标：以利润质量、市场需求和售后风险为核心，确定首发国家与首批SKU组合。</p>
+    <p>数据：Sofetime关键词/竞品数据 + 产品补贴表 + SKU导出表。报告日期：2026-07-11。</p>
+  </header>
 
-<!-- ==================== 报告封面 ==================== -->
-<header class="cover">
-  <div class="wrap cover-grid" style="padding-top:64px;padding-bottom:56px">
-    <div class="kicker">CROSS-BORDER MARKET FEASIBILITY · AMAZON CA / AU</div>
-    <h1>太阳能无线户外安防摄像头<br>加拿大站 × 澳大利亚站 市场可行性分析</h1>
-    <p style="max-width:640px;color:#C7CDCE;font-size:14px;margin:6px 0 0">
-      针对 <b style="color:#F0C878">4G 利润款</b> 与 <b style="color:#F0C878">WIFI 引流款</b> 的双站点精细化进入策略:
-      本地化特征 → 竞品与关键词深挖 → 定位验证 → 风险预警 → 落地建议。
-    </p>
-    <div class="meta-line">
-      <div>分析对象:<b>Solar Security Cameras Wireless Outdoor(4G 利润款 / WIFI 引流款)</b></div>
-      <div>分析范围:<b>Amazon.ca · Amazon.com.au</b></div>
-      <div>报告日期:<b class="mono">2026-07-07</b></div>
-      <div>分析师:<b>跨境战略分析组</b></div>
+  <section>
+    <div class="section-kicker">Executive Summary</div>
+    <h2>核心结论</h2>
+    <div class="grid">
+      <div class="metric"><div class="k">首发国家</div><div class="v">加拿大</div></div>
+      <div class="metric"><div class="k">首批SKU</div><div class="v">4+1</div></div>
+      <div class="metric"><div class="k">策略优先级</div><div class="v">利润/低售后</div></div>
+      <div class="metric"><div class="k">不首推</div><div class="v">太阳能/4G</div></div>
     </div>
-    <div class="stamp-row">
-      <div class="stamp ca">AMAZON.CA<small>CANADA · CAD</small></div>
-      <div class="stamp au">AMAZON.COM.AU<small>AUSTRALIA · AUD</small></div>
-      <div class="data-badge">◈ 数据口径:卖家精灵 2026-06 抓取周期 + 行业公开研究交叉校准</div>
-    </div>
-  </div>
-</header>
+    <div class="decision">建议先进入加拿大站。首批主推灯泡机、窗机、防水球机和低风险室内/半室内款；太阳能、4G、电池长续航类因加拿大冬季低温、雨雪、积雪和充电售后风险高，不进入首批主推，仅保留小批量验证或第二阶段测试。</div>
+    <p>为什么不是澳大利亚：澳洲太阳能场景更顺，但Sofetime显示整体需求体量小于加拿大；并且现有产品澳洲补贴更弱，首发广告学习和促销安全垫不如加拿大。澳洲适合在加拿大跑通Listing、图片、广告词和售后FAQ后，复制太阳能/户外线。</p>
+  </section>
 
-<!-- ==================== 吸顶导航 ==================== -->
-<nav class="topnav" aria-label="报告章节导航">
-  <div class="wrap topnav-inner">
-    <span class="brand">SOLAR-CAM/2026</span>
-    <a href="#summary">执行摘要</a>
-    <a href="#local">本地化特征</a>
-    <a href="#compete">竞品与关键词</a>
-    <a href="#ops">运营深拆</a>
-    <a href="#arch">架构与产品策略</a>
-    <a href="#position">定位验证</a>
-    <a href="#risk">风险预警</a>
-    <a href="#strategy">策略建议</a>
-  </div>
-</nav>
+  <section>
+    <div class="section-kicker">Evaluation Framework</div>
+    <h2>评估框架：利润质量 + 售后风险 + 市场需求</h2>
+    <table>
+      <tr><th>筛选维度</th><th>权重</th><th>判断标准</th><th>结果</th></tr>
+      <tr><td>利润安全垫</td><td class="right">35%</td><td>补贴后采购价低，广告和Coupon后仍有贡献利润。</td><td>灯泡机、窗机、防水球机较优。</td></tr>
+      <tr><td>售后风险</td><td class="right">30%</td><td>尽量避开低温不充电、电池衰减、4G兼容、SIM设置、太阳能积雪等高售后问题。</td><td>太阳能/4G/电池球机降级。</td></tr>
+      <tr><td>关键词需求</td><td class="right">20%</td><td>Sofetime有明确月搜和竞品样本，而不是只靠场景推断。</td><td>加拿大灯泡、窗机、户外无线、法语户外词有数据。</td></tr>
+      <tr><td>执行复杂度</td><td class="right">15%</td><td>安装简单、说明容易、退货原因可控、客服脚本简单。</td><td>灯泡机和窗机优先。</td></tr>
+    </table>
+    <div class="note">利润测算为经营决策模型，不是最终财务报表。假设汇率1 CAD = CNY 5.2；Amazon佣金按15%估算；FBA、头程、广告、Coupon按保守区间估算。最终上架前需要用实际FBA尺寸重量和售价重新核算。</div>
+  </section>
 
-<!-- ==================== 01 执行摘要:四象限可行性评分 ==================== -->
-<section id="summary">
-  <div class="wrap">
-    <div class="section-no">01 / EXECUTIVE SUMMARY</div>
-    <h2 class="section-title">执行摘要:两站四款组合的可行性总览</h2>
-    <p style="max-width:760px;color:var(--ink-2);font-size:14px">
-      综合评分由五个维度加权得出(市场容量 20%、竞争格局 20%、本地适配 25%、利润空间 25%、合规风险 10%)。
-      结论先行:<b style="color:var(--au)">澳大利亚站 4G 款是本次组合中的最优主攻点(8.0 分)</b>,
-      加拿大站以「WIFI 引流 + 4G 收割」的组合拳进入;加拿大 WIFI 款承担引流职能、不以单品盈利为目标。
-    </p>
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6" style="margin-top:26px">
-      <!-- 环形评分:--v 为百分比(评分×10),--c 为站点色 -->
-      <div class="card card-pad">
-        <div class="gauge" style="--v:67;--c:var(--ca)" role="img" aria-label="加拿大WIFI款综合评分6.7分"><div><div><b>6.7</b><span>/10</span></div></div></div>
-        <div class="gauge-label">🇨🇦 CA · WIFI 引流款</div>
-        <div class="gauge-sub">可行 · 定位为流量入口</div>
+  <section>
+    <h2>数据看板：为什么加拿大优先</h2>
+    <div class="split">
+      <div class="chartbox">
+        <h3>核心关键词月搜索量</h3>
+        <div class="barrow"><span>CA 法语户外词</span><div class="bar green"><span style="width:100%"></span></div><b>45,135</b></div>
+        <div class="barrow"><span>CA wireless outdoor</span><div class="bar green"><span style="width:67%"></span></div><b>30,346</b></div>
+        <div class="barrow"><span>CA security camera</span><div class="bar"><span style="width:51%"></span></div><b>22,938</b></div>
+        <div class="barrow"><span>AU security camera</span><div class="bar orange"><span style="width:23%"></span></div><b>10,499</b></div>
+        <div class="barrow"><span>CA light bulb</span><div class="bar"><span style="width:14%"></span></div><b>6,432</b></div>
+        <div class="barrow"><span>AU solar</span><div class="bar orange"><span style="width:4%"></span></div><b>2,026</b></div>
       </div>
-      <div class="card card-pad">
-        <div class="gauge" style="--v:73;--c:var(--ca)" role="img" aria-label="加拿大4G款综合评分7.3分"><div><div><b>7.3</b><span>/10</span></div></div></div>
-        <div class="gauge-label">🇨🇦 CA · 4G 利润款</div>
-        <div class="gauge-sub">推荐 · 度假屋/木屋场景</div>
-      </div>
-      <div class="card card-pad">
-        <div class="gauge" style="--v:69;--c:var(--au)" role="img" aria-label="澳大利亚WIFI款综合评分6.9分"><div><div><b>6.9</b><span>/10</span></div></div></div>
-        <div class="gauge-label">🇦🇺 AU · WIFI 引流款</div>
-        <div class="gauge-sub">可行 · 需先解高温痛点</div>
-      </div>
-      <div class="card card-pad" style="border-color:var(--amber);box-shadow:0 0 0 3px var(--amber-soft)">
-        <div class="gauge" style="--v:80;--c:var(--au)" role="img" aria-label="澳大利亚4G款综合评分8.0分"><div><div><b>8.0</b><span>/10</span></div></div></div>
-        <div class="gauge-label">🇦🇺 AU · 4G 利润款 ★</div>
-        <div class="gauge-sub">主攻 · 农场/偏远地产刚需</div>
+      <div class="chartbox">
+        <h3>站点对比指标</h3>
+        <table>
+          <tr><th>指标</th><th>加拿大</th><th>澳大利亚</th><th>判断</th></tr>
+          <tr><td>security camera月搜</td><td class="right">22,938</td><td class="right">10,499</td><td class="good">CA为AU 2.18倍</td></tr>
+          <tr><td>outdoor security camera月搜</td><td class="right">10,481</td><td class="right">2,034</td><td class="good">CA为AU 5.15倍</td></tr>
+          <tr><td>Top样本最高月销</td><td class="right">5,598</td><td class="right">1,079</td><td class="good">CA头部动销更强</td></tr>
+          <tr><td>灯泡机最低到手成本</td><td class="right">CNY 27.0</td><td class="right">CNY 32.0</td><td class="good">CA成本更低</td></tr>
+          <tr><td>太阳能场景适配</td><td class="center">中</td><td class="center">高</td><td class="warn">AU适合第二阶段</td></tr>
+        </table>
       </div>
     </div>
+    <p>数据解释：加拿大的大词、户外词、法语户外词和竞品销量样本都更强；澳大利亚的太阳能场景更自然，但Amazon AU样本销量较小，且现有产品澳洲补贴弱于加拿大，因此不适合作为首轮承担试错的站点。</p>
+  </section>
 
-    <div class="card card-pad" style="margin-top:18px">
-      <div class="grid md:grid-cols-3 gap-4" style="font-size:13px">
-        <div><b style="color:var(--green)">✓ 最大机会</b><br>澳洲约 1/4 国土无固定宽带但有 4G 覆盖,农场与偏远地产的"无网监控"是结构性刚需;北美/大洋洲太阳能安防赛道年增速 8%–15%,4G 蜂窝细分为增速最快的连接方式。</div>
-        <div><b style="color:#A56F0F">◈ 关键约束</b><br>加拿大冬季有效日照骤降(多伦多 12 月峰值日照约 1.4h/日),续航差评是 CA 站最大口碑雷区;澳洲夏季 45°C+ 高温死机是 AU 站差评首因。</div>
-        <div><b style="color:var(--red)">⚠ 最需前置的合规</b><br>CA:ISED 无线认证 + 魁北克法语双语包装(Bill 96);AU:RCM 认证 + Telstra Band 28(700MHz)频段兼容,缺 B28 的 4G 模组等于放弃偏远市场。</div>
+  <section class="mutedband">
+    <div class="section-kicker">Australia Market Decision</div>
+    <h2>澳大利亚暂缓进入的数据依据</h2>
+    <p>澳大利亚并非没有机会，尤其在太阳能户外摄像头、农场/偏远物业、4G无Wi-Fi场景上具备环境适配性。但从首发投入角度看，澳洲的市场体量、首批产品利润安全垫、竞品动销规模和数据确定性均弱于加拿大，因此建议暂缓作为首发站点。</p>
+    <div class="grid">
+      <div class="metric"><div class="k">AU核心词月搜</div><div class="v">10,499</div></div>
+      <div class="metric"><div class="k">CA核心词月搜</div><div class="v">22,938</div></div>
+      <div class="metric"><div class="k">AU户外词月搜</div><div class="v">2,034</div></div>
+      <div class="metric"><div class="k">CA户外词月搜</div><div class="v">10,481</div></div>
+    </div>
+    <div class="split">
+      <div class="chartbox">
+        <h3>搜索需求对比</h3>
+        <div class="barrow"><span>CA security camera</span><div class="bar green"><span style="width:100%"></span></div><b>22,938</b></div>
+        <div class="barrow"><span>AU security camera</span><div class="bar orange"><span style="width:46%"></span></div><b>10,499</b></div>
+        <div class="barrow"><span>CA outdoor security</span><div class="bar green"><span style="width:46%"></span></div><b>10,481</b></div>
+        <div class="barrow"><span>AU outdoor security</span><div class="bar orange"><span style="width:9%"></span></div><b>2,034</b></div>
+        <div class="barrow"><span>CA solar security</span><div class="bar"><span style="width:17%"></span></div><b>3,964</b></div>
+        <div class="barrow"><span>AU solar security</span><div class="bar orange"><span style="width:9%"></span></div><b>2,026</b></div>
+      </div>
+      <div class="chartbox">
+        <h3>竞品动销对比</h3>
+        <div class="barrow"><span>CA Top竞品月销</span><div class="bar green"><span style="width:100%"></span></div><b>5,598</b></div>
+        <div class="barrow"><span>AU Top竞品月销</span><div class="bar orange"><span style="width:19%"></span></div><b>1,079</b></div>
+        <div class="barrow"><span>CA户外Top样本</span><div class="bar green"><span style="width:92%"></span></div><b>5,172</b></div>
+        <div class="barrow"><span>AU户外Top样本</span><div class="bar orange"><span style="width:4%"></span></div><b>227</b></div>
+        <div class="barrow"><span>CA太阳能样本</span><div class="bar"><span style="width:39%"></span></div><b>2,176</b></div>
+        <div class="barrow"><span>AU太阳能样本</span><div class="bar orange"><span style="width:2%"></span></div><b>60</b></div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ==================== 02 本地化市场特征(站点切换标签页) ==================== -->
-<section id="local">
-  <div class="wrap">
-    <div class="section-no">02 / LOCALIZATION DEEP-DIVE</div>
-    <h2 class="section-title">本地化市场特征:同一颗摄像头,两种完全不同的战场</h2>
-
-    <!-- 交互控制条:站点切换(全局联动图表与内容) -->
-    <div class="controls-bar" role="toolbar" aria-label="站点与产品切换">
-      <div class="site-tabs" role="tablist">
-        <button type="button" data-site="ca" class="active" role="tab" aria-selected="true"><span class="dot"></span>🇨🇦 加拿大站</button>
-        <button type="button" data-site="au" role="tab" aria-selected="false"><span class="dot"></span>🇦🇺 澳大利亚站</button>
-      </div>
-      <div class="select-wrap">
-        <select id="productSelect" aria-label="选择产品型号进行对比">
-          <option value="4g">产品:4G 利润款(蜂窝联网)</option>
-          <option value="wifi">产品:WIFI 引流款(2.4G联网)</option>
-        </select>
-      </div>
-      <span class="controls-hint">切换站点与产品,下方所有图表与数据将实时联动更新</span>
+    <table>
+      <tr><th>对比维度</th><th>加拿大数据</th><th>澳大利亚数据</th><th>结论</th></tr>
+      <tr><td>泛安防需求</td><td>security camera月搜22,938</td><td>security camera月搜10,499</td><td class="good">加拿大约为澳洲2.18倍，广告学习样本更大。</td></tr>
+      <tr><td>户外安防需求</td><td>outdoor security camera月搜10,481</td><td>outdoor security camera月搜2,034</td><td class="good">加拿大约为澳洲5.15倍，户外款扩量更有空间。</td></tr>
+      <tr><td>太阳能机会</td><td>solar security camera月搜3,964，竞品31,636</td><td>solar security camera月搜2,026，竞品7,870</td><td class="warn">澳洲太阳能切入性不错，但绝对需求小；适合第二阶段。</td></tr>
+      <tr><td>竞品动销</td><td>CA Top样本月销5,598；高客单太阳能2-pack样本月销2,112</td><td>AU Top样本月销1,079；太阳能户外样本月销60-87</td><td class="good">加拿大动销规模更能支撑首发投入。</td></tr>
+      <tr><td>采购成本</td><td>灯泡机最低CNY27；窗机CNY51.8；4G在售款CNY95.3起</td><td>灯泡机最低CNY32；窗机CNY58.8；4G在售款CNY135.3起</td><td class="good">加拿大补贴后成本更低，能承受促销和广告试错。</td></tr>
+      <tr><td>数据完整性</td><td>light bulb、window、solar、wireless outdoor、法语户外词均有Sofetime数据</td><td>AU light bulb、window、4G、battery等细分词未返回完整热搜详情</td><td class="good">加拿大首批SKU选择确定性更高。</td></tr>
+      <tr><td>售后风险</td><td>冬季太阳能/电池风险高，但灯泡机和窗机可规避</td><td>太阳能环境更友好，但4G/SIM、RCM/ACMA、市场体量小仍增加试错成本</td><td class="warn">澳洲不是不能做，而是更适合复制成熟方案。</td></tr>
+    </table>
+    <div class="panel">
+      <h3>澳大利亚后续进入建议</h3>
+      <p>澳大利亚建议作为第二阶段市场，优先复制加拿大验证后的图片结构、五点文案、广告词和客服FAQ。进入澳洲时，不建议以窗机为核心，应优先测试 solar security camera、outdoor wireless camera、farm security camera、4G camera 等户外场景词，并将太阳能/4G频段和RCM/ACMA合规作为上架前置条件。</p>
     </div>
+  </section>
 
-    <!-- ========== 加拿大本地化面板 ========== -->
-    <div id="panel-ca" class="site-panel" style="margin-top:24px">
-      <div class="grid lg:grid-cols-2 gap-6">
-        <div class="card card-pad">
-          <div class="eyebrow">冬季日照 × 太阳能续航</div>
-          <h3 class="display" style="font-size:18px;margin:6px 0 10px">高纬度冬季:有效日照跌至夏季的 1/4,续航是生死线</h3>
-          <div class="chart-box"><canvas id="sunChart" role="img" aria-label="加拿大主要城市冬夏有效峰值日照对比图"></canvas></div>
-          <div class="divider-note">
-            按 2W 太阳能板 + 10000mAh 电池、日均 12 次触发建模:多伦多 12 月纯太阳能仅能维持约 <b class="mono">9–14 天</b> 净平衡,
-            温哥华(多云+降雨)更差。<b>结论:CA 版本必须标配 Type-C 应急补电口 + 低温锂电池(-20°C 放电)+ 可加购 5W 大板</b>,
-            并在 Listing 首屏主动给出"冬季续航方案",否则 11–2 月差评将系统性击穿评分。
-          </div>
-        </div>
-        <div class="card card-pad">
-          <div class="eyebrow">住宅结构 × 安防需求</div>
-          <h3 class="display" style="font-size:18px;margin:6px 0 10px">独栋住宅是基本盘,"度假木屋"是 4G 款的黄金场景</h3>
-          <div class="stat-strip" style="margin-bottom:12px">
-            <div class="cell"><b>52.6%</b><span>独栋住宅占比(2021人口普查)</span></div>
-            <div class="cell"><b>~19万+</b><span>私人度假屋/Cottage 存量(安省/魁省集中)</span></div>
-            <div class="cell"><b>22.9%</b><span>法语母语人口占比(魁北克为主)</span></div>
-            <div class="cell"><b>+38%</b><span>"cottage security"类搜索近一年增速</span></div>
-          </div>
-          <div class="insight"><div class="ic" style="background:var(--ca-soft)">🏡</div><div><h5>独栋+前后院 = 多摄像头需求</h5><p>独栋家庭平均安装 2–4 个户外点位(门廊/车道/后院),适合"WIFI 款 2 只装"引流套装拉高客单。</p></div></div>
-          <div class="insight"><div class="ic" style="background:var(--ca-soft)">🛶</div><div><h5>Cottage Country:4G 款的天然主场</h5><p>安省 Muskoka、魁省 Laurentides 等度假屋带大多无宽带、业主 9 个月不在场,防盗+防水管冻裂远程查看是刚需,对 4G 款价格不敏感。</p></div></div>
-          <div class="insight"><div class="ic" style="background:var(--ca-soft)">🗣️</div><div><h5>法语区:被主流卖家忽视的流量洼地</h5><p>法语关键词「caméra de surveillance solaire」竞争度极低(竞品数不足英语词的 15%);魁省买家更信任含法语 A+ 页面与法语客服的品牌,转化率溢价明显。产品包装依 Bill 96 需英法双语。</p></div></div>
-        </div>
-      </div>
-      <div class="card card-pad" style="margin-top:18px">
-        <div class="grid md:grid-cols-3 gap-4" style="font-size:13px">
-          <div><span class="tag blue">区域差异</span><p style="margin:6px 0 0;color:var(--ink-2)"><b style="color:var(--ink)">BC 省(温哥华)</b>:冬季阴雨为主,太阳能效率全国最低,但气温温和;卖点侧重 IP66 防雨与阴天续航。</p></div>
-          <div><span class="tag blue">区域差异</span><p style="margin:6px 0 0;color:var(--ink-2)"><b style="color:var(--ink)">草原三省(卡尔加里等)</b>:冬季晴天多、日照相对充足但极寒(-30°C),电池低温性能是核心卖点。</p></div>
-          <div><span class="tag blue">区域差异</span><p style="margin:6px 0 0;color:var(--ink-2)"><b style="color:var(--ink)">安省/魁省走廊</b>:人口与订单密度最高,兼有城市独栋与度假屋双场景,是投放预算的第一优先区。</p></div>
-        </div>
-      </div>
-    </div>
+  <section>
+    <h2>关键词机会矩阵</h2>
+    <table>
+      <tr><th>关键词</th><th>月搜</th><th>竞品数</th><th>需求/竞品×1000</th><th>匹配产品</th><th>投放优先级</th><th>分析结论</th></tr>
+      <tr><td>light bulb security camera</td><td class="right">6,432</td><td class="right">2,841</td><td class="right good">2.26</td><td>灯泡机</td><td class="center"><span class="score s1">高</span></td><td>最适合首发，低成本、低安装售后。</td></tr>
+      <tr><td>security cameras wireless outdoor</td><td class="right">30,346</td><td class="right">29,212</td><td class="right good">1.04</td><td>防水球机/户外款</td><td class="center"><span class="score s1">高</span></td><td>流量大，适合低价户外款承接。</td></tr>
+      <tr><td>camera surveillance exterieur</td><td class="right">45,135</td><td class="right">58,570</td><td class="right">0.77</td><td>户外款/窗机</td><td class="center"><span class="score s2">中高</span></td><td>加拿大法语流量，适合后台词和A+本地化。</td></tr>
+      <tr><td>window security camera</td><td class="right">2,997</td><td class="right">19,729</td><td class="right">0.15</td><td>窗机</td><td class="center"><span class="score s2">中</span></td><td>量不大，但差异化强、售后可控。</td></tr>
+      <tr><td>solar security camera</td><td class="right">3,964</td><td class="right">31,636</td><td class="right">0.13</td><td>太阳能款</td><td class="center"><span class="score s3">低</span></td><td>有需求，但加拿大冬季售后风险高。</td></tr>
+      <tr><td>doorbell camera</td><td class="right">41,570</td><td class="right">33,020</td><td class="right">1.26</td><td>门口场景</td><td class="center"><span class="score s3">低</span></td><td>流量大但意图偏门铃，我方不直接主投。</td></tr>
+    </table>
+    <p class="mini">优先级不是只看月搜，而是同时看需求明确度、SKU匹配度、售后风险和利润安全垫。</p>
+  </section>
 
-    <!-- ========== 澳大利亚本地化面板 ========== -->
-    <div id="panel-au" class="site-panel" hidden style="margin-top:24px">
-      <div class="grid lg:grid-cols-2 gap-6">
-        <div class="card card-pad">
-          <div class="eyebrow">4G 覆盖 × 偏远地产</div>
-          <h3 class="display" style="font-size:18px;margin:6px 0 10px">"有信号、没网线":澳洲是 4G 太阳能摄像头的全球最佳单一市场之一</h3>
-          <div class="stat-strip" style="margin-bottom:12px">
-            <div class="cell"><b>99.5%+</b><span>Telstra 4G 人口覆盖率</span></div>
-            <div class="cell"><b>~1/3</b><span>国土面积有蜂窝覆盖(其余为无人区)</span></div>
-            <div class="cell"><b>~70%</b><span>独立屋(detached house)占比</span></div>
-            <div class="cell"><b>8.7万+</b><span>农业经营体数量(农场均面积巨大)</span></div>
-          </div>
-          <div class="insight"><div class="ic" style="background:var(--au-soft)">📡</div><div><h5>Band 28(700MHz)是入场券</h5><p>Telstra/Optus 乡村覆盖高度依赖 B28 低频段,大量中国白牌 4G 摄像头因缺 B28 在乡村"有天线没信号",差评占比高达三成。<b>模组必须支持 B28/B3/B1,并预装或推荐 Telstra 网络 IoT SIM。</b></p></div></div>
-          <div class="insight"><div class="ic" style="background:var(--au-soft)">🐄</div><div><h5>农场场景:看牲畜、看大门、看水泵</h5><p>农场主用 4G 摄像头监控数公里外的大门与饮水点,愿为"免布线免电源"支付 AUD 250–350;这是利润款最厚的价格带。</p></div></div>
-          <div class="insight"><div class="ic" style="background:var(--au-soft)">🏗️</div><div><h5>工地/房车/度假屋 = 第二增长曲线</h5><p>建筑工地防盗(澳洲工具盗窃高发)、Caravan 旅行与海滨度假屋均为无固定网络场景,B 端小批量采购常见,可开 Business Price。</p></div></div>
-        </div>
-        <div class="card card-pad">
-          <div class="eyebrow">极端气候 × 设备防护</div>
-          <h3 class="display" style="font-size:18px;margin:6px 0 10px">一台设备要同时扛住 45°C 热浪、尘暴与热带暴雨</h3>
-          <div class="insight"><div class="ic" style="background:var(--au-soft)">🔥</div><div><h5>夏季高温是 AU 差评首因</h5><p>内陆与西澳夏季气温常达 42–47°C,机身暴晒下内部可超 60°C:普通 18650 锂电池加速衰减、主板死机重启。<b>需高温电芯(60°C 工作)、浅色外壳、遮阳檐设计,并把"50°C 实测运行"写进五点。</b></p></div></div>
-          <div class="insight"><div class="ic" style="background:var(--au-soft)">🌵</div><div><h5>干旱区:防尘等级 &gt; 防水等级</h5><p>红土尘暴会侵入按键与镜头舱,IP65 不够,建议按 <b>IP66 防尘密封 + 镜头疏尘镀膜</b> 设计,减少"画面模糊"退货。</p></div></div>
-          <div class="insight"><div class="ic" style="background:var(--au-soft)">🌧️</div><div><h5>北部热带:湿季连月暴雨 + 高湿</h5><p>昆士兰/北领地湿季(11–4月)暴雨与雷暴密集,密封圈老化渗水是第二大质量差评;三防漆 + 双层密封圈是低成本高回报的改进。</p></div></div>
-          <div class="insight"><div class="ic" style="background:var(--au-soft)">☀️</div><div><h5>好消息:日照资源全球顶级</h5><p>澳洲大部分地区年均峰值日照 4.5–6.5h/日,太阳能续航几乎不构成瓶颈——营销重点应从"续航"转向"耐候与信号"。</p></div></div>
-        </div>
-      </div>
-      <div class="card card-pad" style="margin-top:18px">
-        <div class="grid md:grid-cols-3 gap-4" style="font-size:13px">
-          <div><span class="tag ochre">区域差异</span><p style="margin:6px 0 0;color:var(--ink-2)"><b style="color:var(--ink)">东南沿海(悉尼/墨尔本)</b>:城市独立屋密集,WIFI 款主战场;关注院落包裹防盗与 Nature Strip 车辆监控话术。</p></div>
-          <div><span class="tag ochre">区域差异</span><p style="margin:6px 0 0;color:var(--ink-2)"><b style="color:var(--ink)">内陆/西澳矿区农区</b>:4G 款核心腹地,高温+粉尘防护与 B28 信号为第一卖点,客单价与利润率最高。</p></div>
-          <div><span class="tag ochre">区域差异</span><p style="margin:6px 0 0;color:var(--ink-2)"><b style="color:var(--ink)">昆士兰热带带</b>:湿季防水与防雷保护为主诉求;雨季恰逢购物旺季(11–1月),备货需前置。</p></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  <section>
+    <h2>SKU综合评分模型</h2>
+    <table>
+      <tr><th>SKU</th><th>产品</th><th>利润安全垫35%</th><th>售后低风险30%</th><th>关键词匹配20%</th><th>执行简单15%</th><th>综合评分</th><th>结论</th></tr>
+      <tr><td>T-CP8040LF-W21V</td><td>灯泡机基础款</td><td class="center">9.5</td><td class="center">9.0</td><td class="center">9.2</td><td class="center">9.0</td><td class="center good">9.2</td><td>首推引流款。</td></tr>
+      <tr><td>T-CP8050LF-W3M</td><td>灯泡机升级款</td><td class="center">9.0</td><td class="center">9.0</td><td class="center">9.0</td><td class="center">8.8</td><td class="center good">9.0</td><td>首推利润款。</td></tr>
+      <tr><td>CP15W1-W30Q</td><td>窗机</td><td class="center">8.8</td><td class="center">8.2</td><td class="center">7.2</td><td class="center">8.0</td><td class="center good">8.2</td><td>差异化利润款。</td></tr>
+      <tr><td>CQ1051-W30V</td><td>防水球机</td><td class="center">8.2</td><td class="center">6.8</td><td class="center">8.5</td><td class="center">7.5</td><td class="center warn">7.7</td><td>低价户外测试款。</td></tr>
+      <tr><td>T-CP23W1-W30V</td><td>室内摇头机</td><td class="center">6.8</td><td class="center">9.0</td><td class="center">6.5</td><td class="center">8.5</td><td class="center warn">7.5</td><td>备选补充款。</td></tr>
+      <tr><td>CQ42W1S-G41J</td><td>4G太阳能球机</td><td class="center">7.2</td><td class="center risk">3.5</td><td class="center">6.0</td><td class="center">4.5</td><td class="center risk">5.3</td><td>不进首批主推。</td></tr>
+      <tr><td>CQ42W1S-W43J</td><td>Wi-Fi太阳能球机</td><td class="center">6.8</td><td class="center risk">4.0</td><td class="center">6.5</td><td class="center">5.0</td><td class="center risk">5.5</td><td>春夏小批量验证。</td></tr>
+    </table>
+  </section>
 
-<!-- ==================== 03 竞品与关键词深挖(联动站点+产品) ==================== -->
-<section id="compete">
-  <div class="wrap">
-    <div class="section-no">03 / KEYWORD & COMPETITOR MINING(卖家精灵数据)</div>
-    <h2 class="section-title">竞品数据深挖:<span id="competeTitle" class="mono" style="font-size:.8em;color:var(--ca)">CA · 4G 利润款</span></h2>
-    <p class="controls-hint" style="margin-top:4px">▲ 使用上方控制条切换站点 / 产品,本节全部图表与表格随之更新</p>
+  <section>
+    <h2>利润结构拆解</h2>
+    <table>
+      <tr><th>SKU</th><th>售价</th><th>采购成本折CAD</th><th>佣金15%</th><th>FBA估算</th><th>头程估算</th><th>广告+Coupon</th><th>估算贡献利润</th><th>贡献利润率</th></tr>
+      <tr><td>T-CP8040LF-W21V</td><td class="right">CAD 39.99</td><td class="right">5.19</td><td class="right">6.00</td><td class="right">5.50</td><td class="right">3.00</td><td class="right">8.00</td><td class="right good">12.30</td><td class="right good">30.8%</td></tr>
+      <tr><td>T-CP8050LF-W3M</td><td class="right">CAD 42.99</td><td class="right">6.35</td><td class="right">6.45</td><td class="right">5.80</td><td class="right">3.00</td><td class="right">8.50</td><td class="right good">12.90</td><td class="right good">30.0%</td></tr>
+      <tr><td>CP15W1-W30Q</td><td class="right">CAD 59.99</td><td class="right">9.96</td><td class="right">9.00</td><td class="right">6.50</td><td class="right">3.50</td><td class="right">12.00</td><td class="right good">19.03</td><td class="right good">31.7%</td></tr>
+      <tr><td>CQ1051-W30V</td><td class="right">CAD 49.99</td><td class="right">8.08</td><td class="right">7.50</td><td class="right">6.80</td><td class="right">3.50</td><td class="right">10.50</td><td class="right good">13.61</td><td class="right">27.2%</td></tr>
+      <tr><td>T-CP23W1-W30V</td><td class="right">CAD 39.99</td><td class="right">8.08</td><td class="right">6.00</td><td class="right">5.80</td><td class="right">3.00</td><td class="right">8.00</td><td class="right warn">9.11</td><td class="right">22.8%</td></tr>
+    </table>
+    <p class="mini">广告+Coupon为冷启动保守预算，不代表成熟期。成熟期如果自然排名上升，利润率有上修空间。</p>
+  </section>
 
-    <!-- 关键词分析 -->
-    <div class="grid lg:grid-cols-5 gap-6" style="margin-top:20px">
-      <div class="card card-pad lg:col-span-3">
-        <div class="eyebrow">关键词流量结构</div>
-        <h3 class="display" style="font-size:17px;margin:6px 0 10px">核心词月搜索量 × 转化率</h3>
-        <div class="chart-box tall"><canvas id="kwChart" role="img" aria-label="关键词搜索量与转化率组合图"></canvas></div>
+  <section>
+    <h2>最终推荐SKU：低售后风险版</h2>
+    <table>
+      <tr><th>优先级</th><th>型号</th><th>类型</th><th>加拿大到手采购价</th><th>建议售价</th><th>估算单件贡献利润</th><th>售后风险</th><th>推荐理由</th></tr>
+      <tr><td>1</td><td>T-CP8040LF-W21V</td><td>灯泡摄像头</td><td class="right">CNY 27.0</td><td class="right">CAD 39.99</td><td class="right good">约CAD 12.3</td><td class="good">低</td><td>采购价最低，light bulb security camera CA月搜6,432、竞品2,841；灯座安装降低布线和电池售后。</td></tr>
+      <tr><td>2</td><td>T-CP8050LF-W3M</td><td>灯泡摄像头升级款</td><td class="right">CNY 33.0</td><td class="right">CAD 42.99</td><td class="right good">约CAD 12.9</td><td class="good">低</td><td>作为3MP/双频升级款，适合与低价灯泡机组成变体或2-pack，提高客单价。</td></tr>
+      <tr><td>3</td><td>CP15W1-W30Q</td><td>窗机</td><td class="right">CNY 51.8</td><td class="right">CAD 59.99</td><td class="right good">约CAD 19.0</td><td class="good">低-中</td><td>window security camera CA月搜2,997；适合加拿大租房、公寓、冬季室内向外看，避开户外低温电池问题。</td></tr>
+      <tr><td>4</td><td>CQ1051-W30V</td><td>防水球机/低价户外款</td><td class="right">CNY 42.0</td><td class="right">CAD 49.99</td><td class="right good">约CAD 13.6</td><td class="warn">中</td><td>承接outdoor和wireless outdoor词，成本低；如果是常电/非电池逻辑，售后低于太阳能电池款。</td></tr>
+      <tr><td>5（备选）</td><td>T-CP23W1-W30V</td><td>室内/半室内摇头机</td><td class="right">CNY 42.0</td><td class="right">CAD 39.99</td><td class="right warn">约CAD 9.1</td><td class="good">低</td><td>利润不如前四款，但售后风险低，可作为室内宠物/婴儿/老人看护补充款。</td></tr>
+    </table>
+    <p>首批建议实际备货：前4款为正式首发，备选摇头机按少量测试。这样能覆盖灯座、窗户、低价户外、室内看护四个场景，同时把太阳能/4G的冬季售后风险排除在首批之外。</p>
+  </section>
+
+  <section>
+    <h2>明确不建议首批主推的产品</h2>
+    <table>
+      <tr><th>产品类型</th><th>涉及型号</th><th>不首推原因</th><th>保留策略</th></tr>
+      <tr><td>4G太阳能球机</td><td>CQ42W1S-G41J、CQ42B1S-G41J-6、ZC-YT15-G41J</td><td class="risk">SIM/运营商频段、4G流量、低温充电、积雪遮挡、冬季掉电均会造成高售后。</td><td>只做10-20台小批量验证；确认频段、低温、APP和客服脚本后再扩。</td></tr>
+      <tr><td>Wi-Fi太阳能电池球机</td><td>CQ42W1S-W43J、T-CQ4011S-W43J、T-CQ4021S-W43J</td><td class="risk">加拿大冬季日照短、积雪和低温导致“太阳能不充电/电池掉电快”差评概率高。</td><td>第二阶段在春夏季测试，主图必须写清冬季限制。</td></tr>
+      <tr><td>电池卡片机</td><td>T-CL3311-W43J、T-CL3011-W43J、T-CL3021-W43J</td><td class="warn">低温续航衰减，且Sofetime未返回battery security camera完整热搜数据。</td><td>作为后续无线补充款，不作为首批利润核心。</td></tr>
+      <tr><td>高价套装</td><td>基站/NVR/多路套装</td><td class="warn">客单高但安装、兼容、售后解释复杂，新站首发风险大。</td><td>等单品Listing有评论和品牌信任后再做。</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>关键词市场验证</h2>
+    <table>
+      <tr><th>关键词</th><th>站点</th><th>月搜索量</th><th>竞品数</th><th>结论</th><th>对应产品</th></tr>
+      <tr><td>light bulb security camera</td><td>CA</td><td class="right">6,432</td><td class="right">2,841</td><td class="good">需求明确、竞争相对低，是首批最优切入口。</td><td>灯泡机</td></tr>
+      <tr><td>window security camera</td><td>CA</td><td class="right">2,997</td><td class="right">19,729</td><td class="good">细分场景清晰，适合租房、公寓和冬季室内安装。</td><td>窗机</td></tr>
+      <tr><td>security cameras wireless outdoor</td><td>CA</td><td class="right">30,346</td><td class="right">29,212</td><td class="good">户外无线大词，可承接低价户外款，但竞争强。</td><td>防水球机</td></tr>
+      <tr><td>camera surveillance exterieur</td><td>CA</td><td class="right">45,135</td><td class="right">58,570</td><td class="good">加拿大法语户外词价值高，应进入后台词和A+本地化。</td><td>户外款/窗机</td></tr>
+      <tr><td>solar security camera</td><td>CA</td><td class="right">3,964</td><td class="right">31,636</td><td class="warn">有需求，但售后风险高，不作为首批主推。</td><td>第二阶段太阳能款</td></tr>
+      <tr><td>doorbell camera</td><td>CA</td><td class="right">41,570</td><td class="right">33,020</td><td class="warn">流量大但门铃意图强，我方非门铃，不宜冷启动主投。</td><td>仅用front door/porch场景词</td></tr>
+      <tr><td>security camera</td><td>CA</td><td class="right">22,938</td><td class="right">70,108</td><td class="warn">大词体量大但竞争强，首期小预算测试。</td><td>全线</td></tr>
+      <tr><td>security camera</td><td>AU</td><td class="right">10,499</td><td class="right">17,022</td><td class="warn">体量约为加拿大46%，澳洲更适合第二阶段。</td><td>澳洲后续</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>竞品销量与价格带</h2>
+    <div class="split">
+      <div class="chartbox">
+        <h3>加拿大竞品月销量Top样本</h3>
+        <div class="barrow"><span>Tapo C200</span><div class="bar green"><span style="width:100%"></span></div><b>5,598</b></div>
+        <div class="barrow"><span>HITELLARCAM 2K</span><div class="bar green"><span style="width:92%"></span></div><b>5,172</b></div>
+        <div class="barrow"><span>Tapo C260 4K</span><div class="bar"><span style="width:81%"></span></div><b>4,527</b></div>
+        <div class="barrow"><span>Tapo 2-pack</span><div class="bar"><span style="width:59%"></span></div><b>3,297</b></div>
+        <div class="barrow"><span>Tapo Solar PTZ</span><div class="bar orange"><span style="width:39%"></span></div><b>2,176</b></div>
+        <div class="barrow"><span>aosu Solar 2-pack</span><div class="bar orange"><span style="width:38%"></span></div><b>2,112</b></div>
       </div>
-      <div class="card card-pad lg:col-span-2">
-        <div class="eyebrow">蓝海机会</div>
-        <h3 class="display" style="font-size:17px;margin:6px 0 10px">长尾关键词:低竞争 · 高购买意图</h3>
-        <div class="tbl-scroll"><table class="tbl">
-          <thead><tr><th>长尾关键词</th><th>月搜索</th><th>竞品数</th><th>机会</th></tr></thead>
-          <tbody id="longtailBody"><!-- JS 注入 --></tbody>
-        </table></div>
-        <div class="divider-note" id="longtailNote"></div>
+      <div class="chartbox">
+        <h3>加拿大竞品估算月销售额</h3>
+        <div class="barrow"><span>aosu Solar 2-pack</span><div class="bar green"><span style="width:100%"></span></div><b>337,899</b></div>
+        <div class="barrow"><span>Tapo C260 4K</span><div class="bar"><span style="width:94%"></span></div><b>316,845</b></div>
+        <div class="barrow"><span>Tapo 2-pack</span><div class="bar"><span style="width:89%"></span></div><b>302,005</b></div>
+        <div class="barrow"><span>Tapo Solar PTZ</span><div class="bar orange"><span style="width:77%"></span></div><b>261,098</b></div>
+        <div class="barrow"><span>HITELLARCAM 2K</span><div class="bar"><span style="width:61%"></span></div><b>206,777</b></div>
+        <div class="barrow"><span>Tapo C200</span><div class="bar"><span style="width:58%"></span></div><b>195,818</b></div>
       </div>
     </div>
-
-    <!-- 竞品分层 + 市场容量 -->
-    <div class="grid lg:grid-cols-5 gap-6" style="margin-top:18px">
-      <div class="card card-pad lg:col-span-3">
-        <div class="eyebrow">竞品分层定价</div>
-        <h3 class="display" style="font-size:17px;margin:6px 0 10px">头部 / 腰部 / 尾部定价带 与 本品建议定价</h3>
-        <div class="chart-box tall"><canvas id="priceChart" role="img" aria-label="竞品分层定价折线图"></canvas></div>
-        <div class="divider-note" id="priceNote"></div>
-      </div>
-      <div class="card card-pad lg:col-span-2">
-        <div class="eyebrow">市场容量与集中度</div>
-        <h3 class="display" style="font-size:17px;margin:6px 0 10px">细分市场份额结构</h3>
-        <div class="chart-box"><canvas id="shareChart" role="img" aria-label="市场集中度饼图"></canvas></div>
-        <div class="stat-strip" style="margin-top:12px">
-          <div class="cell"><b id="statVolume">—</b><span>细分市场年销量(站内)</span></div>
-          <div class="cell"><b id="statGrowth">—</b><span>年增速(YoY)</span></div>
-          <div class="cell"><b id="statCR5">—</b><span>CR5 集中度</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 竞品明细表 + 痛点 -->
-    <div class="grid lg:grid-cols-5 gap-6" style="margin-top:18px">
-      <div class="card card-pad lg:col-span-3">
-        <div class="eyebrow">竞品分层明细</div>
-        <h3 class="display" style="font-size:17px;margin:6px 0 10px">代表竞品:定价 · 月销 · 功能配置</h3>
-        <div class="tbl-scroll"><table class="tbl">
-          <thead><tr><th>层级</th><th>代表品牌/链接</th><th>定价</th><th>月销</th><th>关键配置</th></tr></thead>
-          <tbody id="competitorBody"><!-- JS 注入 --></tbody>
-        </table></div>
-      </div>
-      <div class="card card-pad lg:col-span-2">
-        <div class="eyebrow">用户未满足需求</div>
-        <h3 class="display" style="font-size:17px;margin:6px 0 10px">差评高频痛点(提及率)</h3>
-        <div class="chart-box"><canvas id="painChart" role="img" aria-label="竞品差评痛点横向条形图"></canvas></div>
-        <div class="divider-note" id="painNote"></div>
-      </div>
-    </div>
-
-    <!-- 季节性(两站对照,静态) -->
-    <div class="card card-pad" style="margin-top:18px">
-      <div class="eyebrow">需求季节性(两站对照 · 不随切换变化)</div>
-      <h3 class="display" style="font-size:17px;margin:6px 0 10px">南北半球错季互补:CA 旺季在 5–8 月,AU 旺季在 10–2 月</h3>
-      <div class="chart-box"><canvas id="seasonChart" role="img" aria-label="加澳两站月度需求指数曲线"></canvas></div>
-      <div class="divider-note">
-        指数 100 = 各站年均值。双站布局可平滑产能与现金流:同一批供应链在 3–4 月备 CA 夏季货、8–9 月备 AU 夏季+黑五货;
-        两站均在 11 月底(黑五/网一)出现叠加峰值,是唯一需要同时抢仓的窗口。
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== 03+ 竞品运营深拆(联动站点+产品) ==================== -->
-<section id="ops">
-  <div class="wrap">
-    <div class="section-no">03+ / OPERATOR-LEVEL DECONSTRUCTION(卖家精灵数据)</div>
-    <h2 class="section-title">竞品运营深拆:<span id="opsTitle" class="mono" style="font-size:.8em;color:var(--ca)">CA · 4G 利润款</span></h2>
-    <p class="controls-hint" style="margin-top:4px">▲ 从"我是操盘手"的视角反推对手的钱、流量与打法 · 随上方控制条联动更新</p>
-
-    <!-- 行1:月销趋势 + 利润反推 -->
-    <div class="grid lg:grid-cols-5 gap-6" style="margin-top:20px">
-      <div class="card card-pad lg:col-span-3">
-        <div class="eyebrow">销量运营节奏</div>
-        <h3 class="display" style="font-size:17px;margin:6px 0 10px">头/腰/尾代表竞品 · 近 6 个月月销趋势</h3>
-        <div class="chart-box tall"><canvas id="opsTrendChart" role="img" aria-label="竞品近六个月月销趋势折线图"></canvas></div>
-        <div class="divider-note" id="trendNote"></div>
-      </div>
-      <div class="card card-pad lg:col-span-2">
-        <div class="eyebrow">利润反推(月度)</div>
-        <h3 class="display" style="font-size:17px;margin:6px 0 10px">对手到底赚多少钱</h3>
-        <div class="tbl-scroll"><table class="tbl">
-          <thead><tr><th>竞品</th><th>月销</th><th>月销售额</th><th>TACOS估</th><th>毛利率估</th><th>月毛利估</th></tr></thead>
-          <tbody id="profitBody"><!-- JS 注入 --></tbody>
-        </table></div>
-        <div class="divider-note" id="profitNote"></div>
-      </div>
-    </div>
-
-    <!-- 行2:流量结构 + 广告CPC -->
-    <div class="grid lg:grid-cols-5 gap-6" style="margin-top:18px">
-      <div class="card card-pad lg:col-span-2">
-        <div class="eyebrow">流量结构反推</div>
-        <h3 class="display" style="font-size:17px;margin:6px 0 10px">自然 vs 广告 vs 关联/站外</h3>
-        <div class="chart-box"><canvas id="trafficChart" role="img" aria-label="竞品流量来源结构堆叠条形图"></canvas></div>
-        <div class="divider-note">头部利润率高的秘密不在成本、在流量结构:自然占比每高 10 个百分点,TACOS 约可低 3–4 个点。我方 90 天目标即是复制这条"自然化"曲线。</div>
-      </div>
-      <div class="card card-pad lg:col-span-3">
-        <div class="eyebrow">广告竞价环境</div>
-        <h3 class="display" style="font-size:17px;margin:6px 0 10px">核心词市场 CPC vs 首页首位竞价</h3>
-        <div class="chart-box"><canvas id="adChart" role="img" aria-label="核心关键词CPC与首位竞价对比柱状图"></canvas></div>
-        <div class="divider-note" id="adNote"></div>
-      </div>
-    </div>
-
-    <!-- 行3:关键词卡位矩阵 -->
-    <div class="card card-pad" style="margin-top:18px">
-      <div class="eyebrow">关键词卡位矩阵</div>
-      <h3 class="display" style="font-size:17px;margin:6px 0 10px">谁在霸屏、坑位多贵、我方从哪切入</h3>
-      <div class="tbl-scroll"><table class="tbl">
-        <thead><tr><th>关键词</th><th>月搜索</th><th>市场CPC</th><th>首位竞价</th><th>当前霸屏方</th><th>我方切入打法</th></tr></thead>
-        <tbody id="bidBody"><!-- JS 注入 --></tbody>
-      </table></div>
-    </div>
-
-    <!-- 行4:打法拆解卡片 -->
-    <div style="margin-top:18px">
-      <div class="eyebrow" style="margin-bottom:10px">竞品打法拆解 → 我方对策</div>
-      <div class="grid md:grid-cols-3 gap-6" id="playbookGrid"><!-- JS 注入 --></div>
-    </div>
-
-    <!-- 行5:细分运营基准 -->
-    <div class="card card-pad" style="margin-top:18px">
-      <div class="eyebrow">细分运营基准(该细分市场首页水位)</div>
-      <h3 class="display" style="font-size:17px;margin:6px 0 10px">进这个类目要跨过的运营门槛</h3>
-      <div class="stat-strip" id="benchStrip"><!-- JS 注入 --></div>
-      <div class="divider-note" id="benchNote"></div>
-    </div>
-
-    <!-- 行6:我方90天作战表(静态,两站对照) -->
-    <div class="card card-pad" style="margin-top:18px;border-top:3px solid var(--amber)">
-      <div class="eyebrow">自身运营视角 · 落地排期</div>
-      <h3 class="display" style="font-size:17px;margin:6px 0 10px">90 天冷启动作战表(两站对照 · 不随切换变化)</h3>
-      <div class="tbl-scroll"><table class="tbl">
-        <thead><tr><th>阶段</th><th>核心动作</th><th>🇨🇦 CA 月广告预算</th><th>🇦🇺 AU 月广告预算</th><th>阶段 KPI(不达标即复盘)</th></tr></thead>
-        <tbody>
-          <tr>
-            <td class="num" style="white-space:nowrap"><b>T+0–30</b><br>冷启动</td>
-            <td>Vine 每款 30 台;仅投蓝海精准词组(竞价上浮 40% 抢首位);Coupon 15% 常驻;A+ 与耐候实测视频同步上线</td>
-            <td class="num">CAD 4,500</td><td class="num">AUD 5,000</td>
-            <td>评论 ≥30 条 · 蓝海词自然位进首页 · 评分 ≥4.4</td>
-          </tr>
-          <tr>
-            <td class="num" style="white-space:nowrap"><b>T+30–60</b><br>放量卡位</td>
-            <td>秒杀 2 场 + 扩投大词商品页位(伏击腰部竞品)+ SB 品牌旗舰广告;开 2-pack / 配件 Bundle 变体</td>
-            <td class="num">CAD 6,500</td><td class="num">AUD 7,000</td>
-            <td>核心词自然位前 3 页 · TACOS ≤28%(WIFI)/ ≤18%(4G)</td>
-          </tr>
-          <tr>
-            <td class="num" style="white-space:nowrap"><b>T+60–90</b><br>利润回正</td>
-            <td>SD 再营销 + 站外 Deal(CA:RedFlagDeals / AU:OzBargain)+ CA 法语广告组扩量;广告向高转化词收缩</td>
-            <td class="num">CAD 5,000</td><td class="num">AUD 5,500</td>
-            <td>自然流量占比 ≥55% · 4G 款净利率 ≥20% · 退货率低于类目基准</td>
-          </tr>
-        </tbody>
-      </table></div>
-      <div class="divider-note">流量结构目标曲线:上架期 广告 65 / 自然 35 → D90 自然 ≥55 → D180 对齐头部水位(自然 ≥60)。广告预算永远跟着"自然位爬坡进度"走,而不是跟着销量焦虑走。</div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== 03++ 竞品架构与我方产品策略(联动站点+产品) ==================== -->
-<section id="arch">
-  <!-- 本板块专用样式:促销热力日历 + 产品矩阵架构图 -->
-  <style>
-    .cal-wrap{overflow-x:auto}
-    .cal{display:grid;grid-template-columns:130px repeat(12,minmax(34px,1fr));gap:4px;min-width:640px}
-    .cal .mh{font-size:10px;text-align:center;color:var(--ink-2);font-family:var(--font-mono)}
-    .cal .rl{font-size:12px;font-weight:600;display:flex;align-items:center}
-    .cal .c{height:24px;border-radius:4px;background:#EDEEE8}
-    .cal .c.i1{background:#F6E3BC}.cal .c.i2{background:#EFC26B}.cal .c.i3{background:#E8A020}
-    .cal .c.our-cell{outline:2px solid var(--ink);outline-offset:-2px}
-    .cal-legend{display:flex;gap:14px;font-size:11px;color:var(--ink-2);margin-top:8px;flex-wrap:wrap}
-    .cal-legend i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:4px}
-    .mx-card{border:1px solid var(--line);border-radius:10px;background:var(--card);padding:16px;position:relative}
-    .mx-card .mx-tier{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:var(--ink-2)}
-    .mx-card h5{font-family:var(--font-display);font-size:16px;margin:4px 0 8px}
-    .mx-sku{display:flex;justify-content:space-between;gap:8px;font-size:13px;border-bottom:1px dashed var(--line);padding:7px 0}
-    .mx-sku:last-of-type{border-bottom:0}
-    .mx-sku .p{font-family:var(--font-mono);white-space:nowrap}
-    .mx-flow{font-size:11px;background:var(--amber-soft);color:#A56F0F;border-radius:999px;padding:3px 10px;display:inline-block;margin-top:10px;font-weight:600}
-  </style>
-
-  <div class="wrap">
-    <div class="section-no">03++ / COMPETITIVE ARCHITECTURE → PRODUCT STRATEGY</div>
-    <h2 class="section-title">竞品架构精拆 × 我方产品策略:<span id="archTitle" class="mono" style="font-size:.8em;color:var(--ca)">CA · 4G 利润款</span></h2>
-    <p class="controls-hint" style="margin-top:4px">▲ 先拆对手的"链接架构、Listing 架构、促销架构",再落我方的"SKU 矩阵、定价阶梯、评论模型、广告账户架构" · 随控制条联动</p>
-
-    <!-- 行1:三维气泡图 + 变体架构表 -->
-    <div class="grid lg:grid-cols-5 gap-6" style="margin-top:20px">
-      <div class="card card-pad lg:col-span-3">
-        <div class="eyebrow">市场格局三维透视</div>
-        <h3 class="display" style="font-size:17px;margin:6px 0 10px">价格 × 月销 × 评论体量(气泡=评论数)与我方切入点</h3>
-        <div class="chart-box tall"><canvas id="bubbleChart" role="img" aria-label="竞品价格销量评论三维气泡图"></canvas></div>
-        <div class="divider-note" id="bubbleNote"></div>
-      </div>
-      <div class="card card-pad lg:col-span-2">
-        <div class="eyebrow">链接与变体架构</div>
-        <h3 class="display" style="font-size:17px;margin:6px 0 10px">对手怎么"堆"评论与排名</h3>
-        <div class="tbl-scroll"><table class="tbl">
-          <thead><tr><th>阵营</th><th>变体/评论架构</th><th>我方对策</th></tr></thead>
-          <tbody id="variantBody"><!-- JS 注入 --></tbody>
-        </table></div>
-      </div>
-    </div>
-
-    <!-- 行2:Listing 架构对标 -->
-    <div class="card card-pad" style="margin-top:18px">
-      <div class="eyebrow">Listing 架构对标</div>
-      <h3 class="display" style="font-size:17px;margin:6px 0 10px">逐要素对标:头部做法 / 腰部做法 / 我方执行标准</h3>
-      <div class="tbl-scroll"><table class="tbl">
-        <thead><tr><th style="width:90px">要素</th><th>头部做法</th><th>腰部做法</th><th style="min-width:220px">我方执行标准(产品策略)</th></tr></thead>
-        <tbody id="listingBody"><!-- JS 注入 --></tbody>
-      </table></div>
-      <div class="divider-note" id="listingNote"></div>
-    </div>
-
-    <!-- 行3:促销节奏热力日历 -->
-    <div class="card card-pad" style="margin-top:18px">
-      <div class="eyebrow">促销架构 · 12 个月节奏(随站点切换)</div>
-      <h3 class="display" style="font-size:17px;margin:6px 0 10px">竞品促销热力日历 与 我方错峰排期</h3>
-      <div class="cal-wrap"><div class="cal" id="promoCal"><!-- JS 注入 --></div></div>
-      <div class="cal-legend">
-        <span><i style="background:#EDEEE8"></i>无动作</span>
-        <span><i style="background:#F6E3BC"></i>轻(Coupon)</span>
-        <span><i style="background:#EFC26B"></i>中(秒杀/加投)</span>
-        <span><i style="background:#E8A020"></i>重(大促深折)</span>
-        <span><i style="background:#fff;outline:2px solid var(--ink);outline-offset:-2px"></i>我方建议排期行</span>
-      </div>
-      <div class="divider-note" id="promoNote"></div>
-    </div>
-
-    <!-- 行4:我方产品矩阵架构图 -->
-    <div style="margin-top:18px">
-      <div class="eyebrow" style="margin-bottom:10px">我方 SKU 矩阵架构(随站点切换 · 金额为当地币)</div>
-      <div class="grid md:grid-cols-3 gap-6" id="matrixGrid"><!-- JS 注入 --></div>
-    </div>
-
-    <!-- 行5:定价阶梯 + 评论增长模型 -->
-    <div class="grid lg:grid-cols-5 gap-6" style="margin-top:18px">
-      <div class="card card-pad lg:col-span-2">
-        <div class="eyebrow">定价阶梯</div>
-        <h3 class="display" style="font-size:17px;margin:6px 0 10px">五个 SKU 的价格卡位</h3>
-        <div class="chart-box"><canvas id="skuChart" role="img" aria-label="我方SKU定价阶梯柱状图"></canvas></div>
-        <div class="divider-note">虚线为该站腰部 WIFI 均价与头部 4G 均价:引流款压腰部、利润款贴头部下沿,五个 SKU 覆盖 30–300 全价格带,任何价位的搜索流量都有承接位。</div>
-      </div>
-      <div class="card card-pad lg:col-span-3">
-        <div class="eyebrow">评论增长模型(180 天推演)</div>
-        <h3 class="display" style="font-size:17px;margin:6px 0 10px">我方评论曲线 vs 首页门槛线:何时"够格"上首页</h3>
-        <div class="chart-box"><canvas id="reviewChart" role="img" aria-label="评论增长模型与首页门槛对比折线图"></canvas></div>
-        <div class="divider-note" id="reviewNote"></div>
-      </div>
-    </div>
-
-    <!-- 行6:广告账户架构 + 双版本硬件架构 -->
-    <div class="grid lg:grid-cols-5 gap-6" style="margin-top:18px">
-      <div class="card card-pad lg:col-span-3">
-        <div class="eyebrow">广告账户架构(随产品切换)</div>
-        <h3 class="display" style="font-size:17px;margin:6px 0 10px">三阶段预算分配:从"精准词抢位"到"再营销收割"</h3>
-        <div class="chart-box"><canvas id="adStructChart" role="img" aria-label="广告活动类型三阶段预算占比堆叠图"></canvas></div>
-        <div class="divider-note" id="adStructNote"></div>
-      </div>
-      <div class="card card-pad lg:col-span-2" style="border-top:3px solid var(--amber)">
-        <div class="eyebrow">产品策略 · 双版本硬件架构(静态)</div>
-        <h3 class="display" style="font-size:17px;margin:6px 0 10px">一套模具,两套内芯:CA 版 vs AU 版</h3>
-        <div class="tbl-scroll"><table class="tbl">
-          <thead><tr><th>部件</th><th>🇨🇦 CA 版</th><th>🇦🇺 AU 版</th></tr></thead>
-          <tbody>
-            <tr><td>电芯</td><td>低温型(-20°C 放电)</td><td>高温型(60°C 工作)</td></tr>
-            <tr><td>太阳能板</td><td>标配 2W + 可选 5W 大板</td><td>标配 2W(日照充足)</td></tr>
-            <tr><td>外壳</td><td>深灰(融雪吸热)</td><td>浅灰 + 遮阳檐(反射降温)</td></tr>
-            <tr><td>密封</td><td>IP65 + 排水槽防冻胀</td><td>IP66 + 双密封圈 + 疏尘镀膜</td></tr>
-            <tr><td>4G 频段</td><td>B2/B4/B7/B12/B13</td><td>B1/B3/B7/<b>B28</b></td></tr>
-            <tr><td>补电口</td><td>Type-C(冬季刚需)</td><td>Type-C(通用)</td></tr>
-            <tr><td>包装/认证</td><td>ISED + 英法双语(Bill 96)</td><td>RCM + 英语</td></tr>
-          </tbody>
-        </table></div>
-        <div class="divider-note">主板、模具、App 全复用,仅电芯/密封/频段/包装四处差异,BOM 增量控制在 6–8%,却分别命中两站差评率最高的痛点——这是本案产品策略的核心杠杆。</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== 04 产品定位验证 ==================== -->
-<section id="position">
-  <div class="wrap">
-    <div class="section-no">04 / POSITIONING VALIDATION</div>
-    <h2 class="section-title">产品定位验证:引流款算流量账,利润款算净利账</h2>
-
-    <div class="grid lg:grid-cols-2 gap-6" style="margin-top:20px">
-      <!-- WIFI 引流款 -->
-      <div class="card card-pad">
-        <div class="eyebrow" style="color:var(--ink-2)">WIFI 引流款 · 低价渗透</div>
-        <h3 class="display" style="font-size:18px;margin:6px 0 10px">低价定位契合度:<span class="tag green">契合入门预算</span></h3>
-        <div class="tbl-scroll"><table class="tbl">
-          <thead><tr><th>验证项</th><th>🇨🇦 CA(CAD 54.99)</th><th>🇦🇺 AU(AUD 59.95)</th></tr></thead>
-          <tbody>
-            <tr><td>入门级安防预算带</td><td class="num">40–70</td><td class="num">45–80</td></tr>
-            <tr><td>vs 腰部均价折让</td><td class="num">-33%</td><td class="num">-37%</td></tr>
-            <tr><td>目标点击份额(核心词)</td><td class="num">3.5%→8%</td><td class="num">3%→7%</td></tr>
-            <tr><td>预期单品净利率</td><td class="num" style="color:var(--red)">≈ 0–3%(战略性)</td><td class="num" style="color:var(--red)">≈ 2–5%</td></tr>
-            <tr><td>引流职能 KPI</td><td colspan="2">为店铺积累评价与复购人群;通过品牌旗舰店/Bundle 把 22–30% 的访客导向 4G 款与配件(备用电池、5W 大板、双装)</td></tr>
-          </tbody>
-        </table></div>
-        <div class="divider-note">
-          <b>引流效果预期评估:</b>两站入门用户对 60 元档(当地币)价格敏感度极高,评论数 &gt; 星级差异成为下单第一决策因子。
-          冷启动以 <b>Vine + 站内 Coupon(15%)+ 秒杀</b> 在 60 天内冲进核心词前 3 页即可完成引流职能;
-          注意 CA 站需在 Listing 明示"冬季续航方案"以保护评分,否则引流款反而拖垮店铺旗舰评分资产。
-        </div>
-      </div>
-
-      <!-- 4G 利润款 -->
-      <div class="card card-pad">
-        <div class="eyebrow" style="color:var(--ink-2)">4G 利润款 · 差异化溢价</div>
-        <h3 class="display" style="font-size:18px;margin:6px 0 10px">高定价支撑力:<span class="tag green">差异化价值成立</span></h3>
-        <div class="tbl-scroll"><table class="tbl">
-          <thead><tr><th>利润测算(单台)</th><th>🇨🇦 CA(CAD 219)</th><th>🇦🇺 AU(AUD 249)</th></tr></thead>
-          <tbody>
-            <tr><td>FOB 成本(折当地币)</td><td class="num">52</td><td class="num">58</td></tr>
-            <tr><td>头程物流+关税</td><td class="num">14</td><td class="num">15</td></tr>
-            <tr><td>FBA 配送费</td><td class="num">11.5</td><td class="num">12.9</td></tr>
-            <tr><td>平台佣金(8% 电子类)</td><td class="num">17.5</td><td class="num">19.9</td></tr>
-            <tr><td>广告(TACOS 13%)</td><td class="num">28.5</td><td class="num">32.4</td></tr>
-            <tr><td>退货/仓储拨备(4%)</td><td class="num">8.8</td><td class="num">10.0</td></tr>
-            <tr><td><b>单台净利 / 净利率</b></td><td class="num" style="color:var(--green)"><b>≈ 86.7 / 26%</b></td><td class="num" style="color:var(--green)"><b>≈ 100.8 / 27%</b></td></tr>
-          </tbody>
-        </table></div>
-        <div class="divider-note">
-          <b>差异化价值验证:</b>"无网络环境可用"在两站均有真实付费场景(CA 度假木屋 / AU 农场与工地),
-          且头部 4G 竞品(Reolink Go 系列等)定价 CAD 289 / AUD 329 以上,本品以 25% 左右价差切"次旗舰"位仍保有 26%+ 净利。
-          附加利润点:<b>4G 流量套餐分成与云存储订阅</b>(与 IoT SIM 服务商合作),可再增加 3–5% 长尾利润。
-        </div>
-      </div>
-    </div>
-
-    <!-- 五维评分雷达 -->
-    <div class="card card-pad" style="margin-top:18px">
-      <div class="eyebrow">可行性评分明细(随站点切换)</div>
-      <h3 class="display" style="font-size:17px;margin:6px 0 10px">五维评分雷达:<span id="radarTitle" class="mono" style="color:var(--ca)">加拿大站</span> · 4G 款 vs WIFI 款</h3>
-      <div class="grid lg:grid-cols-5 gap-6">
-        <div class="lg:col-span-3"><div class="chart-box tall"><canvas id="radarChart" role="img" aria-label="两款产品五维可行性评分雷达图"></canvas></div></div>
-        <div class="lg:col-span-2" style="font-size:13px;color:var(--ink-2)">
-          <p style="margin-top:4px"><b style="color:var(--ink)">读图要点:</b></p>
-          <p id="radarInsight"></p>
-          <p style="margin-top:10px"><b style="color:var(--ink)">权重:</b>本地适配 25% · 利润空间 25% · 市场容量 20% · 竞争格局 20% · 合规风险 10%(风险维度得分越高代表风险越低)。</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== 05 风险预警 ==================== -->
-<section id="risk">
-  <div class="wrap">
-    <div class="section-no">05 / RISK RADAR</div>
-    <h2 class="section-title">风险预警:按严重度分级的四类风险</h2>
-    <div class="grid md:grid-cols-2 gap-6" style="margin-top:20px">
-
-      <div class="card card-pad risk-card">
-        <div class="risk-level" style="color:var(--red)">■ 高风险 · 合规</div>
-        <h4 class="display" style="font-size:16px;margin:6px 0 8px">隐私法规与强制认证</h4>
-        <ul style="margin:0;padding-left:18px;font-size:13px;color:var(--ink-2)">
-          <li><b style="color:var(--ink)">CA:</b>PIPEDA + 魁北克 Law 25 对录像数据跨境存储与泄露通报有硬性要求;无线设备需 ISED 认证(RSS-247/RSS-130),包装与说明书在魁省销售须英法双语(Bill 96)。</li>
-          <li><b style="color:var(--ink)">AU:</b>Privacy Act 1988 + 各州监控设备法(如 NSW Surveillance Devices Act,禁止偷拍邻居私域);电子产品须 RCM 标志,4G 模组需 ACMA 频段合规。</li>
-          <li><b style="color:var(--ink)">规避:</b>App 内置"隐私遮蔽区"功能并在 Listing 提示合法安装角度;认证在首批发货前 8–10 周启动;云存储优先选当地/美区节点并公示。</li>
-        </ul>
-      </div>
-
-      <div class="card card-pad risk-card">
-        <div class="risk-level" style="color:var(--red)">■ 高风险 · 产品口碑</div>
-        <h4 class="display" style="font-size:16px;margin:6px 0 8px">气候适配失败 → 差评螺旋</h4>
-        <ul style="margin:0;padding-left:18px;font-size:13px;color:var(--ink-2)">
-          <li>CA 冬季续航衰减(差评提及率最高 31%)与 AU 夏季高温死机(26%)是两站现有竞品的头号翻车点,也是新品最大机会与最大风险的同一枚硬币。</li>
-          <li><b style="color:var(--ink)">规避:</b>CA 版低温电芯 + 补电口;AU 版高温电芯 + 遮阳檐;两版差异化 SKU 而非一版通吃;上架前完成 -20°C / 50°C 第三方实测报告并做成 A+ 素材。</li>
-        </ul>
-      </div>
-
-      <div class="card card-pad risk-card mid">
-        <div class="risk-level" style="color:#A56F0F">■ 中风险 · 季节与运营</div>
-        <h4 class="display" style="font-size:16px;margin:6px 0 8px">需求季节波动 + 4G 资费依赖</h4>
-        <ul style="margin:0;padding-left:18px;font-size:13px;color:var(--ink-2)">
-          <li>CA 站 12–2 月需求指数跌至 60 左右,库存易超龄产生长期仓储费;AU 站旺季(11–1月)与其湿季重叠,差评与订单同步放大。</li>
-          <li>4G 款体验绑定当地 SIM 资费:CA 三大运营商 IoT 资费偏高、AU 乡村实际仅 Telstra 网络可选,资费投诉占 4G 款差评 21–28%。</li>
-          <li><b style="color:var(--ink)">规避:</b>按季节指数做滚动备货(旺季前 90 天到仓、淡季 FBA 库存周数压到 6 周内);与 eSIM/IoT 服务商谈捆绑套餐(首年低至当地币 5–8/月)并预装。</li>
-        </ul>
-      </div>
-
-      <div class="card card-pad risk-card mid">
-        <div class="risk-level" style="color:#A56F0F">■ 中风险 · 供应链物流</div>
-        <h4 class="display" style="font-size:16px;margin:6px 0 8px">头程成本与仓配约束</h4>
-        <ul style="margin:0;padding-left:18px;font-size:13px;color:var(--ink-2)">
-          <li>两站均为海运长航线(CA 西岸约 18–25 天、AU 约 22–30 天),旺季舱位与港口拥堵会放大断货风险;含锂电池货物需 UN38.3 + 海运危包渠道,可选物流商少、价格弹性差。</li>
-          <li>AU 站 FBA 仓网集中在悉尼/墨尔本,西澳与偏远地区尾程时效 5–9 天,差评中"到货慢"占比可观。</li>
-          <li><b style="color:var(--ink)">规避:</b>锁定 2 家以上带锂电资质的庄家做长约价;AU 大促季节提前分仓;单箱重量与包装尺寸按 FBA 分层费卡位(控制在标准件上限内,避免跳档)。</li>
-        </ul>
-      </div>
-
-      <div class="card card-pad risk-card low md:col-span-2">
-        <div class="risk-level" style="color:var(--green)">■ 低风险 · 需持续监测</div>
-        <h4 class="display" style="font-size:16px;margin:6px 0 8px">汇率与竞争格局变化</h4>
-        <p style="font-size:13px;color:var(--ink-2);margin:0">CAD/AUD 对人民币波动直接吞吐 2–4 个点净利,建议按季度做远期锁汇;同时每月用卖家精灵监控头部品牌(Eufy/Reolink/Swann)的降价与新品动作——若头部 4G 款价格下探 15% 以上,本品应优先以"套餐价值"(SIM+云存储+配件)应对而非跟随降价。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== 06 策略建议 ==================== -->
-<section id="strategy">
-  <div class="wrap">
-    <div class="section-no">06 / GO-TO-MARKET PLAYBOOK</div>
-    <h2 class="section-title">策略建议:可直接执行的四张作战卡</h2>
-    <div class="grid md:grid-cols-2 gap-6" style="margin-top:20px">
-
-      <div class="card card-pad strategy-card">
-        <h4>① 定价与价格梯度</h4>
-        <ul>
-          <li><b>WIFI 引流款:</b>CA 定 <span class="mono">CAD 54.99</span>(常态)/ 44.99(大促);AU 定 <span class="mono">AUD 59.95</span> / 47.95。始终压在腰部均价 -30% 以上形成价格断层。</li>
-          <li><b>4G 利润款:</b>CA <span class="mono">CAD 219</span>、AU <span class="mono">AUD 249</span>,锚定头部 -25% 的"次旗舰"位;流量套餐首年半价做决策临门一脚。</li>
-          <li><b>组合:</b>WIFI 双装(CA 99.99 / AU 109.95)拉客单;4G+备用电池+5W 板 Bundle 提毛利 4–6 点。</li>
-        </ul>
-      </div>
-
-      <div class="card card-pad strategy-card">
-        <h4>② 营销切入点</h4>
-        <ul>
-          <li><b>CA:</b>主攻 "solar security camera cold weather / for cottage" 等蓝海词;法语关键词单独建广告组(CPC 低 40%+),配法语 A+ 与客服模板;5 月木屋开季 + 黑五两波脉冲投放。</li>
-          <li><b>AU:</b>4G 款以 "no wifi needed / farm / rural property" 词群为核心;素材直给三张图——B28 信号实测、47°C 高温实测、红土防尘实测;10 月起加码迎接夏季旺季。</li>
-          <li><b>站外:</b>CA 投 Cottage Life 类社区与 Reddit r/PersonalFinanceCanada 安防话题;AU 投农场主 Facebook 群组与 Whirlpool 论坛测评。</li>
-        </ul>
-      </div>
-
-      <div class="card card-pad strategy-card">
-        <h4>③ 产品与合规前置</h4>
-        <ul>
-          <li><b>双版本硬件:</b>CA 版低温电芯 + Type-C 补电;AU 版高温电芯 + IP66 + B28 模组。切勿一版通吃。</li>
-          <li><b>认证时间表:</b>T-10 周启动 ISED / RCM + UN38.3;T-6 周完成英法双语包装与说明书;T-4 周完成极端温度第三方实测报告。</li>
-          <li><b>App 合规:</b>内置隐私遮蔽区、录像水印时间戳、当地化数据节点说明,直接回应 PIPEDA / Privacy Act 审查点。</li>
-        </ul>
-      </div>
-
-      <div class="card card-pad strategy-card">
-        <h4>④ 上市节奏与风控</h4>
-        <ul>
-          <li><b>节奏:</b>第 1 步(本年 8–9 月)AU 站双款上架,赶 10 月旺季;第 2 步(次年 2–3 月)CA 站上架,赶 5 月旺季——用错季结构让同一套供应链全年满载。</li>
-          <li><b>KPI 门槛:</b>60 天内核心词自然位进前 3 页、评分 ≥ 4.3、TACOS ≤ 25%(引流款)/ 15%(4G 款);任一不达标即触发 Listing 复盘而非加预算。</li>
-          <li><b>风控:</b>季度锁汇;FBA 库存周数 6–10 周区间管理;每月卖家精灵监控头部价格与新品,价格战以套餐价值应对。</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <b>数据与口径说明:</b>关键词搜索量/点击率/转化率、竞品定价与月销、痛点提及率、市场容量与集中度等站内数据基于卖家精灵(SellerSprite)2026-06 抓取周期建模输出;
-    宏观与本地化事实(日照、住宅结构、4G 覆盖、法规)来自政府统计与公开行业研究交叉校准。所有金额为当地币种(CA=CAD,AU=AUD)。
-    本报告用于内部策略决策,数值为分析模型口径,执行前请以最新一期抓取数据复核。<br>
-    <span class="mono" style="letter-spacing:.15em">SOLAR-CAM FEASIBILITY REPORT · 2026-07-07 · CONFIDENTIAL</span>
-  </div>
-</footer>
-
-<!-- ==================== 交互脚本:数据仓 + 图表联动 ==================== -->
-<script>
-/* ------------------------------------------------------------------
-   数据仓 DATA[site][product]
-   维护指南:所有可切换数据集中于此,新增站点/产品只需扩展此对象。
-   数据口径:卖家精灵 2026-06 抓取周期(月度),金额为当地币。
-------------------------------------------------------------------- */
-const SITE_META = {
-  ca:{name:'加拿大站', flag:'🇨🇦', color:'#3A6FB0', soft:'#EAF1F8', cur:'CAD'},
-  au:{name:'澳大利亚站', flag:'🇦🇺', color:'#C2622E', soft:'#F9EFE7', cur:'AUD'}
-};
-const PROD_META = {'4g':'4G 利润款', wifi:'WIFI 引流款'};
-
-const DATA = {
-  ca:{
-    '4g':{
-      keywords:{labels:['4g security camera','solar security camera no wifi','cellular security camera','solar camera for cottage','lte camera outdoor'],
-               volume:[9800,4860,7200,2340,1650], cvr:[11.2,14.6,10.4,16.8,12.1]},
-      longtail:[
-        {kw:'solar security camera no wifi needed', vol:'4,860', comp:'214', level:'green', note:'蓝海'},
-        {kw:'solar camera for cottage', vol:'2,340', comp:'96', level:'green', note:'蓝海'},
-        {kw:'4g camera canada sim', vol:'1,720', comp:'150', level:'green', note:'蓝海'},
-        {kw:'caméra solaire 4g', vol:'980', comp:'42', level:'green', note:'法语蓝海'},
-        {kw:'cellular trail security camera', vol:'2,910', comp:'480', level:'amber', note:'次蓝海'}
-      ],
-      longtailNote:'"cottage / no wifi / 法语词"三组词购买意图极强且竞品不足 250 个,建议作为 4G 款广告冷启动的精准词根。',
-      priceTiers:{labels:['头部 TOP1-10','腰部 11-50','尾部 51-150'], price:[296,189,132], suggest:219,
-        note:'头部由 Reolink Go 系列与 Eufy 4G 款把持(CAD 279–329);腰部为 ieGeek、Soliom 等;建议价 219 卡在腰部之上、头部 -25% 的次旗舰空档。'},
-      share:{labels:['Reolink','Eufy','Arlo Go','ieGeek','Soliom','其他(长尾)'], values:[21,14,10,7,6,42]},
-      volume:'8.7万台', growth:'+38.2%', cr5:'58%',
-      competitors:[
-        {tier:'头部', tag:'blue', name:'Reolink Go PT Plus', price:'CAD 289', sales:'1,850', spec:'2K·PTZ·B4/B7/B12·云+SD'},
-        {tier:'头部', tag:'blue', name:'Eufy 4G LTE Cam S330', price:'CAD 329', sales:'1,320', spec:'4K·PTZ·太阳能一体·AI 识别'},
-        {tier:'腰部', tag:'amber', name:'ieGeek 4G Solar', price:'CAD 189', sales:'760', spec:'2K·PTZ·SIM 需自购·SD 卡'},
-        {tier:'腰部', tag:'amber', name:'Soliom S800-4G', price:'CAD 175', sales:'420', spec:'1080P·固定·内置板'},
-        {tier:'尾部', tag:'red', name:'白牌(泛 UBOX 方案)', price:'CAD 118–145', sales:'~150/链接', spec:'1080P·频段残缺·App 体验差'}
-      ],
-      pain:{labels:['流量资费贵/SIM 兼容','信号切换掉线','冬季续航衰减','云存储订阅贵','安装说明差'], values:[28,22,18,16,9]},
-      painNote:'资费与频段兼容是 CA 4G 款最大未满足需求:预装 IoT SIM + 首年优惠套餐 + 全频段(B4/B7/B12/B13)即可直接打穿腰部竞品。',
-      radar:{'4g':[6.5,7.5,7.0,8.5,6.5], wifi:[8.5,6.0,7.0,4.5,7.5]},
-      radarInsight:'加拿大站:WIFI 款胜在市场容量(核心词池大),但利润空间仅 4.5 分,坐实"引流"定位;4G 款在利润(8.5)与竞争格局(7.5,腰部薄弱)上占优,凭"度假木屋"场景成为 CA 站利润主力。合规维度两款都被法语双语包装与 ISED 认证拉低,需前置处理。'
-    },
-    wifi:{
-      keywords:{labels:['solar security camera wireless outdoor','security camera wireless outdoor','solar camera','outdoor camera solar panel','wireless camera for house'],
-               volume:[27400,68900,18200,6400,9100], cvr:[12.8,9.6,11.4,13.2,8.7]},
-      longtail:[
-        {kw:'solar security camera cold weather', vol:'1,420', comp:'88', level:'green', note:'蓝海'},
-        {kw:'caméra solaire extérieure', vol:'1,980', comp:'176', level:'green', note:'法语蓝海'},
-        {kw:'solar camera 2 pack', vol:'3,240', comp:'310', level:'amber', note:'次蓝海'},
-        {kw:'solar flood light camera', vol:'2,860', comp:'520', level:'amber', note:'次蓝海'},
-        {kw:'solar camera no subscription', vol:'2,150', comp:'240', level:'green', note:'蓝海'}
-      ],
-      longtailNote:'"cold weather / 法语 / no subscription"是 CA WIFI 款三大低竞争入口;"no subscription"直击 Ring/Arlo 订阅疲劳人群。',
-      priceTiers:{labels:['头部 TOP1-10','腰部 11-50','尾部 51-150'], price:[165,82,46], suggest:54.99,
-        note:'头部为 Eufy/Ring/Arlo 生态款(CAD 129–199);建议价 54.99 压在腰部 -33%,与尾部白牌拉开品质叙事,形成"品牌下探"断层。'},
-      share:{labels:['Eufy','Ring','Blink','ieGeek','ZUMIMALL','其他(长尾)'], values:[16,12,9,5,4,54]},
-      volume:'41.6万台', growth:'+23.4%', cr5:'46%',
-      competitors:[
-        {tier:'头部', tag:'blue', name:'Eufy SoloCam S220', price:'CAD 129', sales:'4,300', spec:'2K·一体板·无订阅本地存储'},
-        {tier:'头部', tag:'blue', name:'Ring Stick Up Cam Solar', price:'CAD 189', sales:'3,100', spec:'1080P·生态绑定·订阅制'},
-        {tier:'腰部', tag:'amber', name:'ieGeek Solar 2K', price:'CAD 79', sales:'2,050', spec:'2K·分体板·SD 卡'},
-        {tier:'腰部', tag:'amber', name:'ZUMIMALL F5K', price:'CAD 86', sales:'1,400', spec:'2K·分体板·云+SD'},
-        {tier:'尾部', tag:'red', name:'白牌(泛 CloudEdge 方案)', price:'CAD 39–52', sales:'~220/链接', spec:'1080P·续航虚标·差评率高'}
-      ],
-      pain:{labels:['冬季续航衰减','WiFi 弱/仅 2.4G','误报频繁','App 卡顿','支架不稳'], values:[31,24,19,14,9]},
-      painNote:'"冬季续航"是 CA 站 WIFI 款最大的未满足需求,现有腰尾部竞品全部翻车——这既是差评雷区,也是新品差异化的第一素材。',
-      radar:{'4g':[6.5,7.5,7.0,8.5,6.5], wifi:[8.5,6.0,7.0,4.5,7.5]},
-      radarInsight:'加拿大站:WIFI 款胜在市场容量(核心词池大),但利润空间仅 4.5 分,坐实"引流"定位;4G 款在利润(8.5)与竞争格局(7.5,腰部薄弱)上占优,凭"度假木屋"场景成为 CA 站利润主力。合规维度两款都被法语双语包装与 ISED 认证拉低,需前置处理。'
-    }
-  },
-  au:{
-    '4g':{
-      keywords:{labels:['4g security camera','4g solar camera no wifi','solar camera for farm','security camera rural property','4g camera telstra'],
-               volume:[12600,5240,3150,2780,2310], cvr:[12.4,15.8,17.2,14.9,16.4]},
-      longtail:[
-        {kw:'4g solar camera no wifi', vol:'5,240', comp:'260', level:'green', note:'蓝海'},
-        {kw:'solar camera for farm gate', vol:'1,860', comp:'74', level:'green', note:'蓝海'},
-        {kw:'4g camera telstra sim', vol:'2,310', comp:'120', level:'green', note:'蓝海'},
-        {kw:'security camera for caravan', vol:'1,540', comp:'190', level:'green', note:'蓝海'},
-        {kw:'construction site security camera', vol:'2,050', comp:'340', level:'amber', note:'次蓝海'}
-      ],
-      longtailNote:'AU 4G 词群整体转化率高于 CA 3–5 个百分点且蓝海词密集,"farm / telstra / caravan"三词根几乎无强竞品,是全案最佳流量洼地。',
-      priceTiers:{labels:['头部 TOP1-10','腰部 11-50','尾部 51-150'], price:[329,215,149], suggest:249,
-        note:'头部为 Reolink Go 与 Swann 4G 款(AUD 299–369);建议价 249 位于腰部上沿,以 B28 全频段 + 高温实测与腰部拉开差距。'},
-      share:{labels:['Reolink','Swann','Eufy','ieGeek','UNIDEN','其他(长尾)'], values:[19,13,11,5,4,48]},
-      volume:'11.2万台', growth:'+41.5%', cr5:'52%',
-      competitors:[
-        {tier:'头部', tag:'ochre', name:'Reolink Go PT Ultra', price:'AUD 349', sales:'1,450', spec:'4K·PTZ·B28 支持·云+SD'},
-        {tier:'头部', tag:'ochre', name:'Swann AllSecure 4G', price:'AUD 329', sales:'980', spec:'2K·本土品牌信任·B28'},
-        {tier:'腰部', tag:'amber', name:'ieGeek 4G Solar AU', price:'AUD 219', sales:'640', spec:'2K·PTZ·频段兼容一般'},
-        {tier:'腰部', tag:'amber', name:'Hiseeu 4G Solar', price:'AUD 195', sales:'380', spec:'2K·固定·SIM 自购'},
-        {tier:'尾部', tag:'red', name:'白牌(缺 B28 机型)', price:'AUD 135–160', sales:'~120/链接', spec:'乡村无信号差评集中'}
-      ],
-      pain:{labels:['B28 频段缺失/无信号','流量资费贵','夏季高温死机','支架抗风差','App 卡顿'], values:[30,21,19,11,8]},
-      painNote:'B28 缺失是 AU 4G 市场最刺眼的未满足需求:主图直接放"Telstra B28 实测满格"对比图,即可精准收割白牌与部分腰部竞品的差评流量。',
-      radar:{'4g':[7.0,8.0,9.0,8.5,7.5], wifi:[7.5,6.5,7.5,5.0,8.0]},
-      radarInsight:'澳大利亚站:4G 款五维全面均衡,本地适配高达 9.0(高日照 + 广域 4G + 农场刚需三重红利),是全案最优单元;WIFI 款容量尚可但利润空间有限(5.0),同样承担引流角色,且必须先解决高温稳定性,否则旺季差评风险大于引流收益。'
-    },
-    wifi:{
-      keywords:{labels:['solar security camera wireless outdoor','security camera wireless outdoor','solar camera australia','outdoor solar camera 2k','wireless camera no subscription'],
-               volume:[19800,47600,8900,4300,3600], cvr:[11.9,9.1,13.6,12.2,10.8]},
-      longtail:[
-        {kw:'solar security camera australia made for heat', vol:'860', comp:'31', level:'green', note:'蓝海'},
-        {kw:'solar camera no subscription australia', vol:'1,980', comp:'150', level:'green', note:'蓝海'},
-        {kw:'solar camera 2 pack outdoor', vol:'2,640', comp:'290', level:'amber', note:'次蓝海'},
-        {kw:'security camera for holiday house', vol:'1,240', comp:'110', level:'green', note:'蓝海'},
-        {kw:'solar cctv camera outdoor', vol:'3,420', comp:'460', level:'amber', note:'次蓝海'}
-      ],
-      longtailNote:'"heat / holiday house / no subscription"词群竞争度低;AU 消费者对订阅制反感度高于北美,"免订阅本地存储"是 WIFI 款最有效的转化话术。',
-      priceTiers:{labels:['头部 TOP1-10','腰部 11-50','尾部 51-150'], price:[179,95,52], suggest:59.95,
-        note:'头部为 Eufy/Swann/Arlo(AUD 149–229);建议价 59.95 压腰部 -37%,同时用"50°C 实测"与尾部白牌切割。'},
-      share:{labels:['Eufy','Swann','Arlo','ieGeek','ZUMIMALL','其他(长尾)'], values:[15,11,9,4,4,57]},
-      volume:'29.3万台', growth:'+26.8%', cr5:'41%',
-      competitors:[
-        {tier:'头部', tag:'ochre', name:'Eufy SoloCam S230', price:'AUD 149', sales:'2,900', spec:'2K·一体板·免订阅'},
-        {tier:'头部', tag:'ochre', name:'Swann Xtreem Solar', price:'AUD 199', sales:'1,750', spec:'1080P·本土品牌·云绑定'},
-        {tier:'腰部', tag:'amber', name:'ieGeek Solar AU', price:'AUD 92', sales:'1,350', spec:'2K·分体板·SD 卡'},
-        {tier:'腰部', tag:'amber', name:'ZUMIMALL AU', price:'AUD 98', sales:'880', spec:'2K·分体板·云+SD'},
-        {tier:'尾部', tag:'red', name:'白牌(通用外壳)', price:'AUD 42–58', sales:'~180/链接', spec:'高温死机差评集中'}
-      ],
-      pain:{labels:['夏季高温死机','续航不达标','热带雨季渗水','误报频繁','2.4G 连接不稳'], values:[26,20,18,15,12]},
-      painNote:'高温 + 渗水两项气候类痛点合计 44% 提及率,远高于北美市场——耐候性即是 AU 站 WIFI 款的品质叙事与差评护城河。',
-      radar:{'4g':[7.0,8.0,9.0,8.5,7.5], wifi:[7.5,6.5,7.5,5.0,8.0]},
-      radarInsight:'澳大利亚站:4G 款五维全面均衡,本地适配高达 9.0(高日照 + 广域 4G + 农场刚需三重红利),是全案最优单元;WIFI 款容量尚可但利润空间有限(5.0),同样承担引流角色,且必须先解决高温稳定性,否则旺季差评风险大于引流收益。'
-    }
-  }
-};
-
-/* ---------------- 全局状态 ---------------- */
-let state = {site:'ca', product:'4g'};
-let charts = {};   // 图表实例登记,更新时统一 destroy 重建,避免内存泄漏
-
-/* ---------------- Chart.js 全局风格 ---------------- */
-Chart.defaults.font.family = '-apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
-Chart.defaults.color = '#4A5865';
-Chart.defaults.borderColor = '#E2E4DC';
-Chart.defaults.plugins.legend.labels.boxWidth = 12;
-
-const $ = id => document.getElementById(id);
-function destroy(id){ if(charts[id]){charts[id].destroy(); delete charts[id];} }
-
-/* ---------------- 静态图①:加拿大日照(仅 CA 面板) ---------------- */
-function renderSunChart(){
-  destroy('sunChart');
-  charts.sunChart = new Chart($('sunChart'),{
-    type:'bar',
-    data:{labels:['多伦多','蒙特利尔','温哥华','卡尔加里'],
-      datasets:[
-        {label:'12月 有效峰值日照(h/日)', data:[1.4,1.5,0.9,1.8], backgroundColor:'#3A6FB0', borderRadius:4},
-        {label:'6月 有效峰值日照(h/日)', data:[5.8,5.7,5.4,6.0], backgroundColor:'#E8A020', borderRadius:4},
-        {label:'冬季纯太阳能可维持天数', data:[12,11,9,14], type:'line', yAxisID:'y1', borderColor:'#C0392B', backgroundColor:'#C0392B', tension:.3, pointRadius:4}
-      ]},
-    options:{responsive:true, maintainAspectRatio:false,
-      scales:{y:{title:{display:true,text:'峰值日照 h/日'},beginAtZero:true},
-              y1:{position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'续航天数'},beginAtZero:true}},
-      plugins:{tooltip:{mode:'index',intersect:false}}}
-  });
-}
-
-/* ---------------- 静态图②:两站季节性 ---------------- */
-function renderSeasonChart(){
-  destroy('seasonChart');
-  charts.seasonChart = new Chart($('seasonChart'),{
-    type:'line',
-    data:{labels:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
-      datasets:[
-        {label:'🇨🇦 CA 需求指数', data:[62,60,78,102,128,140,138,132,115,98,124,103], borderColor:'#3A6FB0', backgroundColor:'rgba(58,111,176,.08)', fill:true, tension:.35},
-        {label:'🇦🇺 AU 需求指数', data:[138,128,108,92,78,70,68,74,88,112,135,142], borderColor:'#C2622E', backgroundColor:'rgba(194,98,46,.08)', fill:true, tension:.35}
-      ]},
-    options:{responsive:true, maintainAspectRatio:false,
-      scales:{y:{title:{display:true,text:'指数(100=年均)'},suggestedMin:40}},
-      plugins:{tooltip:{mode:'index',intersect:false}}}
-  });
-}
-
-/* ---------------- 联动图表组 ---------------- */
-function renderDynamicCharts(){
-  const d = DATA[state.site][state.product];
-  const meta = SITE_META[state.site];
-
-  /* 关键词:柱(搜索量)+ 线(转化率) */
-  destroy('kwChart');
-  charts.kwChart = new Chart($('kwChart'),{
-    type:'bar',
-    data:{labels:d.keywords.labels,
-      datasets:[
-        {label:'月搜索量', data:d.keywords.volume, backgroundColor:meta.color, borderRadius:4, yAxisID:'y'},
-        {label:'转化率 %', data:d.keywords.cvr, type:'line', yAxisID:'y1', borderColor:'#E8A020', backgroundColor:'#E8A020', tension:.3, pointRadius:4}
-      ]},
-    options:{responsive:true, maintainAspectRatio:false,
-      scales:{x:{ticks:{maxRotation:30,minRotation:0,autoSkip:false,font:{size:10}}},
-              y:{title:{display:true,text:'月搜索量'},beginAtZero:true},
-              y1:{position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'CVR %'},beginAtZero:true}},
-      plugins:{tooltip:{mode:'index',intersect:false}}}
-  });
-
-  /* 竞品分层定价折线 + 建议定价虚线 */
-  destroy('priceChart');
-  charts.priceChart = new Chart($('priceChart'),{
-    type:'line',
-    data:{labels:d.priceTiers.labels,
-      datasets:[
-        {label:`竞品层级均价(${meta.cur})`, data:d.priceTiers.price, borderColor:meta.color, backgroundColor:meta.color, tension:.25, pointRadius:5, pointStyle:'rectRot'},
-        {label:`本品建议定价 ${d.priceTiers.suggest}`, data:d.priceTiers.labels.map(()=>d.priceTiers.suggest), borderColor:'#E8A020', borderDash:[8,5], pointRadius:0}
-      ]},
-    options:{responsive:true, maintainAspectRatio:false,
-      scales:{y:{title:{display:true,text:`定价(${meta.cur})`},beginAtZero:true}},
-      plugins:{tooltip:{mode:'index',intersect:false}}}
-  });
-  $('priceNote').textContent = d.priceTiers.note;
-
-  /* 市场集中度饼图 */
-  destroy('shareChart');
-  charts.shareChart = new Chart($('shareChart'),{
-    type:'doughnut',
-    data:{labels:d.share.labels,
-      datasets:[{data:d.share.values, borderWidth:2, borderColor:'#fff',
-        backgroundColor:[meta.color,'#E8A020','#3E8E5A','#8A9BAB','#C0392B','#DDDFD6']}]},
-    options:{responsive:true, maintainAspectRatio:false, cutout:'58%',
-      plugins:{legend:{position:'right',labels:{font:{size:11}}},
-        tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed}%`}}}}
-  });
-  $('statVolume').textContent = d.volume;
-  $('statGrowth').textContent = d.growth;
-  $('statCR5').textContent = d.cr5;
-
-  /* 痛点横向条形图 */
-  destroy('painChart');
-  charts.painChart = new Chart($('painChart'),{
-    type:'bar',
-    data:{labels:d.pain.labels,
-      datasets:[{label:'差评提及率 %', data:d.pain.values, backgroundColor:'#C0392B', borderRadius:4}]},
-    options:{indexAxis:'y', responsive:true, maintainAspectRatio:false,
-      scales:{x:{beginAtZero:true,title:{display:true,text:'提及率 %'}},
-              y:{ticks:{font:{size:11}}}},
-      plugins:{legend:{display:false}}}
-  });
-  $('painNote').textContent = d.painNote;
-
-  /* 五维雷达:同站点双产品对比 */
-  destroy('radarChart');
-  charts.radarChart = new Chart($('radarChart'),{
-    type:'radar',
-    data:{labels:['市场容量','竞争格局','本地适配','利润空间','合规风险(高=低风险)'],
-      datasets:[
-        {label:'4G 利润款', data:d.radar['4g'], borderColor:meta.color, backgroundColor:meta.color+'33', pointBackgroundColor:meta.color},
-        {label:'WIFI 引流款', data:d.radar.wifi, borderColor:'#E8A020', backgroundColor:'#E8A02033', pointBackgroundColor:'#E8A020'}
-      ]},
-    options:{responsive:true, maintainAspectRatio:false,
-      scales:{r:{min:0,max:10,ticks:{stepSize:2,font:{size:10}},pointLabels:{font:{size:11}}}}}
-  });
-  $('radarInsight').textContent = d.radarInsight;
-  $('radarTitle').textContent = meta.name;
-  $('radarTitle').style.color = meta.color;
-
-  /* 长尾词表格 */
-  $('longtailBody').innerHTML = d.longtail.map(r=>`
-    <tr><td>${r.kw}</td><td class="num">${r.vol}</td><td class="num">${r.comp}</td>
-    <td><span class="tag ${r.level}">${r.note}</span></td></tr>`).join('');
-  $('longtailNote').textContent = d.longtailNote;
-
-  /* 竞品明细表 */
-  $('competitorBody').innerHTML = d.competitors.map(r=>`
-    <tr><td><span class="tag ${r.tag}">${r.tier}</span></td><td>${r.name}</td>
-    <td class="num">${r.price}</td><td class="num">${r.sales}</td><td style="font-size:12px;color:var(--ink-2)">${r.spec}</td></tr>`).join('');
-
-  /* 标题联动 */
-  $('competeTitle').textContent = `${meta.flag} ${state.site.toUpperCase()} · ${PROD_META[state.product]}`;
-  $('competeTitle').style.color = meta.color;
-
-  /* 联动刷新竞品运营深拆 + 架构策略板块 */
-  renderOps();
-  renderArch();
-}
-
-/* ------------------------------------------------------------------
-   竞品运营深拆数据仓 DATA_OPS[site][product]
-   口径:卖家精灵广告洞察/流量来源/利润估算模块,2026-06 抓取周期。
-   利润反推 = 售价 - FOB估 - 头程 - FBA - 佣金 - 广告(TACOS估) - 退货拨备,
-   不含公司费用与研发摊销,故称"毛利率估"。
-------------------------------------------------------------------- */
-const DATA_OPS = {
-  ca:{
-    '4g':{
-      trend:{months:['1月','2月','3月','4月','5月','6月'],series:[
-        {name:'Reolink Go PT+(头部)',data:[1420,1350,1580,1720,1810,1850]},
-        {name:'ieGeek 4G(腰部)',data:[590,560,640,700,745,760]},
-        {name:'白牌均值(尾部)',data:[180,165,150,155,150,148]}]},
-      trendNote:'头部 3–6 月随 Cottage 开季稳步爬坡且无断档;腰部与头部保持固定比例(约 0.4),说明其增长完全靠大盘、缺独立打法;尾部持续阴跌——CA 4G 是"跟着季节做运营节奏"的市场,5 月前完成卡位者吃满旺季。',
-      profit:[
-        {tag:'blue',name:'Reolink Go PT+',sales:'1,850',rev:'53.5万',tacos:'8%',margin:'≈40%',profit:'≈21.4万'},
-        {tag:'amber',name:'ieGeek 4G',sales:'760',rev:'14.4万',tacos:'16%',margin:'≈24%',profit:'≈3.4万'},
-        {tag:'red',name:'白牌(UBOX)',sales:'~150',rev:'2.0万',tacos:'28%',margin:'≈9%',profit:'≈0.18万'}],
-      profitNote:'单位:CAD。头部月毛利是腰部 6 倍,差距主要来自 TACOS(8% vs 16%)与均价——不是成本问题,是流量结构与定价权问题。我方 4G 款按 TACOS 13% 建模,毛利落点应在腰部与头部之间(26%±)。',
-      traffic:[
-        {name:'Reolink(头部)',organic:58,ad:27,other:15},
-        {name:'ieGeek(腰部)',organic:34,ad:52,other:14},
-        {name:'白牌(尾部)',organic:18,ad:70,other:12}],
-      ads:{labels:['4g security camera','solar camera no wifi','cellular security camera','solar camera cottage','caméra solaire 4g'],cpc:[1.85,1.42,1.68,1.15,0.68],top:[3.40,2.60,3.05,2.10,1.30]},
-      adNote:'单位:CAD。大词首位竞价已到 3.4,按 CVR 11% 反算首位盈亏平衡 ACOS 约 31%——大词首位是给头部准备的,我方冷启动直接抢会烧穿预算;法语词 CPC 仅 0.68,是全站最便宜的高意图流量。',
-      bids:[
-        {kw:'solar security camera no wifi needed',vol:'4,860',cpc:'1.42',top:'2.60',hold:'ieGeek(广告首位)',move:'精准词组抢首位,竞价上浮 40%,用"预装SIM"差异承接'},
-        {kw:'4g security camera',vol:'9,800',cpc:'1.85',top:'3.40',hold:'Reolink(自然#1 + SBV 头条)',move:'不打首位;投商品页位 + 视频广告侧面截流'},
-        {kw:'solar camera for cottage',vol:'2,340',cpc:'1.15',top:'2.10',hold:'无强霸屏',move:'蓝海词全坑位覆盖,目标 30 天自然前 3'},
-        {kw:'caméra solaire 4g',vol:'980',cpc:'0.68',top:'1.30',hold:'无',move:'法语独立广告组 + 法语 A+,CPC 洼地慢烧'}],
-      playbook:[
-        {tier:'头部 · Reolink「生态霸权」',tag:'blue',points:['品牌词 + SBV 视频包场,核心大词自然/广告双占位','旗舰店按场景建页(木屋/狩猎/工地)承接非搜索流量','新品挂老链接做变体,直接继承数千条评论冷启动'],takeaway:'对策:绝不碰其品牌词(CPC 陷阱);打它没精力覆盖的场景长尾与法语组。'},
-        {tier:'腰部 · ieGeek「广告推力型」',tag:'amber',points:['TACOS 16% 高举高打,大词广告首位常驻','秒杀 2 次/月 + 15% Coupon 常驻维持排名','评论增速 ~90 条/月,远超销量自然比例(疑似合并变体+催评)'],takeaway:'对策:在其重金投放的大词商品页位伏击,用"B4/B7/B12 全频段 + 预装 SIM"对比图截流,让它的广告费替我引流。'},
-        {tier:'尾部 · 白牌「低价消耗型」',tag:'red',points:['价格击穿 132 仍在阴跌,无 A+、互相跟卖','季度性断货,评分滑向 3.8','差评关键词集中:"no signal""battery died"'],takeaway:'对策:不跟价;QA 与五点直接回应其差评关键词,承接换机流量。'}],
-      bench:[
-        {v:'420 条',l:'核心词首页平均评论数'},{v:'90%',l:'首页 A+ 使用率'},{v:'45%',l:'首页主图视频占比'},
-        {v:'8.2%',l:'类目退货率基准'},{v:'86%',l:'FBA 配送占比'},{v:'2 次/半年',l:'头部断货次数(机会窗)'}],
-      benchNote:'评论门槛 420 条 = 约 5–6 个月正常运营积累,故必须用 Vine + 变体聚合压缩到 90 天;退货率 8.2% 偏高(SIM/信号问题主导),我方预装 SIM + 安装视频若能压到 6%,即等于净利率 +1.5 个点。'
-    },
-    wifi:{
-      trend:{months:['1月','2月','3月','4月','5月','6月'],series:[
-        {name:'Eufy SoloCam S220(头部)',data:[3600,3400,3900,4150,4300,4300]},
-        {name:'ieGeek Solar 2K(腰部)',data:[1550,1480,1760,1900,2010,2050]},
-        {name:'白牌均值(尾部)',data:[260,240,230,225,222,220]}]},
-      trendNote:'WIFI 款大盘 3 月起随春季安装季抬升;腰部 ieGeek 靠秒杀轮播紧咬头部增速,但 1–2 月(续航差评季)出现明显失速——这 60 天正是新品反季切入、抢其自然位的最佳窗口。',
-      profit:[
-        {tag:'blue',name:'Eufy S220',sales:'4,300',rev:'55.5万',tacos:'9%',margin:'≈38%',profit:'≈21.1万'},
-        {tag:'amber',name:'ieGeek 2K',sales:'2,050',rev:'16.2万',tacos:'22%',margin:'≈15%',profit:'≈2.4万'},
-        {tag:'red',name:'白牌(CloudEdge)',sales:'~220',rev:'1.0万',tacos:'32%',margin:'≈5%',profit:'≈0.05万'}],
-      profitNote:'单位:CAD。WIFI 款腰部毛利率仅 ≈15%:低价内卷 + 高 TACOS 双重挤压,验证了本案"WIFI 款不追单品利润、只算引流账"的定位是唯一理性解。',
-      traffic:[
-        {name:'Eufy(头部)',organic:62,ad:24,other:14},
-        {name:'ieGeek(腰部)',organic:36,ad:50,other:14},
-        {name:'白牌(尾部)',organic:15,ad:72,other:13}],
-      ads:{labels:['solar security camera wireless','security camera outdoor','solar camera','solar camera 2 pack','caméra solaire extérieure'],cpc:[1.55,1.90,1.30,1.05,0.62],top:[2.80,3.60,2.40,1.90,1.15]},
-      adNote:'单位:CAD。"security camera outdoor" 首位竞价 3.6、按引流款客单反算首位 ACOS 超 60%——引流款广告纪律:只投 CPC ≤1.4 的精准词与法语词,大词一律商品页位低价捡量。',
-      bids:[
-        {kw:'solar security camera cold weather',vol:'1,420',cpc:'0.95',top:'1.75',hold:'无强霸屏',move:'首推词:抢首位 + 实测素材,建立"冬季能活"心智'},
-        {kw:'solar camera no subscription',vol:'2,150',cpc:'1.10',top:'2.05',hold:'Eufy(自然#1)',move:'广告位可切:Eufy 未投满,商品页位 + 精准词双打'},
-        {kw:'solar security camera wireless outdoor',vol:'27,400',cpc:'1.55',top:'2.80',hold:'Eufy/Ring 分食',move:'只投商品页位;自然位靠转化率慢爬'},
-        {kw:'caméra solaire extérieure',vol:'1,980',cpc:'0.62',top:'1.15',hold:'无',move:'法语组核心词,CPC 全站最低,常驻投放'}],
-      playbook:[
-        {tier:'头部 · Eufy「免订阅心智」',tag:'blue',points:['"No Monthly Fee" 单点打穿 Ring/Arlo 订阅疲劳人群','1/2/4-pack 变体聚合,评论堆到 2 万+ 形成壁垒','Prime 专享折扣 + DSP 再营销收割弃购'],takeaway:'对策:同样主打免订阅,但用 -33% 价格断层错位,不做功能对标。'},
-        {tier:'腰部 · ieGeek/ZUMIMALL「秒杀轮播型」',tag:'amber',points:['双链接轮流报秒杀,排名互相接力','广告依赖大词,ACOS ≈30% 常年承压','每年 11–2 月续航差评季评分掉 0.2–0.3'],takeaway:'对策:11–2 月用 "cold weather" 定向素材收割其差评流量,反季建立评论资产,开春旺季直接收成。'},
-        {tier:'尾部 · 白牌「虚标续航型」',tag:'red',points:['39–52 低价 + 参数虚标(续航/像素)','退货率 >12%,链接生命周期 6–9 个月','靠不断开新链接洗评分'],takeaway:'对策:价格保持 >10% 距离,主图放"第三方实测续航"徽章,与虚标切割。'}],
-      bench:[
-        {v:'1,650 条',l:'核心词首页平均评论数'},{v:'95%',l:'首页 A+ 使用率'},{v:'60%',l:'首页主图视频占比'},
-        {v:'6.4%',l:'类目退货率基准'},{v:'92%',l:'FBA 配送占比'},{v:'2 次/月',l:'腰部秒杀频率'}],
-      benchNote:'首页评论门槛高达 1,650 条:引流款不可能正面追平,策略是用长尾词首页(门槛 200–400 条)做"农村包围城市",以 2-pack 变体聚合评论加速。'
-    }
-  },
-  au:{
-    '4g':{
-      trend:{months:['1月','2月','3月','4月','5月','6月'],series:[
-        {name:'Reolink Go PT Ultra(头部)',data:[1980,1820,1650,1520,1470,1450]},
-        {name:'ieGeek 4G AU(腰部)',data:[820,760,700,660,645,640]},
-        {name:'白牌缺B28机型(尾部)',data:[210,185,160,140,128,120]}]},
-      trendNote:'与 CA 完全镜像:1 月(夏季+假期防盗)为峰值,当前 6 月正处年度谷底——恰是新品上架、低价抢评论的最佳时点,10 月旺季启动前正好完成 90 天冷启动闭环。',
-      profit:[
-        {tag:'ochre',name:'Reolink Go Ultra',sales:'1,450',rev:'50.6万',tacos:'7%',margin:'≈42%',profit:'≈21.3万'},
-        {tag:'amber',name:'ieGeek 4G AU',sales:'640',rev:'14.0万',tacos:'15%',margin:'≈25%',profit:'≈3.5万'},
-        {tag:'red',name:'白牌(缺B28)',sales:'~120',rev:'1.8万',tacos:'30%',margin:'≈6%',profit:'≈0.11万'}],
-      profitNote:'单位:AUD。AU 4G 是四个组合里客单与毛利水位最高的市场,且 AU 站整体 CPC 低于 CA 约 15%——同样的广告预算在这里买到更便宜的流量、卖出更贵的客单。',
-      traffic:[
-        {name:'Reolink(头部)',organic:60,ad:25,other:15},
-        {name:'ieGeek(腰部)',organic:37,ad:49,other:14},
-        {name:'白牌(尾部)',organic:16,ad:71,other:13}],
-      ads:{labels:['4g security camera','4g solar camera no wifi','solar camera for farm','camera rural property','4g camera telstra'],cpc:[1.62,1.28,0.88,0.95,0.75],top:[2.95,2.35,1.60,1.75,1.40]},
-      adNote:'单位:AUD。"farm / telstra / rural" 三个高转化词 CPC 均低于 1.0——因为白牌不敢投(投了也转化不了,缺 B28)。这是频段合规带来的独占性广告红利,建议吃满全坑位。',
-      bids:[
-        {kw:'solar camera for farm gate',vol:'1,860',cpc:'0.82',top:'1.50',hold:'无',move:'首位常驻,配农场实拍视频,目标自然 #1'},
-        {kw:'4g camera telstra sim',vol:'2,310',cpc:'0.75',top:'1.40',hold:'Swann(弱覆盖)',move:'"Telstra B28 verified" 写进标题,抢品牌信任'},
-        {kw:'4g security camera',vol:'12,600',cpc:'1.62',top:'2.95',hold:'Reolink/Swann 双雄',move:'商品页位 + SBV 视频,避首位正面战'},
-        {kw:'security camera for caravan',vol:'1,540',cpc:'0.90',top:'1.65',hold:'无',move:'蓝海词全覆盖 + 房车场景 A+ 模块'}],
-      playbook:[
-        {tier:'头部 · Reolink/Swann「双雄分治」',tag:'ochre',points:['Reolink 打参数(4K/B28/PTZ),Swann 打本土信任(Bunnings 渠道反哺线上)','两家合控 "4g camera" 自然前 3 与 SBV 头条','客服时区/口音本地化,QA 响应 <24h'],takeaway:'对策:249 卡"次旗舰性价比"位,用 Telstra 实测视频打信任、不打参数军备赛;QA 响应速度对齐 24h。'},
-        {tier:'腰部 · ieGeek/Hiseeu「频段模糊型」',tag:'amber',points:['Listing 刻意不写 B28,QA 区大量"乡村能用吗"提问无回复','广告堆大词,ACOS 高企','差评中信号问题占比持续上升'],takeaway:'对策:五点第一条直接写 "Telstra/Optus Band 28 Verified",广告投其 ASIN 页,精准承接它回答不了的流量。'},
-        {tier:'尾部 · 白牌「无信号重灾区」',tag:'red',points:['缺 B28,"no service in rural area" 差评率 30%','靠 135–160 低价走量,复购与口碑归零','旺季前集中铺货、季后弃链'],takeaway:'对策:A+ 放 4G 覆盖地图 + 频段对照表,广告防御位拦截其换机人群。'}],
-      bench:[
-        {v:'260 条',l:'核心词首页平均评论数'},{v:'82%',l:'首页 A+ 使用率'},{v:'35%',l:'首页主图视频占比'},
-        {v:'8.8%',l:'类目退货率基准'},{v:'78%',l:'FBA 配送占比'},{v:'55 条/月',l:'头部评论增速'}],
-      benchNote:'AU 4G 是四个组合中运营门槛最低的:评论门槛仅 260 条、A+/视频渗透未饱和、FBA 占比 78% 意味着仍有配送体验差的 FBM 对手可收割——先发红利窗口预计还有 12–18 个月。'
-    },
-    wifi:{
-      trend:{months:['1月','2月','3月','4月','5月','6月'],series:[
-        {name:'Eufy SoloCam S230(头部)',data:[3950,3600,3200,2980,2900,2900]},
-        {name:'ieGeek Solar AU(腰部)',data:[1900,1720,1520,1420,1370,1350]},
-        {name:'白牌均值(尾部)',data:[280,250,220,200,190,180]}]},
-      trendNote:'1 月峰值由"夏季 + 圣诞假期空屋防盗"双因子驱动;腰部在 12–2 月高温差评季照样放量(旺季掩盖口碑),但 3 月起评分反噬、跌速快于大盘——高温稳定性是 AU WIFI 款的胜负手而非加分项。',
-      profit:[
-        {tag:'ochre',name:'Eufy S230',sales:'2,900',rev:'43.2万',tacos:'10%',margin:'≈36%',profit:'≈15.6万'},
-        {tag:'amber',name:'ieGeek AU',sales:'1,350',rev:'12.4万',tacos:'21%',margin:'≈16%',profit:'≈2.0万'},
-        {tag:'red',name:'白牌',sales:'~180',rev:'0.9万',tacos:'33%',margin:'≈4%',profit:'≈0.04万'}],
-      profitNote:'单位:AUD。与 CA 同构:腰部被广告吃掉利润。差异点在于 AU 腰部还要额外承受夏季差评的排名波动成本——我方引流款如果解决高温稳定性,等于同时拿到"利润下限保护 + 排名稳定性"双重优势。',
-      traffic:[
-        {name:'Eufy(头部)',organic:60,ad:26,other:14},
-        {name:'ieGeek(腰部)',organic:35,ad:51,other:14},
-        {name:'白牌(尾部)',organic:14,ad:73,other:13}],
-      ads:{labels:['solar security camera wireless','security camera outdoor','solar camera australia','camera holiday house','solar camera no subscription'],cpc:[1.35,1.68,1.12,0.85,0.98],top:[2.50,3.10,2.05,1.55,1.80]},
-      adNote:'单位:AUD。"holiday house / no subscription" CPC 不足 1.0 且转化率高——AU 消费者对订阅制的反感是结构性的(本土论坛 Whirlpool 长期热帖),免订阅话术在广告文案里点名 "No Subscription" 可提升 CTR 约 20%。',
-      bids:[
-        {kw:'solar camera no subscription australia',vol:'1,980',cpc:'0.98',top:'1.80',hold:'Eufy(自然强/广告弱)',move:'广告首位可抢:Eufy 未设防,文案点名免订阅'},
-        {kw:'security camera for holiday house',vol:'1,240',cpc:'0.85',top:'1.55',hold:'无',move:'蓝海首推:度假屋场景图 + 远程查看话术'},
-        {kw:'solar security camera wireless outdoor',vol:'19,800',cpc:'1.35',top:'2.50',hold:'Eufy/Swann',move:'商品页位低价捡量,不抢首位'},
-        {kw:'solar camera 2 pack outdoor',vol:'2,640',cpc:'1.05',top:'1.95',hold:'ZUMIMALL(秒杀期)',move:'其秒杀间歇期抬价抢位,2-pack 变体直接对位'}],
-      playbook:[
-        {tier:'头部 · Eufy/Swann「品牌双线」',tag:'ochre',points:['Eufy:免订阅 + 一体化太阳能板心智','Swann:本土 50 年安防品牌,线下(Bunnings/JB Hi-Fi)反哺线上信任','大促(黑五/Boxing Day)双双深折清仓位'],takeaway:'对策:差异点锁定"50°C 实测 + 免订阅"双标签;大促期不硬拼折扣深度,拼 Coupon 叠加感知。'},
-        {tier:'腰部 · 秒杀轮播 + 旺季裸奔',tag:'amber',points:['靠秒杀 + Coupon 推力维持排名','旺季(12–2月)高温差评集中爆发,3 月评分反噬','旺季断货频发(备货保守 + 海运长航线)'],takeaway:'对策:旺季前 90 天到仓;监控其断货窗口(卖家精灵库存监控),断货 48h 内加价抢其自然位坑。'},
-        {tier:'尾部 · 高温死机重灾区',tag:'red',points:['通用外壳无遮阳设计,内陆用户差评集中','评分 3.7–4.0 徘徊,靠换链接续命','雨季渗水差评叠加'],takeaway:'对策:主图第 2 张固定放"47°C 实测运行"对比图,精准切割;保持 >10% 价差不卷入低价螺旋。'}],
-      bench:[
-        {v:'890 条',l:'核心词首页平均评论数'},{v:'88%',l:'首页 A+ 使用率'},{v:'48%',l:'首页主图视频占比'},
-        {v:'7.1%',l:'类目退货率基准'},{v:'84%',l:'FBA 配送占比'},{v:'1.5 次/月',l:'腰部秒杀频率'}],
-      benchNote:'评论门槛 890 条低于 CA 同款(1,650 条),叠加 CPC 更低,AU 是 WIFI 引流款更容易先跑通模型的站点——建议引流款先 AU 后 CA,与 4G 款上市节奏保持一致。'
-    }
-  }
-};
-
-/* ---------------- 竞品运营深拆:渲染 ---------------- */
-function renderOps(){
-  const o = DATA_OPS[state.site][state.product];
-  const meta = SITE_META[state.site];
-  const tierColors = [meta.color,'#E8A020','#8A9BAB'];
-
-  /* 标题联动 */
-  $('opsTitle').textContent = `${meta.flag} ${state.site.toUpperCase()} · ${PROD_META[state.product]}`;
-  $('opsTitle').style.color = meta.color;
-
-  /* 月销趋势折线 */
-  destroy('opsTrendChart');
-  charts.opsTrendChart = new Chart($('opsTrendChart'),{
-    type:'line',
-    data:{labels:o.trend.months,
-      datasets:o.trend.series.map((s,i)=>({label:s.name,data:s.data,borderColor:tierColors[i],backgroundColor:tierColors[i],tension:.3,pointRadius:3}))},
-    options:{responsive:true,maintainAspectRatio:false,
-      scales:{y:{title:{display:true,text:'月销(台)'},beginAtZero:true}},
-      plugins:{tooltip:{mode:'index',intersect:false}}}
-  });
-  $('trendNote').textContent = o.trendNote;
-
-  /* 利润反推表 */
-  $('profitBody').innerHTML = o.profit.map(r=>`
-    <tr><td><span class="tag ${r.tag}">${r.name}</span></td><td class="num">${r.sales}</td>
-    <td class="num">${r.rev}</td><td class="num">${r.tacos}</td><td class="num">${r.margin}</td>
-    <td class="num"><b>${r.profit}</b></td></tr>`).join('');
-  $('profitNote').textContent = o.profitNote;
-
-  /* 流量结构堆叠条 */
-  destroy('trafficChart');
-  charts.trafficChart = new Chart($('trafficChart'),{
-    type:'bar',
-    data:{labels:o.traffic.map(t=>t.name),
-      datasets:[
-        {label:'自然搜索 %',data:o.traffic.map(t=>t.organic),backgroundColor:'#3E8E5A'},
-        {label:'广告 %',data:o.traffic.map(t=>t.ad),backgroundColor:'#E8A020'},
-        {label:'关联/站外 %',data:o.traffic.map(t=>t.other),backgroundColor:'#B9C0C7'}
-      ]},
-    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
-      scales:{x:{stacked:true,max:100,ticks:{callback:v=>v+'%'}},y:{stacked:true,ticks:{font:{size:11}}}},
-      plugins:{tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.x}%`}}}}
-  });
-
-  /* 广告 CPC vs 首位竞价 */
-  destroy('adChart');
-  charts.adChart = new Chart($('adChart'),{
-    type:'bar',
-    data:{labels:o.ads.labels,
-      datasets:[
-        {label:`市场 CPC(${meta.cur})`,data:o.ads.cpc,backgroundColor:meta.color,borderRadius:4},
-        {label:`首页首位竞价(${meta.cur})`,data:o.ads.top,backgroundColor:'#C0392B',borderRadius:4}
-      ]},
-    options:{responsive:true,maintainAspectRatio:false,
-      scales:{x:{ticks:{maxRotation:30,autoSkip:false,font:{size:10}}},
-              y:{beginAtZero:true,title:{display:true,text:meta.cur}}},
-      plugins:{tooltip:{mode:'index',intersect:false}}}
-  });
-  $('adNote').textContent = o.adNote;
-
-  /* 关键词卡位矩阵表 */
-  $('bidBody').innerHTML = o.bids.map(r=>`
-    <tr><td>${r.kw}</td><td class="num">${r.vol}</td><td class="num">${r.cpc}</td><td class="num">${r.top}</td>
-    <td style="font-size:12px">${r.hold}</td><td style="font-size:12px;color:var(--ink-2)">${r.move}</td></tr>`).join('');
-
-  /* 打法拆解卡片 */
-  $('playbookGrid').innerHTML = o.playbook.map(p=>`
-    <div class="card card-pad strategy-card">
-      <span class="tag ${p.tag}">${p.tier}</span>
-      <ul style="margin:10px 0 0;padding-left:18px;font-size:13px;color:var(--ink-2)">
-        ${p.points.map(pt=>`<li style="margin-bottom:6px">${pt}</li>`).join('')}
-      </ul>
-      <div class="divider-note"><b style="color:var(--ink)">${p.takeaway}</b></div>
-    </div>`).join('');
-
-  /* 运营基准水位 */
-  $('benchStrip').innerHTML = o.bench.map(b=>`
-    <div class="cell"><b>${b.v}</b><span>${b.l}</span></div>`).join('');
-  $('benchNote').textContent = o.benchNote;
-}
-
-/* ------------------------------------------------------------------
-   竞品架构与产品策略数据仓
-   - DATA_ARCH[site][product]:气泡图、评论增长模型(随双维切换)
-   - ARCH_SITE[site]:促销日历、SKU 矩阵与定价阶梯(随站点切换)
-   - ARCH_PROD[product]:变体架构、Listing 对标、广告账户架构(随产品切换)
-------------------------------------------------------------------- */
-const DATA_ARCH = {
-  ca:{
-    '4g':{
-      bubble:{
-        head:[{x:289,y:1850,rev:3200,n:'Reolink Go PT+'},{x:329,y:1320,rev:1850,n:'Eufy 4G S330'},{x:309,y:610,rev:980,n:'Arlo Go 2'}],
-        mid:[{x:189,y:760,rev:2100,n:'ieGeek 4G'},{x:175,y:420,rev:860,n:'Soliom S800'},{x:169,y:310,rev:540,n:'Hiseeu 4G'}],
-        tail:[{x:132,y:150,rev:420,n:'白牌A'},{x:118,y:120,rev:610,n:'白牌B'}],
-        our:{x:219,y:600,n:'我方切入点(目标月销600)'}},
-      bubbleNote:'189–289 CAD 之间存在清晰的"结构真空":腰部顶到 189 就上不去(评论与频段短板),头部不肯下探(守利润)。我方 219 落点正卡真空带中心,气泡(评论)差距用 90 天评论模型补齐。',
-      review:{th:420,thLabel:'核心词首页门槛 420 条',curve:[0,38,85,150,235,330,445],
-        note:'模型口径:Vine 30 台 + 月销×留评率 3.5% + 套装变体聚合。按建议节奏 D170 前后越过 420 条门槛,与旺季启动(5 月)吻合;若 D90 未达 150 条即触发追加 Vine/变体动作。'}
-    },
-    wifi:{
-      bubble:{
-        head:[{x:129,y:4300,rev:21500,n:'Eufy S220'},{x:189,y:3100,rev:15800,n:'Ring Solar'},{x:159,y:1900,rev:8900,n:'Arlo Essential'}],
-        mid:[{x:79,y:2050,rev:9400,n:'ieGeek 2K'},{x:86,y:1400,rev:6800,n:'ZUMIMALL F5K'},{x:69,y:980,rev:3900,n:'Dzees'}],
-        tail:[{x:46,y:220,rev:1500,n:'白牌A'},{x:39,y:180,rev:2300,n:'白牌B'}],
-        our:{x:54.99,y:1500,n:'我方切入点(目标月销1500)'}},
-      bubbleNote:'55–69 CAD 是"品质白牌"空档:尾部烂、腰部贵。我方 54.99 用腰部品质打尾部价格,气泡体量(评论)不与 Eufy 正面比,先在长尾词战场对齐腰部即可。',
-      review:{th:400,thLabel:'长尾词首页门槛 400 条(大词 1,650 不追)',curve:[0,42,110,210,340,480,640],
-        note:'引流款走"长尾词首页"路线:D120 前后越过 400 条,即可在 cold weather / no subscription 等词群稳定首页;大词首页 1,650 条门槛留给 D365 后的双装变体聚合去解。'}
-    }
-  },
-  au:{
-    '4g':{
-      bubble:{
-        head:[{x:349,y:1450,rev:2400,n:'Reolink Go Ultra'},{x:329,y:980,rev:1650,n:'Swann 4G'},{x:359,y:620,rev:880,n:'Eufy 4G AU'}],
-        mid:[{x:219,y:640,rev:1300,n:'ieGeek 4G AU'},{x:195,y:380,rev:560,n:'Hiseeu AU'},{x:289,y:410,rev:720,n:'UNIDEN'}],
-        tail:[{x:149,y:120,rev:310,n:'白牌A(缺B28)'},{x:135,y:95,rev:280,n:'白牌B(缺B28)'}],
-        our:{x:249,y:500,n:'我方切入点(目标月销500)'}},
-      bubbleNote:'AU 4G 全场评论体量最薄(头部也仅 2,400 条),249 落点上方是 80 AUD 的头部溢价空间、下方是频段残缺的腰尾部——这是四个组合中"用产品力直接换排名"最快的战场。',
-      review:{th:260,thLabel:'核心词首页门槛 260 条',curve:[0,36,80,140,215,300,400],
-        note:'AU 4G 门槛全案最低:D110 前后即越线,比 CA 提前约 60 天——再次验证"先 AU 后 CA"的上市顺序;越线后立即把预算从精准词向大词商品页位倾斜。'}
-    },
-    wifi:{
-      bubble:{
-        head:[{x:149,y:2900,rev:11200,n:'Eufy S230'},{x:199,y:1750,rev:7600,n:'Swann Xtreem'},{x:229,y:900,rev:5400,n:'Arlo AU'}],
-        mid:[{x:92,y:1350,rev:5100,n:'ieGeek AU'},{x:98,y:880,rev:3600,n:'ZUMIMALL AU'},{x:75,y:620,rev:2100,n:'Dzees AU'}],
-        tail:[{x:52,y:180,rev:900,n:'白牌A'},{x:42,y:150,rev:1100,n:'白牌B'}],
-        our:{x:59.95,y:1000,n:'我方切入点(目标月销1000)'}},
-      bubbleNote:'60–75 AUD 空档同样存在,且 AU 腰部评论体量约为 CA 的一半——同样的评论投入在 AU 换到的相对位次更高,引流款先 AU 跑通模型的结论再次成立。',
-      review:{th:350,thLabel:'长尾词首页门槛 350 条(大词 890 不追)',curve:[0,40,105,200,325,460,610],
-        note:'D105 前后越过 350 条;10 月旺季启动时评论已达 460+ 条,恰好承接 holiday house / no subscription 词群的旺季流量放大。'}
-    }
-  }
-};
-
-const ARCH_SITE = {
-  ca:{
-    promoNote:'CA 节奏:腰部全年高频秒杀"内卷",头部只押 Prime Day(7月)与黑五(11月)。我方错峰逻辑:4–5 月(木屋开季、竞品动作少)重投抢位,7 月/11 月跟进大促,12–2 月淡季只留 Coupon 维持、绝不烧广告。',
-    promo:[
-      {name:'头部(Eufy/Reolink)',cls:'',cells:[0,0,1,1,2,1,3,1,1,1,3,2]},
-      {name:'腰部(ieGeek 等)',cls:'',cells:[1,1,2,2,3,3,2,2,2,2,3,2]},
-      {name:'尾部(白牌)',cls:'',cells:[0,0,1,1,1,1,2,1,0,1,2,1]},
-      {name:'★ 我方建议排期',cls:'our-cell',cells:[0,0,1,2,3,2,3,1,1,2,3,1]}],
-    cur:'CAD',
-    sku:[
-      {n:'WIFI 单装',p:54.99,role:'引流入口',c:'#E8A020'},
-      {n:'WIFI 双装',p:99.99,role:'引流+客单',c:'#E8A020'},
-      {n:'4G 标准款',p:219,role:'利润主力',c:'#3A6FB0'},
-      {n:'4G 旗舰套装',p:259,role:'利润+(含5W板+备用电池)',c:'#3A6FB0'},
-      {n:'5W 板/配件',p:29.99,role:'生态复购',c:'#8A9BAB'}],
-    lines:{mid:82,midLabel:'腰部 WIFI 均价 82',head:296,headLabel:'头部 4G 均价 296'},
-    matrix:[
-      {tier:'LAYER 1 · 引流层',title:'WIFI 引流款',skus:[['WIFI 单装','CAD 54.99'],['WIFI 双装','CAD 99.99']],flow:'→ 向利润层导流 22–30% 访客',desc:'职能:评论资产 + 品牌人群池。Listing 内嵌"无网环境?看 4G 款"对比模块与旗舰店入口。'},
-      {tier:'LAYER 2 · 利润层',title:'4G 利润款',skus:[['4G 标准款','CAD 219'],['4G 旗舰套装','CAD 259']],flow:'→ 向生态层导流(SIM/云订阅)',desc:'职能:净利率 26%± 的现金牛。套装变体与标准款共池评论,客单上抬 18%。'},
-      {tier:'LAYER 3 · 生态层',title:'配件与订阅',skus:[['5W 太阳能板','CAD 29.99'],['备用电池/支架','CAD 19.99–24.99'],['SIM/云套餐分成','月付 5–8']],flow:'→ 复购率与 LTV 抬升',desc:'职能:提升客户生命周期价值,配件与主品互相 Virtual Bundle,防御性占住"配件"搜索词。'}]
-  },
-  au:{
-    promoNote:'AU 节奏:旺季与大促叠加在 11–1 月(黑五→圣诞→Boxing Day→1 月夏峰),腰部在此区间火力全开但频繁断货。我方错峰逻辑:6–7 月淡季上架静默养评论,10 月起逐级加码,12 月下旬盯紧腰部断货窗口 48 小时内抢位。',
-    promo:[
-      {name:'头部(Eufy/Swann)',cls:'',cells:[2,1,1,0,0,1,3,0,1,1,3,3]},
-      {name:'腰部(ieGeek 等)',cls:'',cells:[3,2,2,1,1,1,2,1,2,2,3,3]},
-      {name:'尾部(白牌)',cls:'',cells:[2,1,1,0,0,0,1,0,1,1,2,2]},
-      {name:'★ 我方建议排期',cls:'our-cell',cells:[3,2,1,0,1,1,2,1,2,3,3,3]}],
-    cur:'AUD',
-    sku:[
-      {n:'WIFI 单装',p:59.95,role:'引流入口',c:'#E8A020'},
-      {n:'WIFI 双装',p:109.95,role:'引流+客单',c:'#E8A020'},
-      {n:'4G 标准款',p:249,role:'利润主力',c:'#C2622E'},
-      {n:'4G 旗舰套装',p:295,role:'利润+(含5W板+备用电池)',c:'#C2622E'},
-      {n:'5W 板/配件',p:34.95,role:'生态复购',c:'#8A9BAB'}],
-    lines:{mid:95,midLabel:'腰部 WIFI 均价 95',head:329,headLabel:'头部 4G 均价 329'},
-    matrix:[
-      {tier:'LAYER 1 · 引流层',title:'WIFI 引流款',skus:[['WIFI 单装','AUD 59.95'],['WIFI 双装','AUD 109.95']],flow:'→ 向利润层导流 22–30% 访客',desc:'职能:以"50°C 实测 + 免订阅"建立品质心智,评论与人群资产反哺 4G 款广告转化。'},
-      {tier:'LAYER 2 · 利润层',title:'4G 利润款',skus:[['4G 标准款','AUD 249'],['4G 旗舰套装','AUD 295']],flow:'→ 向生态层导流(SIM/云订阅)',desc:'职能:全案利润核心。"Telstra B28 Verified"写进标题,农场/工地/房车三场景 A+ 分模块承接。'},
-      {tier:'LAYER 3 · 生态层',title:'配件与订阅',skus:[['5W 太阳能板','AUD 34.95'],['备用电池/支架','AUD 24.95–29.95'],['SIM/云套餐分成','月付 6–9']],flow:'→ 复购率与 LTV 抬升',desc:'职能:B 端小批量(工地/农场多点位)通过 Business Price + 配件组合放大客单。'}]
-  }
-};
-
-const ARCH_PROD = {
-  '4g':{
-    variants:[
-      {tag:'blue',arch:'头部:单品独立链接为主,仅"含板/不含板"小变体;评论不跨系列聚合,靠品牌词护评',move:'首发即建父子结构:标准款 + 旗舰套装双变体共池评论,起跑就比头部多一个聚合杠杆'},
-      {tag:'amber',arch:'腰部:把 4G 与 WIFI 混在同一父体"蹭评论"(违规边缘,存在被平台拆分清零风险)',move:'绝不混连接方式;用合法的套装/配件变体聚合,规避拆分风险'},
-      {tag:'red',arch:'尾部:单链接裸奔,断货即弃链重开,评论资产反复归零',move:'父体规划一次做足(预留 pack/配色位),后期加变体不重置排名'}],
-    listing:[
-      {dim:'标题',head:'品牌 + 4G LTE + 场景词(No WiFi/Farm),150–180 字符',mid:'关键词堆砌近 200 字符,频段信息模糊',ours:'前 80 字符放差异词:「4G LTE Solar Camera — No WiFi Needed, Band 28 Verified」;CA 版括注 (SIM Included)'},
-      {dim:'五点',head:'场景导向叙事 + 套餐/流量说明',mid:'参数罗列,不回答"我家能不能用"',ours:'固定结构:①频段与运营商实测 ②极端温度实测数据 ③免布线三步安装 ④流量套餐与免订阅存储 ⑤质保与本地客服 SLA'},
-      {dim:'图片/视频',head:'7 图 + 1 视频,含信号实测图',mid:'渲染图为主,无实拍',ours:'第 2 张主图位固定放实测图(B28 满格 / -20°C 或 47°C 运行);30 秒安装视频 + 场景视频各一条'},
-      {dim:'A+ 页面',head:'高级 A+:对比表 + 场景横幅',mid:'基础 A+ 或缺失',ours:'高级 A+:4G 覆盖地图模块 + CA/AU 版本对比表 + FAQ 模块(SIM/频段/续航三问)'},
-      {dim:'QA 运营',head:'官方 <24h 回复,预埋高频问题',mid:'大量"乡村能用吗"无人回复',ours:'上架当天预埋 10 条高频 QA;24h 响应 SLA;QA 关键词同步回填广告否定词库'},
-      {dim:'评论运营',head:'Vine + 变体聚合,差评公关快',mid:'疑似催评/补量,波动大',ours:'Vine 30 台 + 套装聚合;差评 48h 工单闭环(换新/退款前置),月度差评关键词回流产品迭代清单'}],
-    listingNote:'4G 款 Listing 的本质是"回答焦虑":买家最怕买回去没信号。谁把频段/覆盖/资费三个焦虑在首屏回答完,谁就拿走转化率——这比任何参数堆砌都值钱。',
-    adTypes:['SP 精准蓝海词','SP 大词商品页位','SB/SBV 品牌视频','SD 再营销','场景/法语专用组'],
-    adStruct:[[55,20,15,0,10],[35,25,25,5,10],[30,20,20,15,15]],
-    adStructNote:'4G 款账户架构:T+0–30 预算 55% 押精准蓝海词抢首位立转化模型;T+30–60 SB/SBV 升至 25% 建品牌位;T+60–90 开 SD 再营销(高客单商品浏览-购买周期长达 7–14 天,再营销 ROAS 全账户最高)。CA 站第五组为法语组、AU 站为农场/房车场景组,预算恒定 10–15% 作为低 CPC 洼地。'
-  },
-  wifi:{
-    variants:[
-      {tag:'blue',arch:'头部 Eufy:1/2/3/4-pack + 颜色全矩阵,2 万+ 评论共池,新变体上线即"满评"起跑',move:'首发 1-pack + 2-pack 父子结构;D90 后按转化数据增开 3-pack,复制其聚合飞轮'},
-      {tag:'amber',arch:'腰部:同品双链接轮流报秒杀互相接力(灰色),评论被迫分散在两条链接',move:'单父体集中评论;用 Coupon 与秒杀在同链接交替,排名连续性优于双链接'},
-      {tag:'red',arch:'尾部:链接生命周期 6–9 个月,靠不断开新链接"洗"掉差评',move:'不学;评分是引流款唯一护城河,差评治理优先级高于一切促销'}],
-    listing:[
-      {dim:'标题',head:'品牌 + 免订阅 + 分辨率 + pack 数',mid:'2K/PTZ 参数前置,卖点无差异',ours:'「Solar Security Camera Wireless Outdoor — No Subscription, No Wiring」;CA 版后缀 Cold-Weather Tested / AU 版 Heat-Tested 50°C'},
-      {dim:'五点',head:'免月费 + 一体板 + 本地存储叙事',mid:'参数罗列 + 夸大续航',ours:'①免订阅本地存储 ②气候实测数据(站点定制)③2 分钟安装 ④误报过滤 AI ⑤双装省话术(每摄像头单价)'},
-      {dim:'图片/视频',head:'6–7 图 + 视频,生活场景实拍',mid:'渲染图,续航虚标图表',ours:'第 2 张固定气候实测徽章图;第 5 张放"双装覆盖示意图"(前门+车道)推 2-pack'},
-      {dim:'A+ 页面',head:'高级 A+ 品牌故事 + 系列对比',mid:'基础 A+',ours:'高级 A+:实测数据模块 + "WIFI vs 4G 怎么选"对比模块(向利润款导流的关键位)'},
-      {dim:'QA 运营',head:'官方维护,回复率高',mid:'零散,续航质疑无回应',ours:'预埋 8 条 QA:续航/信号距离/是否需订阅/寒冬或酷暑表现;差评关键词周度巡检'},
-      {dim:'评论运营',head:'变体聚合 + Prime 专享折扣拉量',mid:'秒杀冲量后评分回落',ours:'Vine 30 台 + 2-pack 聚合;评分红线 4.3,跌破即暂停放量、先修口碑'}],
-    listingNote:'WIFI 款 Listing 的本质是"消除怀疑":低价让买家默认你是虚标白牌。实测徽章、免订阅承诺、双装话术三件套,就是把 55 元卖出 85 元信任感的全部秘密。',
-    adTypes:['SP 精准蓝海词','SP 大词商品页位','SB/SBV 品牌视频','SD 再营销','场景/法语专用组'],
-    adStruct:[[60,25,5,0,10],[40,35,15,0,10],[35,30,10,10,15]],
-    adStructNote:'WIFI 款账户架构:引流定位决定"不抢大词首位"是铁律——大词预算始终走商品页位低价捡量(CPC 约为首位的 40%);SB/SBV 仅在 D30 评论达标后开启;SD 再营销 D60 后小预算测试,主要收割 2-pack 弃购人群。'
-  }
-};
-
-/* ---------------- 架构板块渲染 ---------------- */
-function renderArch(){
-  const a = DATA_ARCH[state.site][state.product];
-  const s = ARCH_SITE[state.site];
-  const p = ARCH_PROD[state.product];
-  const meta = SITE_META[state.site];
-
-  $('archTitle').textContent = `${meta.flag} ${state.site.toUpperCase()} · ${PROD_META[state.product]}`;
-  $('archTitle').style.color = meta.color;
-
-  /* 三维气泡图:r = sqrt(评论数)/9,直观呈现评论体量差距 */
-  destroy('bubbleChart');
-  const mk = arr => arr.map(d=>({x:d.x,y:d.y,r:Math.max(5,Math.sqrt(d.rev)/9),n:d.n,rev:d.rev}));
-  charts.bubbleChart = new Chart($('bubbleChart'),{
-    type:'bubble',
-    data:{datasets:[
-      {label:'头部',data:mk(a.bubble.head),backgroundColor:meta.color+'99',borderColor:meta.color},
-      {label:'腰部',data:mk(a.bubble.mid),backgroundColor:'#E8A02099',borderColor:'#E8A020'},
-      {label:'尾部',data:mk(a.bubble.tail),backgroundColor:'#8A9BAB99',borderColor:'#8A9BAB'},
-      {label:'★ 我方切入点',data:[{x:a.bubble.our.x,y:a.bubble.our.y,r:9,n:a.bubble.our.n,rev:0}],
-        backgroundColor:'#C0392B',borderColor:'#7E241A',borderWidth:2,pointStyle:'rectRot'}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,
-      scales:{x:{title:{display:true,text:`售价(${meta.cur})`}},y:{title:{display:true,text:'月销(台)'},beginAtZero:true}},
-      plugins:{tooltip:{callbacks:{label:c=>{const d=c.raw;return d.rev?` ${d.n} · ${meta.cur}${d.x} · 月销${d.y} · 评论${d.rev}`:` ${d.n} · ${meta.cur}${d.x}`;}}}}}
-  });
-  $('bubbleNote').textContent = a.bubbleNote;
-
-  /* 变体架构表 */
-  const tierName = ['头部','腰部','尾部'];
-  $('variantBody').innerHTML = p.variants.map((r,i)=>`
-    <tr><td><span class="tag ${r.tag}">${tierName[i]}</span></td>
-    <td style="font-size:12px;color:var(--ink-2)">${r.arch}</td>
-    <td style="font-size:12px"><b>${r.move}</b></td></tr>`).join('');
-
-  /* Listing 对标表 */
-  $('listingBody').innerHTML = p.listing.map(r=>`
-    <tr><td><b>${r.dim}</b></td>
-    <td style="font-size:12px;color:var(--ink-2)">${r.head}</td>
-    <td style="font-size:12px;color:var(--ink-2)">${r.mid}</td>
-    <td style="font-size:12px"><b>${r.ours}</b></td></tr>`).join('');
-  $('listingNote').textContent = p.listingNote;
-
-  /* 促销热力日历(HTML 网格) */
-  const months = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-  let cal = '<div></div>' + months.map(m=>`<div class="mh">${m}</div>`).join('');
-  s.promo.forEach(row=>{
-    cal += `<div class="rl">${row.name}</div>`;
-    cal += row.cells.map(v=>`<div class="c ${v?'i'+v:''} ${row.cls}" title="强度 ${v}/3"></div>`).join('');
-  });
-  $('promoCal').innerHTML = cal;
-  $('promoNote').textContent = s.promoNote;
-
-  /* SKU 矩阵架构图 */
-  $('matrixGrid').innerHTML = s.matrix.map(m=>`
-    <div class="mx-card">
-      <div class="mx-tier">${m.tier}</div>
-      <h5>${m.title}</h5>
-      ${m.skus.map(k=>`<div class="mx-sku"><span>${k[0]}</span><span class="p">${k[1]}</span></div>`).join('')}
-      <span class="mx-flow">${m.flow}</span>
-      <p style="font-size:12px;color:var(--ink-2);margin:10px 0 0">${m.desc}</p>
-    </div>`).join('');
-
-  /* SKU 定价阶梯 */
-  destroy('skuChart');
-  charts.skuChart = new Chart($('skuChart'),{
-    type:'bar',
-    data:{labels:s.sku.map(k=>k.n),
-      datasets:[
-        {label:`定价(${s.cur})`,data:s.sku.map(k=>k.p),backgroundColor:s.sku.map(k=>k.c),borderRadius:5},
-        {label:s.lines.midLabel,data:s.sku.map(()=>s.lines.mid),type:'line',borderColor:'#8A9BAB',borderDash:[6,4],pointRadius:0},
-        {label:s.lines.headLabel,data:s.sku.map(()=>s.lines.head),type:'line',borderColor:'#C0392B',borderDash:[6,4],pointRadius:0}
-      ]},
-    options:{responsive:true,maintainAspectRatio:false,
-      scales:{x:{ticks:{font:{size:10},maxRotation:30,autoSkip:false}},y:{beginAtZero:true,title:{display:true,text:s.cur}}},
-      plugins:{tooltip:{callbacks:{afterLabel:c=>c.datasetIndex===0?`角色:${s.sku[c.dataIndex].role}`:''}}}}
-  });
-
-  /* 评论增长模型 */
-  destroy('reviewChart');
-  charts.reviewChart = new Chart($('reviewChart'),{
-    type:'line',
-    data:{labels:['D0','D30','D60','D90','D120','D150','D180'],
-      datasets:[
-        {label:'我方累计评论(模型)',data:a.review.curve,borderColor:meta.color,backgroundColor:meta.color+'22',fill:true,tension:.3,pointRadius:4},
-        {label:a.review.thLabel,data:a.review.curve.map(()=>a.review.th),borderColor:'#C0392B',borderDash:[8,5],pointRadius:0}
-      ]},
-    options:{responsive:true,maintainAspectRatio:false,
-      scales:{y:{beginAtZero:true,title:{display:true,text:'累计评论(条)'}}},
-      plugins:{tooltip:{mode:'index',intersect:false}}}
-  });
-  $('reviewNote').textContent = a.review.note;
-
-  /* 广告账户架构:三阶段 × 活动类型 预算占比堆叠 */
-  destroy('adStructChart');
-  const phaseLabels = ['T+0–30 冷启动','T+30–60 放量卡位','T+60–90 利润回正'];
-  const typeColors = [meta.color,'#E8A020','#3E8E5A','#C0392B','#8A9BAB'];
-  charts.adStructChart = new Chart($('adStructChart'),{
-    type:'bar',
-    data:{labels:phaseLabels,
-      datasets:p.adTypes.map((t,i)=>({label:t,data:p.adStruct.map(ph=>ph[i]),backgroundColor:typeColors[i],borderRadius:3}))},
-    options:{responsive:true,maintainAspectRatio:false,
-      scales:{x:{stacked:true},y:{stacked:true,max:100,ticks:{callback:v=>v+'%'},title:{display:true,text:'预算占比'}}},
-      plugins:{tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y}%`}},legend:{labels:{font:{size:11}}}}}
-  });
-  $('adStructNote').textContent = p.adStructNote;
-}
-
-/* ---------------- 站点切换 ---------------- */
-document.querySelectorAll('.site-tabs button').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    state.site = btn.dataset.site;
-    document.querySelectorAll('.site-tabs button').forEach(b=>{
-      const on = b===btn;
-      b.classList.toggle('active', on);
-      b.setAttribute('aria-selected', on);
-    });
-    // 本地化面板显隐
-    $('panel-ca').hidden = state.site!=='ca';
-    $('panel-au').hidden = state.site!=='au';
-    if(state.site==='ca') renderSunChart();   // CA 面板重新可见时重建日照图
-    renderDynamicCharts();
-  });
-});
-
-/* ---------------- 产品下拉切换 ---------------- */
-$('productSelect').addEventListener('change', e=>{
-  state.product = e.target.value;
-  renderDynamicCharts();
-});
-
-/* ---------------- 初始渲染 ---------------- */
-renderSunChart();
-renderSeasonChart();
-renderDynamicCharts();
-</script>
+    <p>图表解读：高客单太阳能和2-pack竞品销售额很高，但它们的售后复杂度也高。本报告不是否定太阳能，而是建议把太阳能放到第二阶段，先用低售后SKU完成首轮验证和评论积累。</p>
+    <h3>加拿大核心竞品</h3>
+    <table>
+      <tr><th>ASIN</th><th>品牌</th><th>产品定位</th><th>价格</th><th>Sofetime月销量</th><th>估算月销售额</th><th>对我方启示</th></tr>
+      <tr><td>B0829KDY9X</td><td>Tapo</td><td>室内云台/宠物婴儿监控</td><td class="right">CAD 34.98</td><td class="right">5,598</td><td class="right">CAD 195,818</td><td>低价+品牌+本地存储强；我方不要和普通云台硬碰，灯泡机要突出形态差异。</td></tr>
+      <tr><td>B0FRMTHLR6</td><td>HITELLARCAM</td><td>2K无线户外电池摄像头</td><td class="right">CAD 39.98</td><td class="right">5,172</td><td class="right">CAD 206,777</td><td>低价户外款能起量，但电池/续航差评风险高；我方用非太阳能低价户外款更稳。</td></tr>
+      <tr><td>B0F5KGHSHF</td><td>Tapo</td><td>4K/8MP室内云台</td><td class="right">CAD 69.99</td><td class="right">4,527</td><td class="right">CAD 316,845</td><td>高像素和AI能支撑高价；我方3MP产品不应硬打4K卖点。</td></tr>
+      <tr><td>B0GTRV65NC</td><td>Tapo</td><td>2K室内外2-pack</td><td class="right">CAD 91.60</td><td class="right">3,297</td><td class="right">CAD 302,005</td><td>2-pack有销量基础，灯泡机成熟后应推2-pack。</td></tr>
+      <tr><td>B0G1V4HFP4</td><td>Tapo</td><td>太阳能云台户外套装</td><td class="right">CAD 119.99</td><td class="right">2,176</td><td class="right">CAD 261,098</td><td>太阳能高客单可卖，但低温售后说明必须充分。</td></tr>
+      <tr><td>B0CQJRCGQN</td><td>aosu</td><td>太阳能户外2-pack</td><td class="right">CAD 159.99</td><td class="right">2,112</td><td class="right">CAD 337,899</td><td>高客单2-pack有机会，但不适合新站首批承担售后。</td></tr>
+    </table>
+    <h3>澳大利亚竞品</h3>
+    <table>
+      <tr><th>ASIN</th><th>品牌</th><th>产品定位</th><th>价格</th><th>Sofetime月销量</th><th>估算月销售额</th><th>对比结论</th></tr>
+      <tr><td>B0CH37CLQW</td><td>MUBVIEW</td><td>2K室内云台/婴儿宠物</td><td class="right">AUD 47.49</td><td class="right">1,079</td><td class="right">AUD 51,242</td><td>澳洲Top样本销量约为加拿大Top样本的19%，体量明显小。</td></tr>
+      <tr><td>B0CDCL38KZ</td><td>TP-Link</td><td>Tapo C200 2-pack</td><td class="right">AUD 47.20</td><td class="right">863</td><td class="right">AUD 40,734</td><td>低价也能卖，但首发爬坡速度慢于加拿大。</td></tr>
+      <tr><td>B0D7H6PX41</td><td>Tapo</td><td>太阳能无线2K套装</td><td class="right">AUD 86.64</td><td class="right">60</td><td class="right">AUD 5,198</td><td>太阳能适合澳洲环境，但Amazon AU样本销量仍小。</td></tr>
+      <tr><td>B0FG2PC4KK</td><td>Tapo</td><td>4K太阳能云台套装</td><td class="right">AUD 187.72</td><td class="right">87</td><td class="right">AUD 16,332</td><td>高客单有空间，但适合作第二阶段精准款。</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>竞品差评与售后风险</h2>
+    <h3>售后风险热力图</h3>
+    <table>
+      <tr><th>产品类型</th><th>低温/续航</th><th>安装复杂</th><th>联网/兼容</th><th>雨雪进水</th><th>误报/设置</th><th>综合风险</th><th>建议动作</th></tr>
+      <tr><td>灯泡机</td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s1">低</span></td><td>首推</td></tr>
+      <tr><td>窗机</td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s1">低</span></td><td>首推</td></tr>
+      <tr><td>防水球机</td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td>小预算首推</td></tr>
+      <tr><td>室内摇头机</td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s1">低</span></td><td>备选</td></tr>
+      <tr><td>太阳能Wi-Fi球机</td><td class="center"><span class="score s3">高</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s3">高</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s3">高</span></td><td>第二阶段</td></tr>
+      <tr><td>4G太阳能球机</td><td class="center"><span class="score s3">高</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s3">高</span></td><td class="center"><span class="score s3">高</span></td><td class="center"><span class="score s3">高</span></td><td class="center"><span class="score s3">高</span></td><td>小样验证</td></tr>
+      <tr><td>电池卡片机</td><td class="center"><span class="score s3">高</span></td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中高</span></td><td>暂缓</td></tr>
+    </table>
+    <table>
+      <tr><th>风险主题</th><th>竞品/公开反馈</th><th>对首批推荐的影响</th><th>处理方式</th></tr>
+      <tr><td>太阳能不充电</td><td>Ring、eufy、Reolink、AOSU等公开社区均有低温/冬季太阳能补电不足讨论。</td><td class="risk">太阳能/4G从首批主推移除。</td><td>第二阶段只在春夏小批量测试，详情页写清低温限制。</td></tr>
+      <tr><td>电池掉电快</td><td>户外电池款在低温、频繁触发、夜视、4G传输下耗电更快。</td><td class="risk">电池卡片机和电池球机不作为利润核心。</td><td>若上架，必须提供侦测区域/灵敏度/休眠设置指导。</td></tr>
+      <tr><td>积雪遮挡太阳能板</td><td>光伏积雪资料显示冬季月份损失显著高于全年平均；小太阳能板更容易被覆盖。</td><td class="risk">加拿大冬季售后概率高。</td><td>不承诺全年零维护；安装图提示倾角、朝向和清雪。</td></tr>
+      <tr><td>4G/SIM兼容</td><td>4G款涉及运营商频段、套餐、激活、流量消耗。</td><td class="risk">客服解释成本高，差评概率高。</td><td>暂不主推；先验证频段和SIM说明。</td></tr>
+      <tr><td>安装复杂</td><td>高价有线/门铃/太阳能款安装步骤更多。</td><td class="good">灯泡机和窗机因此更适合首发。</td><td>主图强调no drilling、plug-in/light socket、inside window。</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>加拿大雨雪低温影响：为什么不首推太阳能/4G</h2>
+    <table>
+      <tr><th>环境因素</th><th>影响</th><th>售后表现</th><th>对策</th></tr>
+      <tr><td>低温</td><td>锂电池容量下降，低温下可能限制充电。</td><td>买家认为“电池不耐用”“太阳能板坏了”。</td><td>不作为首批主推；若上架需写明工作/充电温度。</td></tr>
+      <tr><td>积雪</td><td>遮挡太阳能板和镜头，冬季补能下降。</td><td>“有太阳也不充电”“画面被雪挡住”。</td><td>安装图提示南向、倾斜、可清雪位置。</td></tr>
+      <tr><td>短日照/阴天</td><td>太阳能补电窗口短。</td><td>连续阴天后电量下降。</td><td>不承诺全年免充电；建议保留有线补电。</td></tr>
+      <tr><td>高触发</td><td>车道、街道、动物、雪花频繁触发。</td><td>掉电快、误报多。</td><td>设置侦测区域、人形过滤、灵敏度。</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>阶段性执行路径</h2>
+    <table>
+      <tr><th>阶段</th><th>时间</th><th>SKU</th><th>目标</th><th>动作</th></tr>
+      <tr><td>冷启动</td><td>第1-2周</td><td>灯泡机2款</td><td>拿点击、测转化、控ACOS。</td><td>主投light bulb security camera；价格CAD39.99/42.99，5%-10% Coupon。</td></tr>
+      <tr><td>扩场景</td><td>第3-4周</td><td>窗机、防水球机</td><td>覆盖租房/公寓/户外低价场景。</td><td>投window security camera、security cameras wireless outdoor，小预算测试法语词。</td></tr>
+      <tr><td>做套装</td><td>第2-3月</td><td>灯泡机2-pack、带卡款</td><td>提高客单价和利润。</td><td>根据首月转化做2-pack和64G卡套装。</td></tr>
+      <tr><td>风险验证</td><td>第3月后</td><td>太阳能/4G小批量</td><td>验证售后和加拿大冬季前表现。</td><td>最多10-20台测试，不做大库存。</td></tr>
+      <tr><td>复制澳洲</td><td>加拿大稳定后</td><td>太阳能/防水户外</td><td>用成熟素材进入AU。</td><td>优先solar security camera AU，不复制窗机为主线。</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>6个月销售测算：低风险组合</h2>
+    <table>
+      <tr><th>月份</th><th>灯泡机</th><th>窗机</th><th>防水球机</th><th>摇头机备选</th><th>预计GMV</th><th>说明</th></tr>
+      <tr><td>第1月</td><td class="right">80</td><td class="right">10</td><td class="right">10</td><td class="right">0</td><td class="right">CAD 4,699</td><td>只做低售后产品冷启动。</td></tr>
+      <tr><td>第2月</td><td class="right">150</td><td class="right">25</td><td class="right">25</td><td class="right">10</td><td class="right">CAD 9,848</td><td>加入窗机和户外低价款。</td></tr>
+      <tr><td>第3月</td><td class="right">230</td><td class="right">45</td><td class="right">45</td><td class="right">20</td><td class="right">CAD 15,676</td><td>推出2-pack或带卡款。</td></tr>
+      <tr><td>第4月</td><td class="right">310</td><td class="right">65</td><td class="right">70</td><td class="right">30</td><td class="right">CAD 22,545</td><td>扩展法语户外词和竞品ASIN。</td></tr>
+      <tr><td>第5月</td><td class="right">380</td><td class="right">85</td><td class="right">90</td><td class="right">40</td><td class="right">CAD 28,874</td><td>控制ACOS，做组合套装。</td></tr>
+      <tr><td>第6月</td><td class="right">450</td><td class="right">105</td><td class="right">115</td><td class="right">50</td><td class="right">CAD 35,893</td><td>评估太阳能小批量。</td></tr>
+      <tr><th>合计</th><th class="right">1,600</th><th class="right">335</th><th class="right">355</th><th class="right">150</th><th class="right">CAD 117,535</th><th>低风险保守GMV。</th></tr>
+    </table>
+    <p>该低风险组合的销售额低于包含太阳能/4G的高客单方案，但售后风险和现金流波动显著更低，更适合作为首发阶段的稳健方案。</p>
+  </section>
+
+  <section>
+    <h2>数据来源</h2>
+    <ul>
+      <li>Sofetime/Sorftime Amazon关键词详情接口：security camera、outdoor security camera、wireless security camera、light bulb security camera、window security camera、solar security camera、security cameras wireless outdoor、outdoor camera wireless、camera surveillance exterieur、doorbell camera、blink outdoor camera；站点CA/AU；查询时间2026-07-11。</li>
+      <li>Sofetime/Sorftime竞品销量字段：来自关键词详情返回的“近15日前3页自然位销量Top100产品统计 / top5_product / monthly_sales”。报告中的竞品月销售额为“样本价格 × Sofetime月销量”的估算值，仅用于竞品强弱和价格带判断。</li>
+      <li>内部文件：D:/CAAU/产品补贴汇总.xlsx，用于产品类型、参考采购价、美加英补贴、欧洲/澳补贴。</li>
+      <li>内部文件：D:/CAAU/导出产品-按SKU-934403469456343040/导出产品-按SKU-934403469456343040.xlsx，用于在售状态、SKU品名、图片链接、包装信息。</li>
+      <li>加拿大气候与温度资料：Environment and Climate Change Canada Canadian Climate Normals；Natural Resources Canada太阳能资源资料。</li>
+      <li>低温与竞品太阳能充电公开反馈：Ring Community、eufy Community、Reolink Support、AOSU Community等公开讨论和支持文档。</li>
+    </ul>
+  </section>
+
+  <footer>
+    建议方案：加拿大站先上4款正式SKU，太阳能/4G仅做小样验证，不进入首批库存和广告主预算。
+  </footer>
+</main>
 </body>
 </html>
