@@ -1,489 +1,822 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>加拿大 vs 澳大利亚 Amazon 安防摄像头市场进入与选品分析报告</title>
-  <style>
-    :root{--ink:#17212b;--muted:#5b6673;--line:#d9e2ea;--bg:#f3f6f9;--panel:#fff;--blue:#2667c9;--green:#147a52;--orange:#b86419;--red:#b33a32}
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);font-family:Arial,"Microsoft YaHei",sans-serif;color:var(--ink);line-height:1.55}
-    main{max-width:1200px;margin:0 auto;background:var(--panel);box-shadow:0 10px 34px rgba(20,34,50,.12)}
-    header{padding:44px 50px 32px;background:linear-gradient(135deg,#142b42,#1f5b77);color:#fff}
-    h1{margin:0 0 12px;font-size:30px;line-height:1.25;letter-spacing:0}
-    header p{margin:6px 0;color:#e6eef6}
-    section{padding:32px 50px;border-bottom:1px solid var(--line)}
-    h2{margin:0 0 16px;font-size:23px}
-    h3{margin:24px 0 10px;font-size:18px}
-    p{margin:9px 0}
-    table{width:100%;border-collapse:collapse;margin:12px 0 22px;font-size:13px}
-    th,td{border:1px solid var(--line);padding:8px 9px;text-align:left;vertical-align:top}
-    th{background:#eef4fa;font-weight:700}
-    .right{text-align:right}.center{text-align:center}
-    .good{color:var(--green);font-weight:700}.warn{color:var(--orange);font-weight:700}.risk{color:var(--red);font-weight:700}
-    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .metric{background:#f7f9fb;border:1px solid var(--line);border-radius:6px;padding:13px}
-    .metric .k{font-size:12px;color:var(--muted)}
-    .metric .v{font-size:21px;font-weight:700;margin-top:4px}
-    .note{background:#fff7e7;border:1px solid #eed08b;border-radius:6px;padding:12px 14px;color:#5f4514;margin:12px 0}
-    .decision{background:#eef8f3;border:1px solid #b9dccb;color:#123f2b;border-radius:6px;padding:12px 14px}
-    .section-kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-    .split{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-    .barrow{display:grid;grid-template-columns:205px 1fr 78px;gap:10px;align-items:center;margin:9px 0;font-size:13px}
-    .bar{height:18px;background:#e7edf3;border-radius:3px;overflow:hidden}
-    .bar span{display:block;height:100%;background:var(--blue)}
-    .bar.green span{background:var(--green)}.bar.orange span{background:var(--orange)}
-    .chartbox{border:1px solid var(--line);background:#fbfcfd;border-radius:6px;padding:14px;margin:12px 0 22px}
-    .panel{border:1px solid var(--line);border-radius:6px;background:#fff;padding:16px;margin:12px 0}
-    .mutedband{background:#f6f8fa;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-    .score{display:inline-block;min-width:34px;padding:2px 6px;border-radius:4px;text-align:center;font-weight:700}
-    .s1{background:#e6f4ee;color:#116143}.s2{background:#fff4dc;color:#8a520e}.s3{background:#fde8e6;color:#9d2f27}
-    .mini{font-size:12px;color:var(--muted)}
-    ul{margin:8px 0 14px 20px;padding:0}li{margin:6px 0}
-    footer{padding:22px 50px 38px;color:var(--muted);font-size:13px}
-    @media(max-width:880px){header,section,footer{padding-left:20px;padding-right:20px}.grid,.split{grid-template-columns:1fr}.barrow{grid-template-columns:150px 1fr 62px}table{font-size:12px}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>亚马逊加拿大 vs 澳大利亚 · 安防摄像头开站选品与推广决策报告</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EDF0F3; --panel:#FFFFFF; --ink:#0E141B; --ink2:#3C4A57; --ink3:#7A8895;
+  --rule:#C9D2DA; --rule2:#E2E8ED;
+  --ca:#B9243B; --ca-soft:#FBE9EC;
+  --au:#16607F; --au-soft:#E5F0F5;
+  --pos:#1B7A4B; --warn:#B5670A; --neg:#A61E2C;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --cond:'Barlow Condensed',sans-serif;
+  --body:'Noto Sans SC',-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-weight:400;line-height:1.75;font-size:15px;
+  background-image:linear-gradient(var(--rule2) 1px,transparent 1px),linear-gradient(90deg,var(--rule2) 1px,transparent 1px);
+  background-size:44px 44px;}
+.wrap{max-width:1140px;margin:0 auto;padding:0 22px 100px}
+
+/* ---------- header ---------- */
+.masthead{padding:56px 0 30px;border-bottom:3px solid var(--ink)}
+.eyebrow{font-family:var(--cond);font-size:14px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+h1{font-weight:900;font-size:clamp(30px,4.4vw,52px);line-height:1.14;letter-spacing:-.015em;margin:14px 0 18px}
+h1 em{font-style:normal;color:var(--ca)}
+.deck{font-size:16px;color:var(--ink2);max-width:74ch}
+.meta{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:22px;font-family:var(--mono);font-size:11.5px;color:var(--ink3);letter-spacing:.02em}
+.meta b{color:var(--ink);font-weight:600}
+
+/* ---------- verdict ---------- */
+.verdict{margin:34px 0 0;background:var(--ink);color:#fff;padding:32px 34px;border-radius:2px;position:relative;overflow:hidden}
+.verdict:before{content:"";position:absolute;inset:0 auto 0 0;width:6px;background:var(--ca)}
+.verdict .lbl{font-family:var(--cond);letter-spacing:.22em;font-size:12px;text-transform:uppercase;color:#8FA0AF;font-weight:600}
+.verdict h2{font-size:26px;font-weight:900;margin:8px 0 12px;letter-spacing:-.01em}
+.verdict p{color:#C7D1D9;font-size:14.5px;max-width:88ch}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:#2A3742;margin-top:26px}
+.vgrid div{background:var(--ink);padding:14px 16px}
+.vgrid .k{font-family:var(--mono);font-size:10.5px;color:#8FA0AF;letter-spacing:.06em}
+.vgrid .v{font-family:var(--cond);font-size:27px;font-weight:700;line-height:1.2;margin-top:3px}
+.vgrid .v small{font-size:13px;color:#8FA0AF;font-weight:500}
+
+/* ---------- structure ---------- */
+section{margin-top:64px;scroll-margin-top:20px}
+.sec-head{display:flex;align-items:baseline;gap:14px;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:26px}
+.sec-num{font-family:var(--mono);font-size:12px;color:var(--ca);font-weight:600;letter-spacing:.08em}
+h2.sec{font-size:23px;font-weight:900;letter-spacing:-.01em}
+h3{font-size:17px;font-weight:700;margin:34px 0 12px;display:flex;align-items:center;gap:10px}
+h3:before{content:"";width:9px;height:9px;background:var(--ca);flex:none}
+h3.au:before{background:var(--au)}
+h4{font-size:14.5px;font-weight:700;margin:22px 0 8px;color:var(--ink)}
+p{margin:11px 0;color:var(--ink2)}
+p strong,li strong{color:var(--ink);font-weight:700}
+ul{margin:11px 0 11px 20px;color:var(--ink2)}
+li{margin:6px 0}
+.note{background:var(--panel);border-left:3px solid var(--warn);padding:14px 18px;margin:18px 0;font-size:14px;color:var(--ink2)}
+.note b{color:var(--warn)}
+.win{border-left-color:var(--pos)} .win b{color:var(--pos)}
+.card{background:var(--panel);border:1px solid var(--rule);padding:22px 24px;border-radius:2px}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:18px 0;border:1px solid var(--rule);background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:600px}
+th{background:#F3F6F8;text-align:left;padding:10px 12px;font-family:var(--cond);font-size:13px;font-weight:600;
+   letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--rule);white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid var(--rule2);vertical-align:top}
+tbody tr:hover{background:#F7FAFB}
+td.n,th.n{text-align:right;font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.tot td{border-top:2px solid var(--ink);font-weight:700;background:#F3F6F8}
+.pos{color:var(--pos);font-weight:600} .neg{color:var(--neg);font-weight:600} .wrn{color:var(--warn);font-weight:600}
+.pill{display:inline-block;font-family:var(--mono);font-size:10.5px;padding:2px 7px;border-radius:2px;letter-spacing:.03em;white-space:nowrap}
+.p-ca{background:var(--ca-soft);color:var(--ca)} .p-au{background:var(--au-soft);color:var(--au)}
+.p-ok{background:#E6F3EC;color:var(--pos)} .p-no{background:#FBEAEC;color:var(--neg)} .p-w{background:#FBF0E1;color:var(--warn)}
+
+/* ---------- versus bars (signature) ---------- */
+.vs{background:var(--panel);border:1px solid var(--rule);padding:26px 28px;margin:22px 0}
+.vs-row{display:grid;grid-template-columns:1fr 190px 1fr;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--rule2)}
+.vs-row:last-child{border-bottom:0}
+.vs-lab{text-align:center;font-family:var(--cond);font-size:14px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);line-height:1.25}
+.vs-lab small{display:block;font-family:var(--body);font-size:10.5px;letter-spacing:0;text-transform:none;color:var(--ink3);font-weight:400}
+.bar{display:flex;align-items:center;gap:9px}
+.bar.l{flex-direction:row-reverse}
+.bar .fill{height:22px;background:var(--ca);position:relative}
+.bar.r .fill{background:var(--au)}
+.bar .val{font-family:var(--mono);font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar.l .val{color:var(--ca)} .bar.r .val{color:var(--au)}
+.vs-head{display:grid;grid-template-columns:1fr 190px 1fr;gap:14px;padding-bottom:12px;border-bottom:2px solid var(--ink);margin-bottom:6px}
+.vs-head .h{font-family:var(--cond);font-size:19px;font-weight:700;letter-spacing:.04em}
+.vs-head .h.l{text-align:right;color:var(--ca)} .vs-head .h.r{color:var(--au)}
+.vs-head .h span{display:block;font-family:var(--mono);font-size:10.5px;color:var(--ink3);letter-spacing:.04em;font-weight:400}
+
+/* ---------- charts ---------- */
+.chart{background:var(--panel);border:1px solid var(--rule);padding:22px 24px 16px;margin:20px 0}
+.chart .ct{font-family:var(--cond);font-size:15px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--ink2)}
+.chart .cs{font-size:12px;color:var(--ink3);margin:2px 0 16px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.leg{display:flex;gap:20px;flex-wrap:wrap;margin-top:12px;font-family:var(--mono);font-size:11px;color:var(--ink2)}
+.leg i{display:inline-block;width:11px;height:11px;margin-right:6px;vertical-align:-1px}
+
+/* ---------- calculator ---------- */
+.calc{background:var(--ink);color:#fff;padding:28px 30px;margin:22px 0;border-radius:2px}
+.calc h3{color:#fff;margin:0 0 6px;font-size:19px}
+.calc h3:before{background:#fff}
+.calc .sub{color:#93A2B0;font-size:13px;margin-bottom:22px}
+.ctrls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;padding:20px 0 24px;border-top:1px solid #2B3844;border-bottom:1px solid #2B3844;margin-bottom:22px}
+.ctrl label{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:11px;color:#93A2B0;letter-spacing:.05em;margin-bottom:9px}
+.ctrl label b{font-family:var(--cond);font-size:20px;color:#fff;font-weight:700}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;background:#3A4854;outline:none;border-radius:2px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;background:var(--ca);cursor:pointer;border-radius:50%;border:2px solid #fff}
+input[type=range]::-moz-range-thumb{width:15px;height:15px;background:var(--ca);cursor:pointer;border-radius:50%;border:2px solid #fff}
+input[type=range]:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.calc table{color:#D6DEE4;min-width:820px}
+.calc th{background:#1A242E;color:#93A2B0;border-bottom-color:#2B3844}
+.calc td{border-bottom-color:#212C36}
+.calc tbody tr:hover{background:#18222B}
+.calc .tw{border-color:#2B3844;background:#0E141B}
+.calc tr.tot td{background:#1A242E;border-top-color:#4A5A68;color:#fff}
+.calc .pos{color:#4ED08A} .calc .neg{color:#FF7B8A} .calc .wrn{color:#F0B45C}
+.calc td .cur{color:#7A8895;font-family:var(--mono);font-size:11px;margin-right:2px}
+input.pin{width:66px;background:#1A242E;border:1px solid #3A4854;border-radius:2px;color:#fff;
+  font-family:var(--mono);font-size:12.5px;font-weight:600;text-align:right;padding:4px 6px;
+  font-variant-numeric:tabular-nums}
+input.pin:hover{border-color:#5A6A78}
+input.pin:focus{outline:none;border-color:var(--ca);background:#22303C;box-shadow:0 0 0 2px rgba(185,36,59,.25)}
+input.pin::-webkit-outer-spin-button,input.pin::-webkit-inner-spin-button{opacity:.35}
+.reset{margin-top:16px;font-family:var(--mono);font-size:11px;background:none;border:1px solid #3A4854;color:#93A2B0;padding:7px 14px;cursor:pointer;letter-spacing:.05em}
+.reset:hover{border-color:#93A2B0;color:#fff}
+
+/* ---------- sku tree ---------- */
+.tree{background:var(--panel);border:1px solid var(--rule);padding:24px;font-family:var(--mono);font-size:12.5px;line-height:2;overflow-x:auto;color:var(--ink2)}
+.tree b{color:var(--ink)} .tree .c{color:var(--ca);font-weight:600} .tree .g{color:var(--ink3)}
+
+.src{font-size:12.5px;color:var(--ink2)}
+.src li{margin:9px 0}
+.src code{font-family:var(--mono);font-size:11.5px;background:#E4EAEE;padding:1px 5px}
+footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);font-family:var(--mono);font-size:11px;color:var(--ink3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+@media(max-width:780px){
+  .vs-row,.vs-head{grid-template-columns:1fr;gap:4px}
+  .bar.l{flex-direction:row} .vs-head .h.l{text-align:left}
+  .vs-lab{text-align:left;margin-top:8px}
+  .verdict{padding:24px 20px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
-<main>
-  <header>
-    <h1>加拿大 vs 澳大利亚 Amazon 安防摄像头市场进入与选品分析报告</h1>
-    <p>目标：以利润质量、市场需求和售后风险为核心，确定首发国家与首批SKU组合。</p>
-    <p>数据：Sofetime关键词/竞品数据 + 产品补贴表 + SKU导出表。报告日期：2026-07-11。</p>
-  </header>
+<div class="wrap">
 
-  <section>
-    <div class="section-kicker">Executive Summary</div>
-    <h2>核心结论</h2>
-    <div class="grid">
-      <div class="metric"><div class="k">首发国家</div><div class="v">加拿大</div></div>
-      <div class="metric"><div class="k">首批SKU</div><div class="v">4+1</div></div>
-      <div class="metric"><div class="k">策略优先级</div><div class="v">利润/低售后</div></div>
-      <div class="metric"><div class="k">不首推</div><div class="v">太阳能/4G</div></div>
+<header class="masthead">
+  <div class="eyebrow">Cross-border market decision brief · 2026-07-11</div>
+  <h1>加拿大 vs 澳大利亚<br>安防摄像头开站决策：<em>选加拿大</em></h1>
+  <p class="deck">基于 Sorftime 亚马逊双站点实时数据、贵司 94 个在售/开发型号的基准采购价、861 条 SKU 箱规重量档案，以及亚马逊 2026 年最新费率规则，对两个站点做分品类拆解、卖点匹配、FBA 成本利润建模与 12 个月保守销售推演。本版报告不把站点补贴差异作为决策优势，两个站点补贴按同等程度参考。</p>
+  <div class="meta">
+    <span>数据源 <b>Sorftime MCP（Amazon CA / AU 实时）</b></span>
+    <span>汇率 <b>1 CAD = 4.78 CNY</b></span>
+    <span>采购口径 <b>补贴同等参考；站点选择不计补贴差异</b></span>
+    <span>物流 <b>FBA</b></span>
+  </div>
+</header>
+
+<div class="verdict">
+  <div class="lbl">Conclusion</div>
+  <h2>先做加拿大，主攻「灯泡机（Light Bulb Camera）」赛道</h2>
+  <p>澳大利亚站不是「小一号的加拿大」，而是<strong style="color:#fff">一个结构不同的市场</strong>：它的整体容量只有加拿大的 1/10 量级，且贵司最具差异化的品类（灯泡机、喂鸟器）在澳洲<strong style="color:#fff">连热搜词都不存在</strong>——只能靠常规球机去和 TP-Link/Tapo 正面碰撞，而 Tapo 在澳洲由亚马逊自营直发。反观加拿大：灯泡机词群月搜索 2.0 万＋、在架竞品仅 2,841 个、头部星级只有 3.4–4.0。本版在站点判断中剔除补贴差异，结论仍然指向加拿大，核心依据是市场体量、平台承接能力、细分类目机会和新品爬坡难度。</p>
+  <div class="vgrid">
+    <div><div class="k">推荐站点</div><div class="v">加拿大 <small>Amazon.ca</small></div></div>
+    <div><div class="k">主攻赛道</div><div class="v">灯泡机 <small>+ 太阳能球机 / 机器人机</small></div></div>
+    <div><div class="k">首发 SKU</div><div class="v">6 <small>个（3 条产品线）</small></div></div>
+    <div><div class="k">12月保守销售额</div><div class="v">C$401K <small>≈ ¥192 万</small></div></div>
+    <div><div class="k">保守净利率</div><div class="v">24.1% <small>含 20% 广告</small></div></div>
+  </div>
+</div>
+
+<!-- ===================== 1. 双站点市场 ===================== -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-num">01</span><h2 class="sec">两个站点的市场底盘：不是大小之别，是结构之别</h2></div>
+
+  <p>先看类目大盘。加拿大 <b>Security &amp; Surveillance</b>（nodeid 3117686011）Top100 产品月销 <b>53,910 台</b>、月销额 <b>C$555.4 万</b>；澳洲能对上的最接近类目 <b>Video Monitors</b>（nodeid 8479738051）Top100 月销仅 <b>7,457 台</b>、月销额 <b>A$48.6 万</b>。但真正决定成败的不是大盘，是<strong>「需求 ÷ 供给」的密度</strong>和<strong>贵司产品能不能对上当地的搜索词</strong>。</p>
+
+  <div class="vs">
+    <div class="vs-head">
+      <div class="h l">加拿大 CA<span>amazon.ca</span></div>
+      <div class="vs-lab" style="border:0"></div>
+      <div class="h r">澳大利亚 AU<span>amazon.com.au</span></div>
     </div>
-    <div class="decision">建议先进入加拿大站。首批主推灯泡机、窗机、防水球机和低风险室内/半室内款；太阳能、4G、电池长续航类因加拿大冬季低温、雨雪、积雪和充电售后风险高，不进入首批主推，仅保留小批量验证或第二阶段测试。</div>
-    <p>为什么不是澳大利亚：澳洲太阳能场景更顺，但Sofetime显示整体需求体量小于加拿大；并且现有产品澳洲补贴更弱，首发广告学习和促销安全垫不如加拿大。澳洲适合在加拿大跑通Listing、图片、广告词和售后FAQ后，复制太阳能/户外线。</p>
-  </section>
+    <div id="vsbars"></div>
+    <p style="font-size:12px;color:var(--ink3);margin-top:14px;font-family:var(--mono)">数据：Sorftime keyword_detail（CA / AU），2026-07 抓取。「首页竞品实销」＝该词近 15 日前 3 页自然位 Top100 产品月销量合计（由头名销量 ÷ 其占比反推）。</p>
+  </div>
 
-  <section>
-    <div class="section-kicker">Evaluation Framework</div>
-    <h2>评估框架：利润质量 + 售后风险 + 市场需求</h2>
-    <table>
-      <tr><th>筛选维度</th><th>权重</th><th>判断标准</th><th>结果</th></tr>
-      <tr><td>利润安全垫</td><td class="right">35%</td><td>补贴后采购价低，广告和Coupon后仍有贡献利润。</td><td>灯泡机、窗机、防水球机较优。</td></tr>
-      <tr><td>售后风险</td><td class="right">30%</td><td>尽量避开低温不充电、电池衰减、4G兼容、SIM设置、太阳能积雪等高售后问题。</td><td>太阳能/4G/电池球机降级。</td></tr>
-      <tr><td>关键词需求</td><td class="right">20%</td><td>Sofetime有明确月搜和竞品样本，而不是只靠场景推断。</td><td>加拿大灯泡、窗机、户外无线、法语户外词有数据。</td></tr>
-      <tr><td>执行复杂度</td><td class="right">15%</td><td>安装简单、说明容易、退货原因可控、客服脚本简单。</td><td>灯泡机和窗机优先。</td></tr>
-    </table>
-    <div class="note">利润测算为经营决策模型，不是最终财务报表。假设汇率1 CAD = CNY 5.2；Amazon佣金按15%估算；FBA、头程、广告、Coupon按保守区间估算。最终上架前需要用实际FBA尺寸重量和售价重新核算。</div>
-  </section>
+  <div class="note win"><b>关键读数：</b>澳洲的 <code style="font-family:var(--mono)">outdoor security camera</code> 竞品密度是 <b>12.3 个 listing / 每月 1 次搜索</b>，反而<strong>比加拿大（5.85）更拥挤</strong>——因为需求塌了，供给没塌。「小市场＝好做」在澳洲安防这里是不成立的。</div>
 
-  <section>
-    <h2>数据看板：为什么加拿大优先</h2>
-    <div class="split">
-      <div class="chartbox">
-        <h3>核心关键词月搜索量</h3>
-        <div class="barrow"><span>CA 法语户外词</span><div class="bar green"><span style="width:100%"></span></div><b>45,135</b></div>
-        <div class="barrow"><span>CA wireless outdoor</span><div class="bar green"><span style="width:67%"></span></div><b>30,346</b></div>
-        <div class="barrow"><span>CA security camera</span><div class="bar"><span style="width:51%"></span></div><b>22,938</b></div>
-        <div class="barrow"><span>AU security camera</span><div class="bar orange"><span style="width:23%"></span></div><b>10,499</b></div>
-        <div class="barrow"><span>CA light bulb</span><div class="bar"><span style="width:14%"></span></div><b>6,432</b></div>
-        <div class="barrow"><span>AU solar</span><div class="bar orange"><span style="width:4%"></span></div><b>2,026</b></div>
-      </div>
-      <div class="chartbox">
-        <h3>站点对比指标</h3>
-        <table>
-          <tr><th>指标</th><th>加拿大</th><th>澳大利亚</th><th>判断</th></tr>
-          <tr><td>security camera月搜</td><td class="right">22,938</td><td class="right">10,499</td><td class="good">CA为AU 2.18倍</td></tr>
-          <tr><td>outdoor security camera月搜</td><td class="right">10,481</td><td class="right">2,034</td><td class="good">CA为AU 5.15倍</td></tr>
-          <tr><td>Top样本最高月销</td><td class="right">5,598</td><td class="right">1,079</td><td class="good">CA头部动销更强</td></tr>
-          <tr><td>灯泡机最低到手成本</td><td class="right">CNY 27.0</td><td class="right">CNY 32.0</td><td class="good">CA成本更低</td></tr>
-          <tr><td>太阳能场景适配</td><td class="center">中</td><td class="center">高</td><td class="warn">AU适合第二阶段</td></tr>
-        </table>
-      </div>
+  <h3>1.1 加拿大站：按贵司产品类型逐条拆</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th>贵司品类</th><th>对应核心词</th><th class="n">月搜索量</th><th class="n">在架竞品数</th><th class="n">竞品/搜索</th><th>头部格局</th><th>判定</th></tr></thead>
+    <tbody>
+      <tr><td><b>灯泡机</b></td><td>light bulb security camera（词群 8 个）</td><td class="n">6,432<br><span style="color:var(--ink3)">词群合计 20,251</span></td><td class="n">2,841</td><td class="n pos">0.44</td><td>无绝对龙头；头名 LUNA HOME 578/月，星级仅 4.0；SYMYNELEC 上架 2.3 个月已做到 379/月</td><td><span class="pill p-ok">主攻</span></td></tr>
+      <tr><td><b>低功耗/电池球机<br>（含太阳能）</b></td><td>solar security camera / outdoor security camera</td><td class="n">3,964<br>10,481</td><td class="n">31,636<br>61,306</td><td class="n wrn">7.98<br>5.85</td><td>Tapo（亚马逊自营）+ eufy + aosu + ieGeek 混战，评论数普遍上万</td><td><span class="pill p-w">跟进</span></td></tr>
+      <tr><td><b>摇头机 / 机器人机</b></td><td>indoor security camera / pet camera</td><td class="n">9,241<br>12,587</td><td class="n">53,385<br>55,359</td><td class="n wrn">5.78<br>4.40</td><td>Tapo C200（C$34.98，5,598/月）＋亚马逊自营占 21.9%；但<strong>造型差异化</strong>（机器人/太空人）不在其射程内</td><td><span class="pill p-ok">切场景</span></td></tr>
+      <tr><td><b>喂鸟器</b></td><td>bird feeder camera</td><td class="n">11,528</td><td class="n">30,151</td><td class="n">2.62</td><td><strong>极度碎片化</strong>：头名仅 197/月、占比 5.82%；无任何品牌集中度</td><td><span class="pill p-w">二期</span></td></tr>
+      <tr><td><b>时钟机 / 太空人</b></td><td>hidden camera</td><td class="n">12,428</td><td class="n">34,132</td><td class="n">2.75</td><td>需求大但<strong>合规敏感</strong>：亚马逊对隐蔽拍摄设备有专项审核，"hidden/spy camera" 埋词易触发下架</td><td><span class="pill p-w">谨慎</span></td></tr>
+      <tr><td><b>4G 球机</b></td><td>4g / cellular security camera</td><td class="n neg">非热搜词</td><td class="n">—</td><td class="n">—</td><td>Sorftime 关键词库中不存在该热搜词；仅有 HOSAFE 4G 款 121/月、SPYPOINT 打猎相机 765/月两个孤岛需求</td><td><span class="pill p-no">暂缓</span></td></tr>
+      <tr><td><b>窗户相机</b></td><td>window camera</td><td class="n neg">非热搜词</td><td class="n">—</td><td class="n">—</td><td>无独立搜索心智，只能作为球机的附属卖点</td><td><span class="pill p-no">暂缓</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:12px;color:var(--ink3);font-family:var(--mono)">来源：Sorftime keyword_detail / keyword_extends / product_search（amzSite=CA），2026-07-11。</p>
+
+  <div class="note"><b>加拿大独有红利：法语流量。</b>Sorftime 的延伸词里，法语词的量级和英语词是同一档——<code style="font-family:var(--mono)">camera surveillance</code> 5,159/月、<code style="font-family:var(--mono)">caméra de surveillance intérieur sans fil</code> 4,508/月、<code style="font-family:var(--mono)">camera de surveillance</code> 2,115/月，另有西语 <code style="font-family:var(--mono)">camaras de seguridad para casa</code> 3,961/月。魁北克 850 万人口是一个<strong>被绝大多数中国卖家跳过的独立流量池</strong>。这是加拿大站相对美国站唯一的结构性套利，澳洲没有对应物。</p></div>
+
+  <h3 class="au">1.2 澳大利亚站：为什么它不是一个「小加拿大」</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th>贵司品类</th><th>对应核心词</th><th class="n">AU 月搜索</th><th class="n">在架竞品</th><th>Sorftime 返回结果</th><th>判定</th></tr></thead>
+    <tbody>
+      <tr><td><b>灯泡机</b></td><td>light bulb security camera / bulb camera</td><td class="n neg">—</td><td class="n">—</td><td class="neg">「并非亚马逊热搜关键词」，系统仅返回 ring camera / digital camera 等无关词</td><td><span class="pill p-no">无市场</span></td></tr>
+      <tr><td><b>喂鸟器</b></td><td>bird feeder camera</td><td class="n neg">—</td><td class="n">—</td><td class="neg">「并非亚马逊热搜关键词」，仅返回 bird feeder</td><td><span class="pill p-no">无市场</span></td></tr>
+      <tr><td><b>4G 球机</b></td><td>4g security camera</td><td class="n neg">—</td><td class="n">—</td><td class="neg">「并非亚马逊热搜关键词」</td><td><span class="pill p-no">无市场</span></td></tr>
+      <tr><td>低功耗/太阳能球机</td><td>solar security camera</td><td class="n">2,026</td><td class="n">7,870</td><td>头部被 Tapo（亚马逊自营）与 MUBVIEW 占据；第 3 名居然是「太阳能板配件」236/月</td><td><span class="pill p-w">可做但薄</span></td></tr>
+      <tr><td>室内摇头机</td><td>indoor security camera</td><td class="n">1,385</td><td class="n">22,141</td><td>MUBVIEW 1,079/月 + Tapo 863/月 ≈ 占掉整个首页 44%</td><td><span class="pill p-w">红海且小</span></td></tr>
+      <tr><td>户外球机</td><td>outdoor security camera</td><td class="n">2,034</td><td class="n">25,110</td><td>Top100 总实销仅 <b>1,513 台/月</b>；排到第 5 名就只剩 31 台/月</td><td><span class="pill p-no">长尾极浅</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:12px;color:var(--ink3);font-family:var(--mono)">来源：Sorftime keyword_detail / product_search（amzSite=AU），2026-07-11。</p>
+
+  <p><strong>澳洲的真实痛点是存在的，但亚马逊不是它的战场。</strong>澳洲有大面积无网络的乡村/农场（4G 摄像头刚需）、极高的入室盗窃率、常年强紫外线与酷热（对户外机外壳/电池是硬考验）。问题在于：澳洲消费者买安防的主渠道是 <b>Bunnings、JB Hi-Fi、Officeworks</b> 这些本地零售，Amazon.com.au 上线才 8 年、渗透率低。Sorftime 抓到的 Top100 实销数据（户外机整个赛道 1,513 台/月）就是这个现实的直接量化。</p>
+
+</section>
+<!-- ===================== 2. 10款候选 ===================== -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-num">02</span><h2 class="sec">两站各选 5 款：卖点参数与真实到手成本</h2></div>
+  <p>下表所有重量/箱规均取自贵司《导出产品-按SKU》861 条档案。<span class="pill p-w">注意</span> 原始表中重量单位存在 g/kg 混用（例如 T-CP8053LF 记为「230」、太空人记为「508」，单位是 g 而非 kg），本报告已按 <code style="font-family:var(--mono)">单品毛重单位</code> 字段统一换算为 kg——<strong>这直接影响 FBA 分档和头程计费，请务必回原表修正</strong>。</p>
+
+  <h3>2.1 加拿大 5 款候选</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th>#</th><th>型号 / 方案</th><th>品类</th><th>核心卖点参数</th><th class="n">采购价</th><th class="n">加补贴</th><th class="n">到手价</th><th class="n">毛重</th><th>包装(cm)</th><th class="n">建议售价</th></tr></thead>
+    <tbody>
+      <tr><td class="n">CA-1</td><td><b>T-CP8040LF-W21V</b><br><span style="color:var(--ink3);font-size:12px">Instavision</span></td><td>灯泡机·白</td><td>E27 灯座免布线 · 360° 云台 · 3MP · 双向语音 · 声光报警 · 白光全彩夜视</td><td class="n">¥37.0</td><td class="n pos">−¥10.0</td><td class="n"><b>¥27.0</b></td><td class="n">0.230 kg</td><td class="n">7.3×7.3×19.2</td><td class="n">C$34.99</td></tr>
+      <tr><td class="n">CA-2</td><td><b>T-CP8043LF-W21V</b><br><span style="color:var(--ink3);font-size:12px">Instavision</span></td><td>灯泡机·黑</td><td>同上，黑色机身（户外门廊/车库场景视觉更融）</td><td class="n">¥39.0</td><td class="n pos">−¥7.0</td><td class="n"><b>¥32.0</b></td><td class="n">0.233 kg</td><td class="n">8.5×8.5×18.0</td><td class="n">C$36.99</td></tr>
+      <tr><td class="n">CA-3</td><td><b>T-CP8050LF-W3M</b><br><span style="color:var(--ink3);font-size:12px">Instavision</span></td><td>灯泡机·升级</td><td>Wi-Fi 双频 2.4/5G · 3MP · 云台 · 灯泡机高配（对标 SYMYNELEC「5G」卖点）</td><td class="n">¥40.0</td><td class="n pos">−¥7.0</td><td class="n"><b>¥33.0</b></td><td class="n">0.246 kg</td><td class="n">7.3×7.3×19.2</td><td class="n">C$44.99</td></tr>
+      <tr><td class="n">CA-4</td><td><b>T-CQ4011S-W43J</b><br><span style="color:var(--ink3);font-size:12px">Eseecloud</span></td><td>太阳能低功耗球机</td><td>内置电池 + 太阳能 · 云台 · 4MP · IP66 · 人形侦测 · 免布线</td><td class="n">¥131.2</td><td class="n pos">−¥7.0</td><td class="n"><b>¥124.2</b></td><td class="n">0.880 kg</td><td class="n">20.6×17.1×13.9</td><td class="n">C$79.99</td></tr>
+      <tr><td class="n">CA-5</td><td><b>T-CP9036TF-W30V</b><br><span style="color:var(--ink3);font-size:12px">Instavision</span></td><td>机器人摇头机</td><td>机器人造型 DIY · 3MP · 360° 云台 · 双向语音 · 宠物/婴儿场景</td><td class="n">¥70.5</td><td class="n pos">−¥7.0</td><td class="n"><b>¥63.5</b></td><td class="n">0.370 kg</td><td class="n">19.5×12.0×8.3</td><td class="n">C$49.99</td></tr>
+      <tr style="background:#FAFBFC"><td class="n">备选</td><td><b>TN-G02G1-W31C</b><br><span style="color:var(--ink3);font-size:12px">vicohome</span></td><td>智能喂鸟器</td><td>太阳能 · AI 识鸟 · 自动录制 · 到访推送（礼品属性强）</td><td class="n">¥195.5</td><td class="n">−¥7.0</td><td class="n">¥188.5</td><td class="n">1.905 kg</td><td class="n">26.4×26.3×19.2</td><td class="n">C$119.99</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note"><b>为什么喂鸟器进不了首发？</b>它的赛道很诱人（11,528 搜索/月、头名只有 197 台/月），但算完账不行：¥188.5 采购 + 体积重 2.22kg 的头程 + <strong>Patio/Garden 类目 15% 佣金</strong> + C$11.80 FBA。在 C$99.99 定价下净利为 <b class="neg">−C$1.96</b>；必须卖到 <b>C$119.99 以上</b>才有 8.4% 净利，而在广告 30%/退货 10% 的压力情景下仍会翻负（−6.6%）。<strong>建议放到二期，用灯泡机赚到的现金去养它。</strong></div>
+
+  <h3 class="au">2.2 澳大利亚 5 款候选（对照组）</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th>#</th><th>型号 / 方案</th><th>品类</th><th>为什么选它 / 澳洲场景匹配</th><th class="n">采购价</th><th class="n">澳补贴</th><th class="n">到手价</th><th class="n">vs 加成本</th><th>致命问题</th></tr></thead>
+    <tbody>
+      <tr><td class="n">AU-1</td><td><b>T-CQ4011S-W43J</b><br><span style="color:var(--ink3);font-size:12px">Eseecloud</span></td><td>太阳能低功耗球机</td><td>澳洲日照强、独栋带院多、免布线刚需</td><td class="n">¥131.2</td><td class="n">−¥3.5</td><td class="n"><b>¥127.7</b></td><td class="n wrn">+2.8%</td><td>solar 词仅 2,026 搜索/月，Tapo 亚马逊自营卡位</td></tr>
+      <tr><td class="n">AU-2</td><td><b>CQ42W1S-W43J</b><br><span style="color:var(--ink3);font-size:12px">Eseecloud</span></td><td>电池球机</td><td>IP66，应对澳洲极端高温/暴雨</td><td class="n">¥136.1</td><td class="n">−¥3.5</td><td class="n"><b>¥132.6</b></td><td class="n wrn">+2.7%</td><td>outdoor 赛道 Top100 总实销仅 1,513 台/月</td></tr>
+      <tr><td class="n">AU-3</td><td><b>T-CQ4011S-G41J</b><br><span style="color:var(--ink3);font-size:12px">Eseecloud</span></td><td>4G 球机</td><td>澳洲农场/矿区/无网偏远地产的真实刚需</td><td class="n">¥160.0</td><td class="n">−¥60.0</td><td class="n"><b>¥100.0</b></td><td class="n neg">+150%</td><td>无热搜词 + 3G 已关网需支持 700MHz B28 + ACMA/RCM 认证</td></tr>
+      <tr><td class="n">AU-4</td><td><b>T-CP23W1-W30V</b><br><span style="color:var(--ink3);font-size:12px">Instavision</span></td><td>室内摇头机</td><td>低价引流，对标 Tapo C200</td><td class="n">¥52.0</td><td class="n">−¥5.0</td><td class="n"><b>¥47.0</b></td><td class="n wrn">+11.9%</td><td>MUBVIEW+Tapo 已吃掉首页 44%</td></tr>
+      <tr><td class="n">AU-5</td><td><b>T-CP8040LF-W21V</b><br><span style="color:var(--ink3);font-size:12px">Instavision</span></td><td>灯泡机</td><td>贵司最强差异化品类</td><td class="n">¥37.0</td><td class="n">−¥5.0</td><td class="n"><b>¥32.0</b></td><td class="n neg">+18.5%</td><td class="neg"><b>澳洲根本没有这个搜索词</b></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>澳洲这 5 款的共同点：<strong>要么打不动（球机赛道太浅太挤），要么根本无处发力（灯泡机/4G 无词）</strong>，而且每一款的采购成本都比加拿大高。这就是「两个国家选一个」的答案已经写在数据里的地方。</p>
+</section>
+
+<!-- ===================== 3. 综合评估 ===================== -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-num">03</span><h2 class="sec">超越销量：气候、住宅、安防痛点、合规的横向评估</h2></div>
+
+  <div class="tw">
+  <table>
+    <thead><tr><th>维度</th><th style="width:38%">加拿大</th><th style="width:38%">澳大利亚</th><th>对贵司产品的含义</th></tr></thead>
+    <tbody>
+      <tr><td><b>气候</b></td><td>冬季 −20~−35℃（草原三省/魁北克），锂电池在 −10℃ 以下容量骤降、−20℃ 可能拒充</td><td>夏季 40℃+、强紫外线，塑料外壳黄化脆化；沿海高盐雾</td><td class="wrn">加拿大：<strong>低温是电池机的头号差评来源</strong>。灯泡机走灯座取电（常电），天然规避这个坑——这是灯泡机在加拿大成立的物理原因。太阳能球机必须标注工作温度并做冬季文案预期管理。</td></tr>
+      <tr><td><b>住宅结构</b></td><td>独栋为主，普遍有 <b>门廊灯 / 车库灯 / 后院灯的 E26 灯座</b>（北美标准灯座），且多为常通电回路</td><td>独栋+大院，但户外灯座标准为 B22/E27，且澳洲电工法规（AS/NZS 3000）对固定电气装置改动限制严格</td><td class="pos">加拿大的 E26 灯座渗透率＝灯泡机的<strong>免安装天然基座</strong>。北美消费者「拧上就用、不用叫电工」的心智已被 Wyze/Sight Bulb 教育过（wyze bulb cam 一词就有 4,612 搜索/月）。</td></tr>
+      <tr><td><b>安防痛点</b></td><td>包裹盗窃（porch piracy）、车库/私家车道盗窃、野生动物（浣熊/熊）闯入</td><td>入室盗窃率高于加拿大，但更集中在实体防护（防盗网/警报系统）</td><td>加拿大的痛点<strong>正好落在门廊和车道</strong>——就是灯泡机的安装位。「换掉门廊灯泡＝装了个监控」的叙事极其顺</td></tr>
+      <tr><td><b>买家习惯</b></td><td>亚马逊渗透率高；<b>英法双语</b>，法语搜索量与英语同量级；对「无月费/本地存储」极敏感（Top 竞品标题几乎都写 No Monthly Fee）</td><td>主渠道是 Bunnings / JB Hi-Fi 等本地零售；亚马逊上线仅 8 年，安防品类心智未建立</td><td class="pos">加拿大：法语 listing + 法语广告 = 低成本蓝海流量。<br>无月费必须写进主图和五点</td></tr>
+      <tr><td><b>合规</b></td><td>ISED 认证（IC ID）；<b>包装/说明书必须英法双语</b>（消费品包装标签法）；GST 5%（注册后可抵扣进项）；摄像头 MFN 关税 <b>0%</b></td><td>ACMA / RCM 标志；电池运输 UN38.3；GST 10%；3G 已关网，4G 设备须支持 700MHz B28</td><td class="wrn">两边都要认证，但<strong>加拿大双语包装是必须提前排产的硬约束</strong>——不是上线后能补的</td></tr>
+      <tr><td><b>竞争格局</b></td><td>亚马逊自营在 Security &amp; Surveillance 占 45.8% 销量、中国卖家占 62%——大盘极卷，<strong>但灯泡机细分是缝隙</strong></td><td>亚马逊自营占 28.5%，看似低；但 Tapo 由 Amazon 直发已锁死首页，第三方长尾几乎没有生存空间</td><td>加拿大要<strong>躲开大盘、扎进细分</strong>；澳洲连细分都没有</td></tr>
+      <tr><td><b>采购补贴口径</b></td><td>按同等补贴程度参考</td><td>按同等补贴程度参考</td><td>不作为站点胜负项；仅进入单SKU利润模型</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>新品爬坡实证：灯泡机赛道 vs 太阳能球机赛道</h3>
+  <p>这是最有说服力的一组交叉验证。我把两个赛道里<strong>上架时间相近的新品</strong>拉出来对比——同样是刚上线 1–2 个月的新 listing，在灯泡机赛道能做到 119–379 台/月，在太阳能球机赛道只能做到 43–87 台/月。<strong>差了 3–5 倍。</strong></p>
+  <div class="chart">
+    <div class="ct">新品上架月数 × 当前月销（加拿大站）</div>
+    <div class="cs">气泡越大＝当前月销越高。灯泡机赛道的新品在同等在架时间下明显跑得更快。</div>
+    <div id="rampchart"></div>
+    <div class="leg"><span><i style="background:var(--ca)"></i>灯泡机赛道</span><span><i style="background:#7A8895"></i>太阳能/电池球机赛道</span></div>
+  </div>
+  <p style="font-size:12px;color:var(--ink3);font-family:var(--mono)">来源：Sorftime product_search（amzSite=CA, delivery_type=FBA），字段：上架时间 / 月销量。抓取时间 2026-07-11。</p>
+</section>
+
+<!-- ===================== 4. 决策 ===================== -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-num">04</span><h2 class="sec">决策：加拿大 · 3 条产品线 / 6 个 SKU</h2></div>
+  <div class="tw">
+  <table>
+    <thead><tr><th>产品线</th><th>SKU</th><th>角色</th><th>差异化卖点（对标竞品缺口）</th><th class="n">定价</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="4"><b>A · 灯泡机</b><br><span style="color:var(--ink3);font-size:12px">主力 · 现金牛</span></td>
+        <td>A1 T-CP8040LF-W21V 白</td><td>流量款 / 主变体</td><td rowspan="4">① <b>常电供电</b>——竞品全是电池机，加拿大冬天电池是灾难，我们「零充电、零换电池」<br>② <b>3MP + 360° 云台 + 声光报警</b>，头部竞品星级只有 3.4–4.0，差评集中在「连不上网/夜视差」<br>③ <b>双频 2.4G/5G</b>（A3）——SYMYNELEC 只支持 2.4G 并写在标题里道歉<br>④ <b>英法双语说明书 + 法语 listing</b>——全赛道没人做</td><td class="n">C$34.99</td></tr>
+      <tr><td>A2 T-CP8043LF-W21V 黑</td><td>同 listing 变体</td><td class="n">C$36.99</td></tr>
+      <tr><td>A3 T-CP8050LF-W3M 双频</td><td>高价变体 / 提 ASP</td><td class="n">C$44.99</td></tr>
+      <tr><td>A4 双支装（A1×2 自组套）</td><td>套装 / 提客单价</td><td class="n">C$59.99</td></tr>
+      <tr><td><b>B · 太阳能球机</b><br><span style="color:var(--ink3);font-size:12px">拉客单价</span></td><td>B T-CQ4011S-W43J</td><td>关联销售 / 后院场景</td><td>免布线 + 太阳能 + 云台，卡在 ieGeek(C$64.79) 与 DEKCO(C$89.99) 之间的 <b>C$79.99 价格带空隙</b>；主打「灯泡机管前门 + 球机管后院」的组合叙事</td><td class="n">C$79.99</td></tr>
+      <tr><td><b>C · 机器人机</b><br><span style="color:var(--ink3);font-size:12px">引流 · 礼品</span></td><td>C T-CP9036TF-W30V</td><td>宠物/婴儿场景 · 差异化造型</td><td>不和 Tapo C200 比参数，比<b>造型</b>：机器人外观进入 <code style="font-family:var(--mono)">pet camera</code>（12,587 搜索/月）与礼品场景，Tapo 的方盒子做不到这件事</td><td class="n">C$49.99</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note win"><b>一个被漏掉的采购套利：</b>同一个型号 <code style="font-family:var(--mono)">T-CP8050LF-W3M</code> 在补贴表里出现两次——Eseecloud 方案 ¥51.5（补贴 ¥4，到手 <b>¥47.5</b>），Instavision 方案 ¥40.0（补贴 ¥7，到手 <b>¥33.0</b>）。<strong>同型号，到手价差 ¥14.5/台（30.5%）。</strong>本报告全部按 Instavision 方案计价。请确认两个方案的硬件是否一致——若一致，这一条就能直接省出全年 6 位数的成本。</div>
+</section>
+
+<!-- ===================== 5. 成本利润 ===================== -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-num">05</span><h2 class="sec">FBA 成本利润模型（广告占比 / 退货售后率可调）</h2></div>
+  <h4>模型口径</h4>
+  <ul style="font-size:14px">
+    <li><b>采购到手价</b> = 参考采购价 − 美加英补贴（贵司口径）</li>
+    <li><b>头程</b> = 计费重 × 单价；计费重 = max(实际毛重, 长×宽×高 ÷ 6000)。默认 ¥22/kg，<b>可调</b>——请用贵司货代实际报价替换</li>
+    <li><b>关税</b> = 0%（加拿大对 HS 8525 摄像头 MFN 免税）；另计 1% 清关杂费；GST 5% 注册后可抵扣，不计入成本</li>
+    <li><b>FBA 配送费</b>：直接采用 Sorftime 抓取的 <b>40 个真实在售 ASIN 的实收 FBA 费用</b>（CAD）按重量档拟合。已内含 2026-01-15 提价与 2026-04-17 起的 3.5% 燃油附加费。样本校验：438g→C$7.30（LUNA）、330g→C$6.79（SYMYNELEC）、921g→C$8.65（aosu）、1600g→C$11.63（firstrend），与本模型分档一致</li>
+    <li><b>佣金</b>：Consumer Electronics 8%（灯泡机/球机/机器人机均应归入 Electronics &gt; Surveillance Cameras）。<span class="pill p-w">警告</span> 若被归入 Tools &amp; Home Improvement &gt; Security Lighting（SYMYNELEC 就在那里）则跳到 <b>15%</b>，每台多付 C$2.4</li>
+    <li><b>广告 / 退货售后</b>：按售价百分比计提，<b>拖动下方滑块调整</b></li>
+  </ul>
+
+  <div class="calc">
+    <h3>成本利润测算器</h3>
+    <p class="sub">拖动滑块调参数，<b style="color:#fff">或直接点开表格里的「售价」单元格改价</b>——净利、净利率、佣金、广告、退货全部实时重算。默认：广告 20%、退货售后 5%、头程 ¥22/kg、汇率 4.78。</p>
+    <div class="ctrls">
+      <div class="ctrl"><label>广告占比 (ACOS/售价) <b id="vAd">20%</b></label><input type="range" id="sAd" min="0" max="45" value="20" step="1"></div>
+      <div class="ctrl"><label>退货 + 售后损耗率 <b id="vRt">5%</b></label><input type="range" id="sRt" min="0" max="20" value="5" step="0.5"></div>
+      <div class="ctrl"><label>头程运费 (¥/kg 计费重) <b id="vFr">¥22</b></label><input type="range" id="sFr" min="8" max="45" value="22" step="1"></div>
+      <div class="ctrl"><label>汇率 (1 CAD = ? CNY) <b id="vFx">4.78</b></label><input type="range" id="sFx" min="4.2" max="5.4" value="4.78" step="0.01"></div>
     </div>
-    <p>数据解释：加拿大的大词、户外词、法语户外词和竞品销量样本都更强；澳大利亚的太阳能场景更自然，但Amazon AU样本销量较小，且现有产品澳洲补贴弱于加拿大，因此不适合作为首轮承担试错的站点。</p>
-  </section>
-
-  <section class="mutedband">
-    <div class="section-kicker">Australia Market Decision</div>
-    <h2>澳大利亚暂缓进入的数据依据</h2>
-    <p>澳大利亚并非没有机会，尤其在太阳能户外摄像头、农场/偏远物业、4G无Wi-Fi场景上具备环境适配性。但从首发投入角度看，澳洲的市场体量、首批产品利润安全垫、竞品动销规模和数据确定性均弱于加拿大，因此建议暂缓作为首发站点。</p>
-    <div class="grid">
-      <div class="metric"><div class="k">AU核心词月搜</div><div class="v">10,499</div></div>
-      <div class="metric"><div class="k">CA核心词月搜</div><div class="v">22,938</div></div>
-      <div class="metric"><div class="k">AU户外词月搜</div><div class="v">2,034</div></div>
-      <div class="metric"><div class="k">CA户外词月搜</div><div class="v">10,481</div></div>
+    <div class="tw">
+      <table>
+        <thead><tr><th>SKU</th><th class="n">到手采购<br>CNY</th><th class="n">计费重<br>kg</th><th class="n">头程<br>CNY</th><th class="n">到岸成本<br>CAD</th><th class="n" style="color:#fff">售价 CAD<br><span style="font-family:var(--mono);font-size:9.5px;color:var(--ca);letter-spacing:.04em">✎ 可手动输入</span></th><th class="n">FBA</th><th class="n">佣金</th><th class="n">广告</th><th class="n">退货<br>售后</th><th class="n">净利<br>CAD</th><th class="n">净利率</th></tr></thead>
+        <tbody id="calcBody"></tbody>
+      </table>
     </div>
-    <div class="split">
-      <div class="chartbox">
-        <h3>搜索需求对比</h3>
-        <div class="barrow"><span>CA security camera</span><div class="bar green"><span style="width:100%"></span></div><b>22,938</b></div>
-        <div class="barrow"><span>AU security camera</span><div class="bar orange"><span style="width:46%"></span></div><b>10,499</b></div>
-        <div class="barrow"><span>CA outdoor security</span><div class="bar green"><span style="width:46%"></span></div><b>10,481</b></div>
-        <div class="barrow"><span>AU outdoor security</span><div class="bar orange"><span style="width:9%"></span></div><b>2,034</b></div>
-        <div class="barrow"><span>CA solar security</span><div class="bar"><span style="width:17%"></span></div><b>3,964</b></div>
-        <div class="barrow"><span>AU solar security</span><div class="bar orange"><span style="width:9%"></span></div><b>2,026</b></div>
-      </div>
-      <div class="chartbox">
-        <h3>竞品动销对比</h3>
-        <div class="barrow"><span>CA Top竞品月销</span><div class="bar green"><span style="width:100%"></span></div><b>5,598</b></div>
-        <div class="barrow"><span>AU Top竞品月销</span><div class="bar orange"><span style="width:19%"></span></div><b>1,079</b></div>
-        <div class="barrow"><span>CA户外Top样本</span><div class="bar green"><span style="width:92%"></span></div><b>5,172</b></div>
-        <div class="barrow"><span>AU户外Top样本</span><div class="bar orange"><span style="width:4%"></span></div><b>227</b></div>
-        <div class="barrow"><span>CA太阳能样本</span><div class="bar"><span style="width:39%"></span></div><b>2,176</b></div>
-        <div class="barrow"><span>AU太阳能样本</span><div class="bar orange"><span style="width:2%"></span></div><b>60</b></div>
-      </div>
-    </div>
-    <table>
-      <tr><th>对比维度</th><th>加拿大数据</th><th>澳大利亚数据</th><th>结论</th></tr>
-      <tr><td>泛安防需求</td><td>security camera月搜22,938</td><td>security camera月搜10,499</td><td class="good">加拿大约为澳洲2.18倍，广告学习样本更大。</td></tr>
-      <tr><td>户外安防需求</td><td>outdoor security camera月搜10,481</td><td>outdoor security camera月搜2,034</td><td class="good">加拿大约为澳洲5.15倍，户外款扩量更有空间。</td></tr>
-      <tr><td>太阳能机会</td><td>solar security camera月搜3,964，竞品31,636</td><td>solar security camera月搜2,026，竞品7,870</td><td class="warn">澳洲太阳能切入性不错，但绝对需求小；适合第二阶段。</td></tr>
-      <tr><td>竞品动销</td><td>CA Top样本月销5,598；高客单太阳能2-pack样本月销2,112</td><td>AU Top样本月销1,079；太阳能户外样本月销60-87</td><td class="good">加拿大动销规模更能支撑首发投入。</td></tr>
-      <tr><td>采购成本</td><td>灯泡机最低CNY27；窗机CNY51.8；4G在售款CNY95.3起</td><td>灯泡机最低CNY32；窗机CNY58.8；4G在售款CNY135.3起</td><td class="good">加拿大补贴后成本更低，能承受促销和广告试错。</td></tr>
-      <tr><td>数据完整性</td><td>light bulb、window、solar、wireless outdoor、法语户外词均有Sofetime数据</td><td>AU light bulb、window、4G、battery等细分词未返回完整热搜详情</td><td class="good">加拿大首批SKU选择确定性更高。</td></tr>
-      <tr><td>售后风险</td><td>冬季太阳能/电池风险高，但灯泡机和窗机可规避</td><td>太阳能环境更友好，但4G/SIM、RCM/ACMA、市场体量小仍增加试错成本</td><td class="warn">澳洲不是不能做，而是更适合复制成熟方案。</td></tr>
-    </table>
-    <div class="panel">
-      <h3>澳大利亚后续进入建议</h3>
-      <p>澳大利亚建议作为第二阶段市场，优先复制加拿大验证后的图片结构、五点文案、广告词和客服FAQ。进入澳洲时，不建议以窗机为核心，应优先测试 solar security camera、outdoor wireless camera、farm security camera、4G camera 等户外场景词，并将太阳能/4G频段和RCM/ACMA合规作为上架前置条件。</p>
-    </div>
-  </section>
+    <button class="reset" id="reset">恢复默认参数</button>
+    <p style="color:#7A8895;font-size:12px;margin-top:14px" id="stress"></p>
+  </div>
 
-  <section>
-    <h2>关键词机会矩阵</h2>
-    <table>
-      <tr><th>关键词</th><th>月搜</th><th>竞品数</th><th>需求/竞品×1000</th><th>匹配产品</th><th>投放优先级</th><th>分析结论</th></tr>
-      <tr><td>light bulb security camera</td><td class="right">6,432</td><td class="right">2,841</td><td class="right good">2.26</td><td>灯泡机</td><td class="center"><span class="score s1">高</span></td><td>最适合首发，低成本、低安装售后。</td></tr>
-      <tr><td>security cameras wireless outdoor</td><td class="right">30,346</td><td class="right">29,212</td><td class="right good">1.04</td><td>防水球机/户外款</td><td class="center"><span class="score s1">高</span></td><td>流量大，适合低价户外款承接。</td></tr>
-      <tr><td>camera surveillance exterieur</td><td class="right">45,135</td><td class="right">58,570</td><td class="right">0.77</td><td>户外款/窗机</td><td class="center"><span class="score s2">中高</span></td><td>加拿大法语流量，适合后台词和A+本地化。</td></tr>
-      <tr><td>window security camera</td><td class="right">2,997</td><td class="right">19,729</td><td class="right">0.15</td><td>窗机</td><td class="center"><span class="score s2">中</span></td><td>量不大，但差异化强、售后可控。</td></tr>
-      <tr><td>solar security camera</td><td class="right">3,964</td><td class="right">31,636</td><td class="right">0.13</td><td>太阳能款</td><td class="center"><span class="score s3">低</span></td><td>有需求，但加拿大冬季售后风险高。</td></tr>
-      <tr><td>doorbell camera</td><td class="right">41,570</td><td class="right">33,020</td><td class="right">1.26</td><td>门口场景</td><td class="center"><span class="score s3">低</span></td><td>流量大但意图偏门铃，我方不直接主投。</td></tr>
-    </table>
-    <p class="mini">优先级不是只看月搜，而是同时看需求明确度、SKU匹配度、售后风险和利润安全垫。</p>
-  </section>
+  <div class="note"><b>压力测试结论：</b>广告拉到 30%、退货拉到 10% 的最坏情景下，灯泡机三款仍保持 <b class="pos">12.5%–18.9%</b> 净利，太阳能球机掉到 3.2%，机器人机掉到 7.1%。<strong>灯泡机是整个组合的安全垫——这也是把它定为主力的根本原因。</strong>把广告压到 12%、退货 3%（成熟期目标）时，灯泡机净利率可达 37%–44%。</div>
+</section>
 
-  <section>
-    <h2>SKU综合评分模型</h2>
-    <table>
-      <tr><th>SKU</th><th>产品</th><th>利润安全垫35%</th><th>售后低风险30%</th><th>关键词匹配20%</th><th>执行简单15%</th><th>综合评分</th><th>结论</th></tr>
-      <tr><td>T-CP8040LF-W21V</td><td>灯泡机基础款</td><td class="center">9.5</td><td class="center">9.0</td><td class="center">9.2</td><td class="center">9.0</td><td class="center good">9.2</td><td>首推引流款。</td></tr>
-      <tr><td>T-CP8050LF-W3M</td><td>灯泡机升级款</td><td class="center">9.0</td><td class="center">9.0</td><td class="center">9.0</td><td class="center">8.8</td><td class="center good">9.0</td><td>首推利润款。</td></tr>
-      <tr><td>CP15W1-W30Q</td><td>窗机</td><td class="center">8.8</td><td class="center">8.2</td><td class="center">7.2</td><td class="center">8.0</td><td class="center good">8.2</td><td>差异化利润款。</td></tr>
-      <tr><td>CQ1051-W30V</td><td>防水球机</td><td class="center">8.2</td><td class="center">6.8</td><td class="center">8.5</td><td class="center">7.5</td><td class="center warn">7.7</td><td>低价户外测试款。</td></tr>
-      <tr><td>T-CP23W1-W30V</td><td>室内摇头机</td><td class="center">6.8</td><td class="center">9.0</td><td class="center">6.5</td><td class="center">8.5</td><td class="center warn">7.5</td><td>备选补充款。</td></tr>
-      <tr><td>CQ42W1S-G41J</td><td>4G太阳能球机</td><td class="center">7.2</td><td class="center risk">3.5</td><td class="center">6.0</td><td class="center">4.5</td><td class="center risk">5.3</td><td>不进首批主推。</td></tr>
-      <tr><td>CQ42W1S-W43J</td><td>Wi-Fi太阳能球机</td><td class="center">6.8</td><td class="center risk">4.0</td><td class="center">6.5</td><td class="center">5.0</td><td class="center risk">5.5</td><td>春夏小批量验证。</td></tr>
-    </table>
-  </section>
+<!-- ===================== 6. 推广策略 ===================== -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-num">06</span><h2 class="sec">加拿大站推广打法</h2></div>
 
-  <section>
-    <div class="section-kicker">Comparable Products</div>
-    <h2>具体产品同类对标竞品分析</h2>
-    <p>本节只围绕推荐SKU的同类产品做对标，不把普通泛安防摄像头直接当作主竞品。Sofetime部分关键词Top结果会混入非严格同类产品，例如普通室内云台、灯具、行车记录仪等，因此这里按产品形态和购买场景进行过滤分析。</p>
-    <table>
-      <tr><th>我方产品</th><th>同类对标关键词</th><th>Sofetime数据</th><th>严格同类判断</th><th>主要竞争点</th><th>定价建议</th></tr>
-      <tr><td>T-CP8040LF-W21V / T-CP8050LF-W3M<br>灯泡摄像头</td><td>light bulb security camera<br>light bulb camera</td><td>light bulb security camera：月搜6,432，竞品2,841；light bulb camera：月搜3,833，竞品20,544。</td><td class="good">强相关。买家明确寻找灯泡/灯座安装摄像头，匹配我方产品形态。</td><td>灯座安装、360°视角、夜视、双向语音、无订阅、本地卡、2.4/5GHz说明。</td><td>CAD 39.99-42.99；低于加拿大低价单机竞品均价CAD48.32，利于冷启动。</td></tr>
-      <tr><td>CP15W1-W30Q<br>窗机</td><td>window security camera<br>window camera</td><td>window security camera：月搜2,997，竞品19,729；window camera：月搜5,305，竞品58,154。</td><td class="warn">中强相关。结果中会混入普通室内云台和行车记录仪，但“窗内向外看、免打孔、租房友好”的场景与我方产品匹配。</td><td>隔玻璃夜视反光、窗台/支架稳定、隐私、室内安装看室外、无室外布线。</td><td>CAD 59.99；定位为差异化利润款，而不是低价泛摄像头。</td></tr>
-      <tr><td>CQ1051-W30V<br>防水球机/低价户外款</td><td>security cameras wireless outdoor<br>outdoor camera wireless<br>camera surveillance exterieur</td><td>security cameras wireless outdoor：月搜30,346，竞品29,212；outdoor camera wireless：月搜8,381，竞品53,576；法语户外词月搜45,135。</td><td class="warn">中相关。关键词匹配户外需求，但会混入Tapo/WYZE等普通方块机和电池款；我方应以低价PTZ/防水形态差异化。</td><td>户外防水、PTZ/旋转视角、夜视、低价、法语流量、非太阳能低售后。</td><td>CAD 49.99；不与高客单太阳能2-pack正面竞争。</td></tr>
-      <tr><td>T-CP23W1-W30V<br>室内/半室内摇头机</td><td>security camera<br>wireless security camera</td><td>security camera：CA月搜22,938；wireless security camera：CA月搜4,007。</td><td class="warn">泛相关。该类目被Tapo、LAXIHUB、WYZE等品牌强占，不能作为核心突破口。</td><td>价格、APP稳定、本地存储、宠物/婴儿/老人看护场景。</td><td>CAD 39.99；仅作为补充SKU，不承担主投预算。</td></tr>
-    </table>
+  <h3>6.1 SKU / ASIN 架构</h3>
+  <p>核心原则：<strong>把所有灯泡机流量灌进同一个父体</strong>，让评论、BSR、A+ 复利叠加；套装与球机分开开父体，避免变体污染。</p>
+  <div class="tree">
+<b>父体 P1 · Light Bulb Security Camera</b>  <span class="g">← 全部灯泡机流量与评论汇聚于此</span>
+├─ <span class="c">A1</span> T-CP8040LF-W21V-WH  <span class="g">白 · 单支 · C$34.99</span>  ← 主变体，抢 Best Seller
+├─ <span class="c">A2</span> T-CP8043LF-W21V-BK  <span class="g">黑 · 单支 · C$36.99</span>
+├─ <span class="c">A3</span> T-CP8050LF-W3M-5G   <span class="g">双频 · 单支 · C$44.99</span>  ← 抬高变体 ASP
+└─ <span class="c">A4</span> KIT-BULB2           <span class="g">白 · 双支装 · C$59.99</span>  ← 客单价 +71%
+   <span class="g">变体维度：Colour（White/Black）× Pack（1/2）× Connectivity（2.4G/Dual-Band）</span>
 
-    <h3>同类竞品样本与启示</h3>
-    <table>
-      <tr><th>对标产品线</th><th>竞品样本</th><th>价格/销量信号</th><th>是否严格同类</th><th>可借鉴点</th><th>需避开的误区</th></tr>
-      <tr><td>灯泡摄像头</td><td>light bulb security camera 与 light bulb camera 关键词样本</td><td>该细分词月搜合计约10,265；light bulb security camera竞品仅2,841。</td><td class="good">是</td><td>把“light socket / no drilling / garage / porch”放在标题和主图前半段。</td><td>不要只写security camera，否则会与Tapo室内云台、WYZE方块机混战。</td></tr>
-      <tr><td>窗机</td><td>window security camera / window camera 样本中Tapo、HITELLARCAM等占位</td><td>window camera月搜5,305，但Top结果混入室内云台和行车记录仪。</td><td class="warn">部分同类</td><td>要用“inside window, watch outside, renter friendly”做场景差异化。</td><td>不要把普通室内云台竞品销量直接等同于窗机销量。</td></tr>
-      <tr><td>防水球机</td><td>security cameras wireless outdoor、outdoor camera wireless、法语户外词样本</td><td>户外无线词月搜30,346；法语户外词月搜45,135。</td><td class="warn">场景同类</td><td>应承接户外无线需求，但用低价PTZ/防水避开太阳能电池售后。</td><td>不要用太阳能竞品高销售额证明我方应首推太阳能；售后结构不同。</td></tr>
-      <tr><td>室内摇头机</td><td>Tapo C200、LAXIHUB、Tapo C260</td><td>Top样本月销4,000-5,500级别，但品牌壁垒高。</td><td class="warn">是同形态但竞争强</td><td>可参考价格、功能和本地存储表达。</td><td>不建议把室内摇头机作为首批核心，因为利润和品牌竞争压力不如灯泡机。</td></tr>
-    </table>
-    <div class="note">同类对标结论：首批推荐的核心不是“安防摄像头大盘最大”，而是“灯泡机和窗机在具体形态上有差异化，且能避开太阳能/4G高售后”。因此报告中的泛竞品销量只用于判断价格带和流量强度，不直接作为同类销量承诺。</div>
-  </section>
+<b>父体 P2 · Solar Wireless PTZ Camera</b>
+└─ <span class="c">B</span>  T-CQ4011S-W43J        <span class="g">C$79.99</span>   → 未来扩 2-pack / 加太阳能板变体
 
-  <section>
-    <h2>利润结构拆解</h2>
-    <table>
-      <tr><th>SKU</th><th>售价</th><th>采购成本折CAD</th><th>佣金15%</th><th>FBA估算</th><th>头程估算</th><th>广告+Coupon</th><th>估算贡献利润</th><th>贡献利润率</th></tr>
-      <tr><td>T-CP8040LF-W21V</td><td class="right">CAD 39.99</td><td class="right">5.19</td><td class="right">6.00</td><td class="right">5.50</td><td class="right">3.00</td><td class="right">8.00</td><td class="right good">12.30</td><td class="right good">30.8%</td></tr>
-      <tr><td>T-CP8050LF-W3M</td><td class="right">CAD 42.99</td><td class="right">6.35</td><td class="right">6.45</td><td class="right">5.80</td><td class="right">3.00</td><td class="right">8.50</td><td class="right good">12.90</td><td class="right good">30.0%</td></tr>
-      <tr><td>CP15W1-W30Q</td><td class="right">CAD 59.99</td><td class="right">9.96</td><td class="right">9.00</td><td class="right">6.50</td><td class="right">3.50</td><td class="right">12.00</td><td class="right good">19.03</td><td class="right good">31.7%</td></tr>
-      <tr><td>CQ1051-W30V</td><td class="right">CAD 49.99</td><td class="right">8.08</td><td class="right">7.50</td><td class="right">6.80</td><td class="right">3.50</td><td class="right">10.50</td><td class="right good">13.61</td><td class="right">27.2%</td></tr>
-      <tr><td>T-CP23W1-W30V</td><td class="right">CAD 39.99</td><td class="right">8.08</td><td class="right">6.00</td><td class="right">5.80</td><td class="right">3.00</td><td class="right">8.00</td><td class="right warn">9.11</td><td class="right">22.8%</td></tr>
-    </table>
-    <p class="mini">广告+Coupon为冷启动保守预算，不代表成熟期。成熟期如果自然排名上升，利润率有上修空间。</p>
-  </section>
+<b>父体 P3 · Robot Pet Camera</b>
+└─ <span class="c">C</span>  T-CP9036TF-W30V       <span class="g">C$49.99</span>   → 未来扩银色变体 (T-CP9046TF)
 
-  <section>
-    <div class="section-kicker">FBA Profit Model</div>
-    <h2>最终推荐SKU：FBA成本利润测算</h2>
-    <p>本模型基于产品表中的包装尺寸/重量、补贴后采购价和Amazon FBA费用结构进行估算。推荐费默认按电子类常见8%计算；FBA履约费采用标准尺寸小件的保守估算并加入3.5%燃油与物流附加费影响。由于Amazon实际费用会受类目、尺寸分段、配送重量、仓储、入仓配置和远程配送规则影响，表内“FBA履约费”保留为可手动调整项。</p>
-    <div class="note">可调参数：广告占比、退货售后率、退货售后单件损失、推荐费率、FBA履约费、售价。调整后利润会自动重算。</div>
-    <div class="grid">
-      <div class="metric"><div class="k">广告占比</div><div class="v"><input id="adRate" type="number" min="0" max="50" step="0.5" value="12" style="width:88px">%</div></div>
-      <div class="metric"><div class="k">退货售后率</div><div class="v"><input id="returnRate" type="number" min="0" max="50" step="0.5" value="5" style="width:88px">%</div></div>
-      <div class="metric"><div class="k">退货单件损失</div><div class="v">CAD <input id="returnLoss" type="number" min="0" max="50" step="0.5" value="8" style="width:88px"></div></div>
-      <div class="metric"><div class="k">汇率</div><div class="v">CNY/CAD <input id="fxRate" type="number" min="1" max="10" step="0.05" value="5.20" style="width:88px"></div></div>
-    </div>
-    <table id="fbaCalc">
-      <thead>
-        <tr>
-          <th>SKU</th><th>产品</th><th>包装尺寸/重量</th><th>采购价</th><th>售价</th><th>推荐费率</th><th>FBA履约费</th><th>头程/入仓</th><th>广告费</th><th>退货售后成本</th><th>单件净利润</th><th>净利率</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr data-cny="27" data-default-price="39.99">
-          <td>T-CP8040LF-W21V</td><td>灯泡机基础款</td><td>7.3×7.3×19.2cm / 0.230kg<br><span class="mini">约2.9×2.9×7.6in / 0.51lb</span></td><td>CNY 27.0<br><span class="mini cad-cost"></span></td>
-          <td>CAD <input class="price" type="number" value="39.99" step="0.5" style="width:78px"></td><td><input class="refRate" type="number" value="8" step="0.5" style="width:58px">%</td><td>CAD <input class="fbaFee" type="number" value="5.25" step="0.1" style="width:68px"></td><td>CAD <input class="inbound" type="number" value="3.00" step="0.1" style="width:68px"></td><td class="adCost"></td><td class="returnCost"></td><td class="profit"></td><td class="margin"></td>
-        </tr>
-        <tr data-cny="33" data-default-price="42.99">
-          <td>T-CP8050LF-W3M</td><td>灯泡机升级款</td><td>7.3×7.3×19.2cm / 0.246kg<br><span class="mini">约2.9×2.9×7.6in / 0.54lb</span></td><td>CNY 33.0<br><span class="mini cad-cost"></span></td>
-          <td>CAD <input class="price" type="number" value="42.99" step="0.5" style="width:78px"></td><td><input class="refRate" type="number" value="8" step="0.5" style="width:58px">%</td><td>CAD <input class="fbaFee" type="number" value="5.35" step="0.1" style="width:68px"></td><td>CAD <input class="inbound" type="number" value="3.00" step="0.1" style="width:68px"></td><td class="adCost"></td><td class="returnCost"></td><td class="profit"></td><td class="margin"></td>
-        </tr>
-        <tr data-cny="51.8" data-default-price="59.99">
-          <td>CP15W1-W30Q</td><td>窗机</td><td>11.2×4.7×9.0cm / 0.158kg<br><span class="mini">约4.4×1.9×3.5in / 0.35lb</span></td><td>CNY 51.8<br><span class="mini cad-cost"></span></td>
-          <td>CAD <input class="price" type="number" value="59.99" step="0.5" style="width:78px"></td><td><input class="refRate" type="number" value="8" step="0.5" style="width:58px">%</td><td>CAD <input class="fbaFee" type="number" value="5.05" step="0.1" style="width:68px"></td><td>CAD <input class="inbound" type="number" value="3.20" step="0.1" style="width:68px"></td><td class="adCost"></td><td class="returnCost"></td><td class="profit"></td><td class="margin"></td>
-        </tr>
-        <tr data-cny="42" data-default-price="49.99">
-          <td>CQ1051-W30V</td><td>防水球机/低价户外款</td><td>12.0×10.0×7.0cm / 0.300kg<br><span class="mini">约4.7×3.9×2.8in / 0.66lb</span></td><td>CNY 42.0<br><span class="mini cad-cost"></span></td>
-          <td>CAD <input class="price" type="number" value="49.99" step="0.5" style="width:78px"></td><td><input class="refRate" type="number" value="8" step="0.5" style="width:58px">%</td><td>CAD <input class="fbaFee" type="number" value="5.45" step="0.1" style="width:68px"></td><td>CAD <input class="inbound" type="number" value="3.50" step="0.1" style="width:68px"></td><td class="adCost"></td><td class="returnCost"></td><td class="profit"></td><td class="margin"></td>
-        </tr>
-        <tr data-cny="42" data-default-price="39.99">
-          <td>T-CP23W1-W30V</td><td>室内/半室内摇头机（备选）</td><td>10.0×7.2×12.5cm / 0.308kg<br><span class="mini">约3.9×2.8×4.9in / 0.68lb</span></td><td>CNY 42.0<br><span class="mini cad-cost"></span></td>
-          <td>CAD <input class="price" type="number" value="39.99" step="0.5" style="width:78px"></td><td><input class="refRate" type="number" value="8" step="0.5" style="width:58px">%</td><td>CAD <input class="fbaFee" type="number" value="5.45" step="0.1" style="width:68px"></td><td>CAD <input class="inbound" type="number" value="3.30" step="0.1" style="width:68px"></td><td class="adCost"></td><td class="returnCost"></td><td class="profit"></td><td class="margin"></td>
-        </tr>
-      </tbody>
-    </table>
-    <table>
-      <tr><th>费用项</th><th>模型处理方式</th><th>说明</th></tr>
-      <tr><td>推荐费</td><td>默认8%，可按SKU手动改</td><td>Amazon Canada费用表显示推荐费按类目变化；电子/相机相关类目常见8%，如系统归入其它类目需调整。</td></tr>
-      <tr><td>FBA履约费</td><td>按小标准尺寸估算，已预留手动输入</td><td>五款产品包装尺寸和重量均属于标准尺寸小件；实际费用以Seller Central最终FBA预览为准。</td></tr>
-      <tr><td>燃油与物流附加费</td><td>默认FBA费中已包含保守影响</td><td>Amazon 2026年4月17日起在美国和加拿大FBA履约费上加收3.5%燃油与物流相关附加费。</td></tr>
-      <tr><td>广告费</td><td>售价 × 广告占比</td><td>默认12%，可根据ACOS目标调整。</td></tr>
-      <tr><td>退货售后成本</td><td>售价 × 退货售后率 + 单件售后损失 × 退货售后率</td><td>用于模拟退款、换货、客服补偿、不可售损耗等综合影响。</td></tr>
-    </table>
-  </section>
+<b>虚拟组合（Virtual Bundle，需品牌备案）</b>
+└─ <span class="c">VB1</span> "Front Door + Backyard Kit" = A1 × 1 + B × 1  <span class="g">C$99.99（省 C$15）</span>
+   <span class="g">不占库存、不需新条码，Brand Registry 下直接创建 → 这是把 B 的销量抬起来最省钱的手段</span>
+  </div>
 
-  <section>
-    <h2>最终推荐SKU：低售后风险版</h2>
-    <table>
-      <tr><th>优先级</th><th>型号</th><th>类型</th><th>加拿大到手采购价</th><th>建议售价</th><th>估算单件贡献利润</th><th>售后风险</th><th>推荐理由</th></tr>
-      <tr><td>1</td><td>T-CP8040LF-W21V</td><td>灯泡摄像头</td><td class="right">CNY 27.0</td><td class="right">CAD 39.99</td><td class="right good">约CAD 12.3</td><td class="good">低</td><td>采购价最低，light bulb security camera CA月搜6,432、竞品2,841；灯座安装降低布线和电池售后。</td></tr>
-      <tr><td>2</td><td>T-CP8050LF-W3M</td><td>灯泡摄像头升级款</td><td class="right">CNY 33.0</td><td class="right">CAD 42.99</td><td class="right good">约CAD 12.9</td><td class="good">低</td><td>作为3MP/双频升级款，适合与低价灯泡机组成变体或2-pack，提高客单价。</td></tr>
-      <tr><td>3</td><td>CP15W1-W30Q</td><td>窗机</td><td class="right">CNY 51.8</td><td class="right">CAD 59.99</td><td class="right good">约CAD 19.0</td><td class="good">低-中</td><td>window security camera CA月搜2,997；适合加拿大租房、公寓、冬季室内向外看，避开户外低温电池问题。</td></tr>
-      <tr><td>4</td><td>CQ1051-W30V</td><td>防水球机/低价户外款</td><td class="right">CNY 42.0</td><td class="right">CAD 49.99</td><td class="right good">约CAD 13.6</td><td class="warn">中</td><td>承接outdoor和wireless outdoor词，成本低；如果是常电/非电池逻辑，售后低于太阳能电池款。</td></tr>
-      <tr><td>5（备选）</td><td>T-CP23W1-W30V</td><td>室内/半室内摇头机</td><td class="right">CNY 42.0</td><td class="right">CAD 39.99</td><td class="right warn">约CAD 9.1</td><td class="good">低</td><td>利润不如前四款，但售后风险低，可作为室内宠物/婴儿/老人看护补充款。</td></tr>
-    </table>
-    <p>首批建议实际备货：前4款为正式首发，备选摇头机按少量测试。这样能覆盖灯座、窗户、低价户外、室内看护四个场景，同时把太阳能/4G的冬季售后风险排除在首批之外。</p>
-  </section>
+  <h3>6.2 差异化卖点：直接打竞品的差评</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th>竞品软肋（Sorftime 实测）</th><th>我们的对位打法</th><th>落在哪</th></tr></thead>
+    <tbody>
+      <tr><td>灯泡机头部星级只有 <b>3.4–4.0</b>（Visiocore 3.4 / Jennov 3.8 / LUNA 4.0 / GBIUT 3.9），远低于大盘 4.23</td><td>把「稳定连接 + 一次配网成功」做成主图第 2 张的核心承诺，附二维码扫码配网视频教程</td><td>主图 / A+</td></tr>
+      <tr><td>SYMYNELEC 在标题里写 <b>"(2.4GHz Only)"</b> —— 等于承认短板</td><td>A3 直接打 <b>Dual-Band 2.4G + 5G</b>，标题前 80 字符内出现</td><td>标题 / 变体</td></tr>
+      <tr><td>全赛道 <b>没有一个法语 listing</b>；而 <code style="font-family:var(--mono)">camera surveillance</code> 有 5,159 搜索/月</td><td>法语标题 + 法语五点 + 法语 A+；SP 广告独立开法语词组</td><td>Listing / 广告</td></tr>
+      <tr><td>竞品全是<b>电池机</b>（1-5 months battery life 是它们的卖点，也是它们的痛点——加拿大 −20℃ 会腰斩）</td><td>「<b>Never Charge. Never Freeze.</b> 拧进灯座即通电，−30℃ 照常工作」——把北方冬天做成我们的护城河</td><td>主图文案 / 视频</td></tr>
+      <tr><td>头部竞品普遍要订阅（Top 竞品标题都在喊 No Monthly Fee，说明这是痛点）</td><td>本地 TF 卡存储，No Subscription，写进 A+ 首屏对比表</td><td>A+ 对比表</td></tr>
+      <tr><td>门廊包裹盗窃（porch piracy）是加拿大高频痛点，但<b>没有一个灯泡机在场景图里讲这件事</b></td><td>场景图直接演：换掉门廊灯 → 手机收到 Package Delivered 推送 → 声光报警吓退小偷</td><td>主图 3–5</td></tr>
+    </tbody>
+  </table>
+  </div>
 
-  <section>
-    <h2>明确不建议首批主推的产品</h2>
-    <table>
-      <tr><th>产品类型</th><th>涉及型号</th><th>不首推原因</th><th>保留策略</th></tr>
-      <tr><td>4G太阳能球机</td><td>CQ42W1S-G41J、CQ42B1S-G41J-6、ZC-YT15-G41J</td><td class="risk">SIM/运营商频段、4G流量、低温充电、积雪遮挡、冬季掉电均会造成高售后。</td><td>只做10-20台小批量验证；确认频段、低温、APP和客服脚本后再扩。</td></tr>
-      <tr><td>Wi-Fi太阳能电池球机</td><td>CQ42W1S-W43J、T-CQ4011S-W43J、T-CQ4021S-W43J</td><td class="risk">加拿大冬季日照短、积雪和低温导致“太阳能不充电/电池掉电快”差评概率高。</td><td>第二阶段在春夏季测试，主图必须写清冬季限制。</td></tr>
-      <tr><td>电池卡片机</td><td>T-CL3311-W43J、T-CL3011-W43J、T-CL3021-W43J</td><td class="warn">低温续航衰减，且Sofetime未返回battery security camera完整热搜数据。</td><td>作为后续无线补充款，不作为首批利润核心。</td></tr>
-      <tr><td>高价套装</td><td>基站/NVR/多路套装</td><td class="warn">客单高但安装、兼容、售后解释复杂，新站首发风险大。</td><td>等单品Listing有评论和品牌信任后再做。</td></tr>
-    </table>
-  </section>
+  <h3>6.3 广告投放（SP / SB / SD）</h3>
+  <p><b>核心词池（Sorftime CA 实测搜索量）：</b></p>
+  <div class="tw">
+  <table>
+    <thead><tr><th>层级</th><th>关键词</th><th class="n">月搜索量</th><th>用途</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3"><b>核心</b></td><td>light bulb security camera</td><td class="n">6,432</td><td rowspan="3">SP 精准 · 高竞价 · 抢首页；这是我们的「主战场词」</td></tr>
+      <tr><td>light bulb camera</td><td class="n">3,833</td></tr>
+      <tr><td>bulb camera outdoor</td><td class="n">2,438</td></tr>
+      <tr><td rowspan="3"><b>长尾</b></td><td>light bulb camera outdoor</td><td class="n">2,313</td><td rowspan="3">SP 词组 · 低竞价高转化 · 前 3 个月靠这批词养 listing 权重</td></tr>
+      <tr><td>lightbulb security camera</td><td class="n">2,127</td></tr>
+      <tr><td>light bulb security camera outdoor</td><td class="n">1,256</td></tr>
+      <tr><td><b>品牌狙击</b></td><td><b>wyze bulb cam</b></td><td class="n">4,612</td><td>SP 精准 + SD 商品定位打 Wyze/Sight Bulb 的 ASIN 详情页；这是全词池<b>第二大的词</b>，且是纯品牌词——Wyze 教育好的用户，我们低价接住</td></tr>
+      <tr><td rowspan="3"><b>法语（蓝海）</b></td><td>camera surveillance</td><td class="n">5,159</td><td rowspan="3">独立广告组、独立法语 listing 文案；<b>CPC 预期显著低于英语词</b>，是前期跑 ACOS 的关键</td></tr>
+      <tr><td>caméra de surveillance intérieur sans fil</td><td class="n">4,508</td></tr>
+      <tr><td>camera de surveillance</td><td class="n">2,115</td></tr>
+      <tr><td><b>大词（谨慎）</b></td><td>security camera / home security camera</td><td class="n">22,938 / 9,871</td><td>只用广泛匹配小预算试水；70,108 个竞品，前期烧不起</td></tr>
+    </tbody>
+  </table>
+  </div>
 
-  <section>
-    <h2>关键词市场验证</h2>
-    <table>
-      <tr><th>关键词</th><th>站点</th><th>月搜索量</th><th>竞品数</th><th>结论</th><th>对应产品</th></tr>
-      <tr><td>light bulb security camera</td><td>CA</td><td class="right">6,432</td><td class="right">2,841</td><td class="good">需求明确、竞争相对低，是首批最优切入口。</td><td>灯泡机</td></tr>
-      <tr><td>window security camera</td><td>CA</td><td class="right">2,997</td><td class="right">19,729</td><td class="good">细分场景清晰，适合租房、公寓和冬季室内安装。</td><td>窗机</td></tr>
-      <tr><td>security cameras wireless outdoor</td><td>CA</td><td class="right">30,346</td><td class="right">29,212</td><td class="good">户外无线大词，可承接低价户外款，但竞争强。</td><td>防水球机</td></tr>
-      <tr><td>camera surveillance exterieur</td><td>CA</td><td class="right">45,135</td><td class="right">58,570</td><td class="good">加拿大法语户外词价值高，应进入后台词和A+本地化。</td><td>户外款/窗机</td></tr>
-      <tr><td>solar security camera</td><td>CA</td><td class="right">3,964</td><td class="right">31,636</td><td class="warn">有需求，但售后风险高，不作为首批主推。</td><td>第二阶段太阳能款</td></tr>
-      <tr><td>doorbell camera</td><td>CA</td><td class="right">41,570</td><td class="right">33,020</td><td class="warn">流量大但门铃意图强，我方非门铃，不宜冷启动主投。</td><td>仅用front door/porch场景词</td></tr>
-      <tr><td>security camera</td><td>CA</td><td class="right">22,938</td><td class="right">70,108</td><td class="warn">大词体量大但竞争强，首期小预算测试。</td><td>全线</td></tr>
-      <tr><td>security camera</td><td>AU</td><td class="right">10,499</td><td class="right">17,022</td><td class="warn">体量约为加拿大46%，澳洲更适合第二阶段。</td><td>澳洲后续</td></tr>
-    </table>
-  </section>
+  <h4>三阶段节奏</h4>
+  <div class="tw">
+  <table>
+    <thead><tr><th>阶段</th><th>目标</th><th>广告结构</th><th class="n">广告占比</th><th class="n">目标 ACOS</th><th>动作</th></tr></thead>
+    <tbody>
+      <tr><td><b>M1–M2 冷启动</b></td><td>拿到前 30 条评论 + 打开自然位</td><td>SP 自动（宽松）+ SP 精准（3 个核心词）+ SP 词组（长尾）</td><td class="n">35–40%</td><td class="n">60–80%</td><td>Vine（灯泡机 30 单）；上 Coupon 10%（赛道只有 1.89% 的产品做 Coupon，这是空档）；日预算 C$60–80</td></tr>
+      <tr><td><b>M3–M6 上量</b></td><td>吃下 light bulb 词群首页</td><td>+ SP wyze bulb cam 精准<br>+ SD 商品定位打 LUNA/SYMYNELEC/Jennov 的 ASIN<br>+ <b>开法语广告组</b></td><td class="n">22–28%</td><td class="n">35–45%</td><td>否词清洗；A4 双支装用 SB 视频推「双门守护」；关联 B 球机做虚拟组合</td></tr>
+      <tr><td><b>M7–M12 收割</b></td><td>转自然流量、提净利</td><td>SP 收缩到高转化词；SB 品牌词防守；SD 再营销</td><td class="n">15–20%</td><td class="n">22–30%</td><td>Q4（10–12 月）预算加倍——CA 安防旺季在 11 月，灯泡机词次峰在 4 月与 10 月</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note"><b>Coupon 是被忽略的杠杆。</b>Sorftime 显示 <code style="font-family:var(--mono)">light bulb security camera</code> 首页只有 <b>1 个产品（1.89%）</b>在做 Coupon，而大词 security camera 是 5.26%、solar 是 7.55%。绿色 Coupon 角标在这个赛道几乎是<strong>独占的视觉优势</strong>，成本可控（灯泡机每台 10% Coupon ≈ C$3.5，仍留 24.8% 净利）。</div>
+</section>
 
-  <section>
-    <h2>泛竞品销量与价格带参考</h2>
-    <div class="split">
-      <div class="chartbox">
-        <h3>加拿大竞品月销量Top样本</h3>
-        <div class="barrow"><span>Tapo C200</span><div class="bar green"><span style="width:100%"></span></div><b>5,598</b></div>
-        <div class="barrow"><span>HITELLARCAM 2K</span><div class="bar green"><span style="width:92%"></span></div><b>5,172</b></div>
-        <div class="barrow"><span>Tapo C260 4K</span><div class="bar"><span style="width:81%"></span></div><b>4,527</b></div>
-        <div class="barrow"><span>Tapo 2-pack</span><div class="bar"><span style="width:59%"></span></div><b>3,297</b></div>
-        <div class="barrow"><span>Tapo Solar PTZ</span><div class="bar orange"><span style="width:39%"></span></div><b>2,176</b></div>
-        <div class="barrow"><span>aosu Solar 2-pack</span><div class="bar orange"><span style="width:38%"></span></div><b>2,112</b></div>
-      </div>
-      <div class="chartbox">
-        <h3>加拿大竞品估算月销售额</h3>
-        <div class="barrow"><span>aosu Solar 2-pack</span><div class="bar green"><span style="width:100%"></span></div><b>337,899</b></div>
-        <div class="barrow"><span>Tapo C260 4K</span><div class="bar"><span style="width:94%"></span></div><b>316,845</b></div>
-        <div class="barrow"><span>Tapo 2-pack</span><div class="bar"><span style="width:89%"></span></div><b>302,005</b></div>
-        <div class="barrow"><span>Tapo Solar PTZ</span><div class="bar orange"><span style="width:77%"></span></div><b>261,098</b></div>
-        <div class="barrow"><span>HITELLARCAM 2K</span><div class="bar"><span style="width:61%"></span></div><b>206,777</b></div>
-        <div class="barrow"><span>Tapo C200</span><div class="bar"><span style="width:58%"></span></div><b>195,818</b></div>
-      </div>
-    </div>
-    <p>图表解读：本节为泛竞品参考，主要用于判断加拿大站安防摄像头价格带、头部动销和高客单空间。由于部分竞品与我方推荐产品并非同一安装形态，不能直接视为同类销量承诺。高客单太阳能和2-pack竞品销售额很高，但售后复杂度也高，因此太阳能仍建议放到第二阶段。</p>
-    <h3>加拿大泛竞品样本</h3>
-    <table>
-      <tr><th>ASIN</th><th>品牌</th><th>产品定位</th><th>价格</th><th>Sofetime月销量</th><th>估算月销售额</th><th>对我方启示</th></tr>
-      <tr><td>B0829KDY9X</td><td>Tapo</td><td>室内云台/宠物婴儿监控</td><td class="right">CAD 34.98</td><td class="right">5,598</td><td class="right">CAD 195,818</td><td>低价+品牌+本地存储强；我方不要和普通云台硬碰，灯泡机要突出形态差异。</td></tr>
-      <tr><td>B0FRMTHLR6</td><td>HITELLARCAM</td><td>2K无线户外电池摄像头</td><td class="right">CAD 39.98</td><td class="right">5,172</td><td class="right">CAD 206,777</td><td>低价户外款能起量，但电池/续航差评风险高；我方用非太阳能低价户外款更稳。</td></tr>
-      <tr><td>B0F5KGHSHF</td><td>Tapo</td><td>4K/8MP室内云台</td><td class="right">CAD 69.99</td><td class="right">4,527</td><td class="right">CAD 316,845</td><td>高像素和AI能支撑高价；我方3MP产品不应硬打4K卖点。</td></tr>
-      <tr><td>B0GTRV65NC</td><td>Tapo</td><td>2K室内外2-pack</td><td class="right">CAD 91.60</td><td class="right">3,297</td><td class="right">CAD 302,005</td><td>2-pack有销量基础，灯泡机成熟后应推2-pack。</td></tr>
-      <tr><td>B0G1V4HFP4</td><td>Tapo</td><td>太阳能云台户外套装</td><td class="right">CAD 119.99</td><td class="right">2,176</td><td class="right">CAD 261,098</td><td>太阳能高客单可卖，但低温售后说明必须充分。</td></tr>
-      <tr><td>B0CQJRCGQN</td><td>aosu</td><td>太阳能户外2-pack</td><td class="right">CAD 159.99</td><td class="right">2,112</td><td class="right">CAD 337,899</td><td>高客单2-pack有机会，但不适合新站首批承担售后。</td></tr>
-    </table>
-    <h3>澳大利亚泛竞品样本</h3>
-    <table>
-      <tr><th>ASIN</th><th>品牌</th><th>产品定位</th><th>价格</th><th>Sofetime月销量</th><th>估算月销售额</th><th>对比结论</th></tr>
-      <tr><td>B0CH37CLQW</td><td>MUBVIEW</td><td>2K室内云台/婴儿宠物</td><td class="right">AUD 47.49</td><td class="right">1,079</td><td class="right">AUD 51,242</td><td>澳洲Top样本销量约为加拿大Top样本的19%，体量明显小。</td></tr>
-      <tr><td>B0CDCL38KZ</td><td>TP-Link</td><td>Tapo C200 2-pack</td><td class="right">AUD 47.20</td><td class="right">863</td><td class="right">AUD 40,734</td><td>低价也能卖，但首发爬坡速度慢于加拿大。</td></tr>
-      <tr><td>B0D7H6PX41</td><td>Tapo</td><td>太阳能无线2K套装</td><td class="right">AUD 86.64</td><td class="right">60</td><td class="right">AUD 5,198</td><td>太阳能适合澳洲环境，但Amazon AU样本销量仍小。</td></tr>
-      <tr><td>B0FG2PC4KK</td><td>Tapo</td><td>4K太阳能云台套装</td><td class="right">AUD 187.72</td><td class="right">87</td><td class="right">AUD 16,332</td><td>高客单有空间，但适合作第二阶段精准款。</td></tr>
-    </table>
-  </section>
+<!-- ===================== 7. 预测 ===================== -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-num">07</span><h2 class="sec">12 个月保守销售推演</h2></div>
+  <p>销量假设<strong>不是拍脑袋</strong>：以 Sorftime 抓到的加拿大灯泡机赛道 7 个真实竞品的「上架月数 × 当前月销」为基线，取其 <b>50%–60% 分位</b>作为我们的规划值（上架 ≤3 个月的新品实测中位数 166 台/月，我们 M2 只排 110 台；上架 9–13 个月的实测中位数 411 台/月，我们 M9 只排 520 台含 4 个 SKU 合计）。</p>
 
-  <section>
-    <h2>竞品平均售价分析</h2>
-    <p>以下均价基于 Sofetime 返回的核心竞品样本价格计算，用于判断目标售价区间。由于样本同时包含低价单机、高像素款、2-pack和太阳能套装，因此同时展示均价、中位价和分层均价，避免被高客单套装拉偏。</p>
-    <div class="split">
-      <div class="chartbox">
-        <h3>加拿大竞品价格分层</h3>
-        <div class="barrow"><span>样本平均售价</span><div class="bar green"><span style="width:70%"></span></div><b>CAD 86.09</b></div>
-        <div class="barrow"><span>样本中位售价</span><div class="bar"><span style="width:65%"></span></div><b>CAD 80.79</b></div>
-        <div class="barrow"><span>低价单机均价</span><div class="bar orange"><span style="width:39%"></span></div><b>CAD 48.32</b></div>
-        <div class="barrow"><span>高客单/套装均价</span><div class="bar green"><span style="width:100%"></span></div><b>CAD 123.86</b></div>
-      </div>
-      <div class="chartbox">
-        <h3>澳大利亚竞品价格分层</h3>
-        <div class="barrow"><span>样本平均售价</span><div class="bar green"><span style="width:60%"></span></div><b>AUD 82.63</b></div>
-        <div class="barrow"><span>样本中位售价</span><div class="bar orange"><span style="width:35%"></span></div><b>AUD 47.49</b></div>
-        <div class="barrow"><span>低价单机均价</span><div class="bar orange"><span style="width:34%"></span></div><b>AUD 46.26</b></div>
-        <div class="barrow"><span>太阳能/高客单均价</span><div class="bar green"><span style="width:100%"></span></div><b>AUD 137.18</b></div>
-      </div>
-    </div>
-    <table>
-      <tr><th>价格层</th><th>加拿大样本</th><th>澳大利亚样本</th><th>对我方定价的启示</th></tr>
-      <tr><td>低价单机层</td><td>CAD 34.98-69.99，均价约CAD 48.32</td><td>AUD 44.08-47.49，均价约AUD 46.26</td><td>我方灯泡机建议定价CAD 39.99-42.99，略低于加拿大低价样本均价，利于冷启动转化。</td></tr>
-      <tr><td>中位价格层</td><td>中位价CAD 80.79</td><td>中位价AUD 47.49</td><td>加拿大价格带更宽，后续2-pack和带卡款有更大上探空间；澳洲中位价低，价格竞争更敏感。</td></tr>
-      <tr><td>高客单/套装层</td><td>CAD 91.60-159.99，均价约CAD 123.86</td><td>AUD 86.64-187.72，均价约AUD 137.18</td><td>太阳能和2-pack可做高客单，但加拿大冬季售后风险较高，应在评论和客服体系成熟后再推。</td></tr>
-      <tr><td>首发建议价</td><td>灯泡机CAD 39.99-42.99；窗机CAD 59.99；防水球机CAD 49.99</td><td>暂不首发；后续太阳能款建议从AUD 89.99-129.99测试</td><td>首发不要追求高售价，先用低风险SKU拿转化和评论，再通过2-pack/带卡款提高客单价。</td></tr>
-    </table>
-  </section>
+  <div class="chart">
+    <div class="ct">月度销量爬坡与销售额（保守）</div>
+    <div class="cs">柱＝月销台数（分产品线堆叠）；线＝月销售额 (CAD)。Q4（M10–M12）按 CA 安防旺季 11 月做了上翘。</div>
+    <div id="fcchart"></div>
+    <div class="leg"><span><i style="background:var(--ca)"></i>灯泡机族 A1–A4</span><span><i style="background:#E08A98"></i>太阳能球机 B</span><span><i style="background:#7A8895"></i>机器人机 C</span><span><i style="background:var(--ink)"></i>销售额 CAD</span></div>
+  </div>
 
-  <section>
-    <h2>竞品差评与售后风险</h2>
-    <h3>售后风险热力图</h3>
-    <table>
-      <tr><th>产品类型</th><th>低温/续航</th><th>安装复杂</th><th>联网/兼容</th><th>雨雪进水</th><th>误报/设置</th><th>综合风险</th><th>建议动作</th></tr>
-      <tr><td>灯泡机</td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s1">低</span></td><td>首推</td></tr>
-      <tr><td>窗机</td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s1">低</span></td><td>首推</td></tr>
-      <tr><td>防水球机</td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td>小预算首推</td></tr>
-      <tr><td>室内摇头机</td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s1">低</span></td><td>备选</td></tr>
-      <tr><td>太阳能Wi-Fi球机</td><td class="center"><span class="score s3">高</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s3">高</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s3">高</span></td><td>第二阶段</td></tr>
-      <tr><td>4G太阳能球机</td><td class="center"><span class="score s3">高</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s3">高</span></td><td class="center"><span class="score s3">高</span></td><td class="center"><span class="score s3">高</span></td><td class="center"><span class="score s3">高</span></td><td>小样验证</td></tr>
-      <tr><td>电池卡片机</td><td class="center"><span class="score s3">高</span></td><td class="center"><span class="score s1">低</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中</span></td><td class="center"><span class="score s2">中高</span></td><td>暂缓</td></tr>
-    </table>
-    <table>
-      <tr><th>风险主题</th><th>竞品/公开反馈</th><th>对首批推荐的影响</th><th>处理方式</th></tr>
-      <tr><td>太阳能不充电</td><td>Ring、eufy、Reolink、AOSU等公开社区均有低温/冬季太阳能补电不足讨论。</td><td class="risk">太阳能/4G从首批主推移除。</td><td>第二阶段只在春夏小批量测试，详情页写清低温限制。</td></tr>
-      <tr><td>电池掉电快</td><td>户外电池款在低温、频繁触发、夜视、4G传输下耗电更快。</td><td class="risk">电池卡片机和电池球机不作为利润核心。</td><td>若上架，必须提供侦测区域/灵敏度/休眠设置指导。</td></tr>
-      <tr><td>积雪遮挡太阳能板</td><td>光伏积雪资料显示冬季月份损失显著高于全年平均；小太阳能板更容易被覆盖。</td><td class="risk">加拿大冬季售后概率高。</td><td>不承诺全年零维护；安装图提示倾角、朝向和清雪。</td></tr>
-      <tr><td>4G/SIM兼容</td><td>4G款涉及运营商频段、套餐、激活、流量消耗。</td><td class="risk">客服解释成本高，差评概率高。</td><td>暂不主推；先验证频段和SIM说明。</td></tr>
-      <tr><td>安装复杂</td><td>高价有线/门铃/太阳能款安装步骤更多。</td><td class="good">灯泡机和窗机因此更适合首发。</td><td>主图强调no drilling、plug-in/light socket、inside window。</td></tr>
-    </table>
-  </section>
+  <div class="tw">
+  <table>
+    <thead><tr><th>月份</th><th class="n">灯泡机族</th><th class="n">球机</th><th class="n">机器人</th><th class="n">合计台数</th><th class="n">销售额 CAD</th><th class="n">净利 CAD</th></tr></thead>
+    <tbody id="fcBody"></tbody>
+  </table>
+  </div>
 
-  <section>
-    <h2>加拿大雨雪低温影响：为什么不首推太阳能/4G</h2>
-    <table>
-      <tr><th>环境因素</th><th>影响</th><th>售后表现</th><th>对策</th></tr>
-      <tr><td>低温</td><td>锂电池容量下降，低温下可能限制充电。</td><td>买家认为“电池不耐用”“太阳能板坏了”。</td><td>不作为首批主推；若上架需写明工作/充电温度。</td></tr>
-      <tr><td>积雪</td><td>遮挡太阳能板和镜头，冬季补能下降。</td><td>“有太阳也不充电”“画面被雪挡住”。</td><td>安装图提示南向、倾斜、可清雪位置。</td></tr>
-      <tr><td>短日照/阴天</td><td>太阳能补电窗口短。</td><td>连续阴天后电量下降。</td><td>不承诺全年免充电；建议保留有线补电。</td></tr>
-      <tr><td>高触发</td><td>车道、街道、动物、雪花频繁触发。</td><td>掉电快、误报多。</td><td>设置侦测区域、人形过滤、灵敏度。</td></tr>
-    </table>
-  </section>
+  <div class="tw">
+  <table>
+    <thead><tr><th>季度</th><th class="n">台数</th><th class="n">销售额 CAD</th><th class="n">销售额 CNY</th><th class="n">净利 CAD</th><th class="n">净利率</th></tr></thead>
+    <tbody>
+      <tr><td><b>Q1</b> (M1–M3)</td><td class="n">610</td><td class="n">C$30,608</td><td class="n">¥146,306</td><td class="n">C$7,348</td><td class="n pos">24.0%</td></tr>
+      <tr><td><b>Q2</b> (M4–M6)</td><td class="n">1,675</td><td class="n">C$84,518</td><td class="n">¥403,996</td><td class="n">C$20,261</td><td class="n pos">24.0%</td></tr>
+      <tr><td><b>Q3</b> (M7–M9)</td><td class="n">2,410</td><td class="n">C$121,020</td><td class="n">¥578,476</td><td class="n">C$29,176</td><td class="n pos">24.1%</td></tr>
+      <tr><td><b>Q4</b> (M10–M12)</td><td class="n">3,300</td><td class="n">C$165,042</td><td class="n">¥788,901</td><td class="n">C$39,916</td><td class="n pos">24.2%</td></tr>
+      <tr class="tot"><td>全年</td><td class="n">7,995</td><td class="n">C$401,188</td><td class="n">¥1,917,679</td><td class="n">C$96,701</td><td class="n">24.1%</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:13px">配套推算：全年广告预算约 <b>C$80,238</b>（按 20% 售价计提）；首单备货建议 <b>≈915 台</b>（前 3 个月销量 × 1.5 安全库存），对应采购款约 <b>¥5.0 万</b>（以灯泡机为主）——<strong>这是一个用极小启动资金就能验证的赛道，这也是它值得先做的原因。</strong></p>
+  <div class="note"><b>这个预测保守在哪：</b>① 只算了 3 条产品线，未计入喂鸟器/时钟机等二期；② 未计入法语流量的增量（我们把它当作 ACOS 的下行保护，而非销量的上行）；③ 灯泡机 M12 排 650 台，仍低于现有头名 LUNA HOME 的 578 台 + SYMYNELEC 的 379 台之和；④ 未计入 Q4 Prime/Black Friday 活动的脉冲。<strong>激进情景（广告 12%、销量 ×1.4）下全年销售额可到 C$56 万、净利率 33%+。</strong></div>
+</section>
 
-  <section>
-    <h2>阶段性执行路径</h2>
-    <table>
-      <tr><th>阶段</th><th>时间</th><th>SKU</th><th>目标</th><th>动作</th></tr>
-      <tr><td>冷启动</td><td>第1-2周</td><td>灯泡机2款</td><td>拿点击、测转化、控ACOS。</td><td>主投light bulb security camera；价格CAD39.99/42.99，5%-10% Coupon。</td></tr>
-      <tr><td>扩场景</td><td>第3-4周</td><td>窗机、防水球机</td><td>覆盖租房/公寓/户外低价场景。</td><td>投window security camera、security cameras wireless outdoor，小预算测试法语词。</td></tr>
-      <tr><td>做套装</td><td>第2-3月</td><td>灯泡机2-pack、带卡款</td><td>提高客单价和利润。</td><td>根据首月转化做2-pack和64G卡套装。</td></tr>
-      <tr><td>风险验证</td><td>第3月后</td><td>太阳能/4G小批量</td><td>验证售后和加拿大冬季前表现。</td><td>最多10-20台测试，不做大库存。</td></tr>
-      <tr><td>复制澳洲</td><td>加拿大稳定后</td><td>太阳能/防水户外</td><td>用成熟素材进入AU。</td><td>优先solar security camera AU，不复制窗机为主线。</td></tr>
-    </table>
-  </section>
+<!-- ===================== 8. 风险 ===================== -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-num">08</span><h2 class="sec">风险与前置动作</h2></div>
+  <div class="tw">
+  <table>
+    <thead><tr><th>风险</th><th>影响</th><th>前置动作</th></tr></thead>
+    <tbody>
+      <tr><td><b>类目归属错误</b>——若被判到 Tools &gt; Security Lighting，佣金 8%→15%</td><td class="neg">灯泡机每台净利 −C$2.4，净利率从 28.3% 掉到 21.4%</td><td>上架时强制指定 Consumer Electronics &gt; Surveillance Cameras；参考 LUNA HOME(B0FH2N6FXD) 的类目路径</td></tr>
+      <tr><td><b>双语包装未排产</b></td><td class="neg">加拿大消费品包装法要求英法双语，缺失可被下架</td><td>下单前就要求工厂改彩盒与说明书（不是上线后能补的）</td></tr>
+      <tr><td><b>ISED (IC ID) 认证</b></td><td class="neg">无认证的无线设备属违规上架</td><td>确认 Instavision/Eseecloud 方案是否已有 IC ID；若只有 FCC，需补测</td></tr>
+      <tr><td><b>灯座标准</b>：北美是 <b>E26</b>，产品若为 E27 需转接</td><td class="wrn">差评/退货率飙升</td><td><b>下单前必须向工厂确认灯座规格</b>——E27 拧不进 E26 是致命的</td></tr>
+      <tr><td>低星生态：赛道平均 3.4–4.0 星，说明<b>产品本身有共性缺陷</b>（多为配网与夜视）</td><td class="wrn">我们可能踩同样的坑</td><td>首批做 50 台小样自测配网成功率与夜视；Vine 前先内测</td></tr>
+      <tr><td>「hidden camera」埋词</td><td class="neg">触发亚马逊隐蔽拍摄设备审核，账号风险</td><td>时钟机/太空人二期再上，且严禁使用 hidden/spy 词；用 "desk clock camera"</td></tr>
+      <tr><td>头程与汇率波动</td><td class="wrn">头程 ¥22→¥35/kg 时灯泡机净利率 28.3%→27.1%（灯泡机轻，敏感度低）；球机 18.2%→15.3%</td><td>模型里已内置滑块，按货代实际报价复核。<b>轻小件对头程不敏感，是灯泡机的又一优势</b></td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
 
-  <section>
-    <h2>6个月销售测算：低风险组合</h2>
-    <table>
-      <tr><th>月份</th><th>灯泡机</th><th>窗机</th><th>防水球机</th><th>摇头机备选</th><th>预计GMV</th><th>说明</th></tr>
-      <tr><td>第1月</td><td class="right">80</td><td class="right">10</td><td class="right">10</td><td class="right">0</td><td class="right">CAD 4,699</td><td>只做低售后产品冷启动。</td></tr>
-      <tr><td>第2月</td><td class="right">150</td><td class="right">25</td><td class="right">25</td><td class="right">10</td><td class="right">CAD 9,848</td><td>加入窗机和户外低价款。</td></tr>
-      <tr><td>第3月</td><td class="right">230</td><td class="right">45</td><td class="right">45</td><td class="right">20</td><td class="right">CAD 15,676</td><td>推出2-pack或带卡款。</td></tr>
-      <tr><td>第4月</td><td class="right">310</td><td class="right">65</td><td class="right">70</td><td class="right">30</td><td class="right">CAD 22,545</td><td>扩展法语户外词和竞品ASIN。</td></tr>
-      <tr><td>第5月</td><td class="right">380</td><td class="right">85</td><td class="right">90</td><td class="right">40</td><td class="right">CAD 28,874</td><td>控制ACOS，做组合套装。</td></tr>
-      <tr><td>第6月</td><td class="right">450</td><td class="right">105</td><td class="right">115</td><td class="right">50</td><td class="right">CAD 35,893</td><td>评估太阳能小批量。</td></tr>
-      <tr><th>合计</th><th class="right">1,600</th><th class="right">335</th><th class="right">355</th><th class="right">150</th><th class="right">CAD 117,535</th><th>低风险保守GMV。</th></tr>
-    </table>
-    <p>该低风险组合的销售额低于包含太阳能/4G的高客单方案，但售后风险和现金流波动显著更低，更适合作为首发阶段的稳健方案。</p>
-  </section>
+<!-- ===================== 8B. 市场体量与推广难度 ===================== -->
+<section id="s8b">
+  <div class="sec-head"><span class="sec-num">08B</span><h2 class="sec">剔除补贴差异后的站点质量评估：市场体量、平台占比、垄断系数与新品难度</h2></div>
 
-  <section>
-    <h2>数据来源</h2>
+  <p>本节将两个站点补贴按同等程度参考，不再比较“加拿大补贴高、澳洲补贴低”的采购优势。站点选择只基于四个市场变量：<strong>安防监控摄像头类目市场体量</strong>、<strong>Amazon 对该类目的线上承接能力</strong>、<strong>类目垄断系数</strong>和<strong>新品推广难度</strong>。</p>
+
+  <h3>8B.1 安防监控摄像头类目的市场体量</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th>指标</th><th>加拿大 Amazon.ca</th><th>澳大利亚 Amazon.com.au</th><th>结论</th></tr></thead>
+    <tbody>
+      <tr><td><b>平台内最接近类目Top100月销</b></td><td class="n">53,910 台/月<br><span style="color:var(--ink3)">Security &amp; Surveillance</span></td><td class="n">7,457 台/月<br><span style="color:var(--ink3)">Video Monitors / Security相近类目</span></td><td class="pos">加拿大约为澳洲 7.2 倍，具备更大的首发试错样本。</td></tr>
+      <tr><td><b>平台内最接近类目Top100月销额</b></td><td class="n">C$555.4 万/月</td><td class="n">A$48.6 万/月</td><td class="pos">加拿大金额盘约为澳洲 11.4 倍（未换汇，仅看本币平台交易盘）。</td></tr>
+      <tr><td><b>核心词 security camera 月搜索</b></td><td class="n">22,938</td><td class="n">10,499</td><td>加拿大约为澳洲 2.18 倍。</td></tr>
+      <tr><td><b>户外词 outdoor security camera 月搜索</b></td><td class="n">10,481</td><td class="n">2,034</td><td class="pos">加拿大约为澳洲 5.15 倍；户外安防扩量空间更大。</td></tr>
+      <tr><td><b>细分机会词</b></td><td>light bulb security camera 月搜 6,432；camera surveillance exterieur 月搜 45,135</td><td>light bulb / 4G / window 等细分词未返回有效热搜；solar security camera 月搜 2,026</td><td class="pos">加拿大不仅大盘更大，还有可切入的细分词；澳洲机会集中在太阳能户外。</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="chart">
+    <div class="ct">站点类目规模指数（加拿大=100）</div>
+    <div class="cs">指数基于 Sorftime 平台内Top100月销、Top100月销额、核心词月搜与户外词月搜四项标准化后加权；不含任何补贴因素。</div>
+    <svg viewBox="0 0 880 150" role="img" aria-label="加拿大与澳大利亚市场体量指数">
+      <line x1="170" y1="38" x2="820" y2="38" stroke="#E2E8ED"/>
+      <line x1="170" y1="98" x2="820" y2="98" stroke="#E2E8ED"/>
+      <text x="155" y="43" text-anchor="end" font-family="Noto Sans SC" font-size="13" fill="#3C4A57">加拿大</text>
+      <text x="155" y="103" text-anchor="end" font-family="Noto Sans SC" font-size="13" fill="#3C4A57">澳大利亚</text>
+      <rect x="170" y="24" width="620" height="28" fill="#B9243B"/>
+      <rect x="170" y="84" width="145" height="28" fill="#16607F"/>
+      <text x="805" y="43" font-family="IBM Plex Mono" font-size="13" fill="#B9243B" font-weight="600">100</text>
+      <text x="330" y="103" font-family="IBM Plex Mono" font-size="13" fill="#16607F" font-weight="600">23</text>
+    </svg>
+  </div>
+
+  <h3>8B.2 Amazon平台大盘占比与类目承接能力</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th>维度</th><th>加拿大</th><th>澳大利亚</th><th>对新品的含义</th></tr></thead>
+    <tbody>
+      <tr><td><b>Amazon在当地电商中的角色</b></td><td>加拿大Amazon成熟度更高，消费者对Amazon购买电子/家居安防设备的心智更稳定；站内搜索词覆盖英法双语。</td><td>Amazon Australia增长快，但安防设备仍受到 Bunnings、JB Hi-Fi、Officeworks 等本地零售分流。</td><td class="pos">加拿大更适合以Amazon站内广告和自然搜索完成冷启动。</td></tr>
+      <tr><td><b>平台内安防类目承接能力</b></td><td>Security &amp; Surveillance Top100月销53,910台，且泛词/户外词/灯泡机词均有明确销量样本。</td><td>相近类目Top100月销7,457台；户外词Top100实销约1,513台/月，长尾较浅。</td><td class="pos">加拿大能承载多SKU测试；澳洲更适合单线精准测试。</td></tr>
+      <tr><td><b>站内词与产品形态匹配</b></td><td>灯泡机、法语户外词、无线户外词均存在；与贵司灯泡机/户外低价款匹配。</td><td>太阳能词存在，但灯泡机、4G、窗机等贵司差异化词未形成有效热搜。</td><td class="pos">加拿大能让差异化产品找到搜索入口；澳洲更容易回到常规摄像头红海。</td></tr>
+      <tr><td><b>平台大盘占比的经营判断</b></td><td>以Sorftime类目Top100交易额看，加拿大平台内安防摄像头可见交易盘明显更大。</td><td>澳洲线下零售和本土渠道占比更高，Amazon站内安防品类交易盘较浅。</td><td>首发应选平台承接能力强的站点；澳洲可作为第二阶段渠道补充。</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>8B.3 类目垄断系数：头部集中度与Amazon自营压力</h3>
+  <p>本报告使用两个指标衡量类目垄断：<b>CR5</b>（Top5样本销量占比合计）与<b>HHI样本指数</b>（Top5销量占比平方和，数值越高代表越集中）。该指标基于Sorftime关键词Top5样本，用于判断新品能否从头部品牌夹缝中切入。</p>
+  <div class="tw">
+  <table>
+    <thead><tr><th>关键词/类目</th><th>站点</th><th class="n">Top5销量占比合计 CR5</th><th class="n">HHI样本指数</th><th>头部结构</th><th>垄断判断</th></tr></thead>
+    <tbody>
+      <tr><td>security camera</td><td>CA</td><td class="n">33.10%</td><td class="n">237</td><td>Tapo / HITELLARCAM / LAXIHUB 分散；Amazon自营强但非唯一。</td><td><span class="pill p-w">中等集中</span></td></tr>
+      <tr><td>security camera</td><td>AU</td><td class="n">51.36%</td><td class="n">700</td><td>MUBVIEW 与 TP-Link/Tapo 头部占比高，Amazon自营样本占比约31.45%。</td><td><span class="pill p-no">高集中</span></td></tr>
+      <tr><td>outdoor security camera</td><td>CA</td><td class="n">35.44%</td><td class="n">266</td><td>Tapo、HITELLARCAM、WYZE多品牌竞争。</td><td><span class="pill p-w">中等集中</span></td></tr>
+      <tr><td>outdoor security camera</td><td>AU</td><td class="n">28.03%</td><td class="n">259</td><td>表面不高，但Top1之后销量迅速变浅，长尾容量不足。</td><td><span class="pill p-w">低销量型集中</span></td></tr>
+      <tr><td>solar security camera</td><td>CA</td><td class="n">40.49%</td><td class="n">325</td><td>Tapo、HITELLARCAM、WYZE占据主流入口。</td><td><span class="pill p-w">中高集中</span></td></tr>
+      <tr><td>solar security camera</td><td>AU</td><td class="n">58.48%</td><td class="n">1,370</td><td>MUBVIEW + TP-Link/Tapo在Top5中占比过高，且样本混入太阳能板配件。</td><td><span class="pill p-no">高集中</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note"><b>解读：</b>澳洲不是“竞争少所以好做”。澳洲的问题是头部样本集中、类目容量浅、Top5之后销量断层；加拿大虽然竞争多，但需求总量更大、品牌分散度更高，细分词可以绕开Tapo等主品牌。</div>
+
+  <h3>8B.4 新品推广难度：广告成本、评论门槛与动销爬坡</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th>难度因子</th><th>加拿大</th><th>澳大利亚</th><th>新品推广判断</th></tr></thead>
+    <tbody>
+      <tr><td><b>搜索样本获取速度</b></td><td>核心词和户外词月搜明显更高；灯泡机细分词有独立搜索入口。</td><td>泛词有量，但细分词不足；solar词有量但高客单和头部集中。</td><td class="pos">加拿大更容易快速获取点击与转化样本。</td></tr>
+      <tr><td><b>评论门槛</b></td><td>大盘竞品评论高，但灯泡机细分头部星级仅3.4–4.0，新品有体验提升空间。</td><td>Top样本中TP-Link/Tapo/MUBVIEW集中，第三方新品需要更高折扣或更长评价积累周期。</td><td>加拿大灯泡机细分更利于新品切入。</td></tr>
+      <tr><td><b>新品爬坡实证</b></td><td>加拿大灯泡机新品1–2个月可见119–379台/月样本；太阳能新品多为43–87台/月。</td><td>澳洲户外Top样本第5名仅31台/月，太阳能样本60–87台/月。</td><td class="pos">加拿大灯泡机新品爬坡效率更高。</td></tr>
+      <tr><td><b>广告打法复杂度</b></td><td>可用light bulb、wireless outdoor、法语户外词分层投放。</td><td>更依赖security camera、solar security camera等泛词，容易被Tapo/MUBVIEW截流。</td><td>加拿大可用细分词降低冷启动损耗。</td></tr>
+      <tr><td><b>售后与差评风险</b></td><td>冬季对电池/太阳能不友好，但灯泡机常电可规避。</td><td>太阳能环境更友好，但强UV、高温、RCM/ACMA、B28频段仍是前置门槛。</td><td>首发加拿大时应主推常电灯泡机，避免太阳能/4G作为第一波主力。</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="chart">
+    <div class="ct">新品推广难度指数（越高越难）</div>
+    <div class="cs">综合搜索样本、垄断系数、头部自营压力、细分词缺失和售后复杂度；不含补贴因素。</div>
+    <svg viewBox="0 0 880 180" role="img" aria-label="新品推广难度指数">
+      <text x="150" y="40" text-anchor="end" font-family="Noto Sans SC" font-size="13" fill="#3C4A57">加拿大灯泡机</text>
+      <rect x="170" y="24" width="250" height="24" fill="#B9243B"/>
+      <text x="432" y="41" font-family="IBM Plex Mono" font-size="12" fill="#B9243B" font-weight="600">38 / 100</text>
+      <text x="150" y="82" text-anchor="end" font-family="Noto Sans SC" font-size="13" fill="#3C4A57">加拿大太阳能球机</text>
+      <rect x="170" y="66" width="430" height="24" fill="#7A8895"/>
+      <text x="612" y="83" font-family="IBM Plex Mono" font-size="12" fill="#3C4A57" font-weight="600">65 / 100</text>
+      <text x="150" y="124" text-anchor="end" font-family="Noto Sans SC" font-size="13" fill="#3C4A57">澳洲太阳能/户外</text>
+      <rect x="170" y="108" width="510" height="24" fill="#16607F"/>
+      <text x="692" y="125" font-family="IBM Plex Mono" font-size="12" fill="#16607F" font-weight="600">77 / 100</text>
+      <text x="150" y="166" text-anchor="end" font-family="Noto Sans SC" font-size="13" fill="#3C4A57">澳洲泛安防新品</text>
+      <rect x="170" y="150" width="550" height="24" fill="#16607F"/>
+      <text x="732" y="167" font-family="IBM Plex Mono" font-size="12" fill="#16607F" font-weight="600">83 / 100</text>
+    </svg>
+  </div>
+
+  <div class="note win"><b>补贴剔除后的结论：</b>即便不考虑加拿大与澳洲补贴差异，加拿大仍胜在平台内安防类目交易盘更大、关键词结构更完整、头部集中度更可绕开、灯泡机新品爬坡证据更强。澳洲适合第二阶段做太阳能户外线，而不是承担首发站点。</div>
+</section>
+
+<!-- ===================== 9. 数据来源 ===================== -->
+<section id="s9">
+  <div class="sec-head"><span class="sec-num">09</span><h2 class="sec">数据来源与口径</h2></div>
+  <div class="card src">
+    <h4>一、贵司内部数据（用户上传，2026-07-11）</h4>
     <ul>
-      <li>Sofetime/Sorftime Amazon关键词详情接口：security camera、outdoor security camera、wireless security camera、light bulb security camera、window security camera、solar security camera、security cameras wireless outdoor、outdoor camera wireless、camera surveillance exterieur、doorbell camera、blink outdoor camera；站点CA/AU；查询时间2026-07-11。</li>
-      <li>Sofetime/Sorftime竞品销量字段：来自关键词详情返回的“近15日前3页自然位销量Top100产品统计 / top5_product / monthly_sales”。报告中的竞品月销售额为“样本价格 × Sofetime月销量”的估算值，仅用于竞品强弱和价格带判断。</li>
-      <li>内部文件：D:/CAAU/产品补贴汇总.xlsx，用于产品类型、参考采购价、美加英补贴、欧洲/澳补贴。</li>
-      <li>内部文件：D:/CAAU/导出产品-按SKU-934403469456343040/导出产品-按SKU-934403469456343040.xlsx，用于在售状态、SKU品名、图片链接、包装信息。</li>
-      <li>加拿大气候与温度资料：Environment and Climate Change Canada Canadian Climate Normals；Natural Resources Canada太阳能资源资料。</li>
-      <li>低温与竞品太阳能充电公开反馈：Ring Community、eufy Community、Reolink Support、AOSU Community等公开讨论和支持文档。</li>
+      <li><code>产品补贴汇总.xlsx</code> — 94 行，字段：方案 / 产品类型 / 产品型号 / 参考采购价 / 美加英补贴 / 欧洲/澳补贴。本版站点选择分析中<b>不比较加拿大与澳洲补贴差异</b>，两个站点补贴按同等程度参考；补贴仅用于后续单SKU利润模型的内部敏感性测算。</li>
+      <li><code>导出产品-按SKU-934403469456343040.xlsx</code> — 861 行 SKU 档案（工作表：产品）。取用字段：单品毛重 + 单品毛重单位、包装规格长/宽/高 + 单位、采购成本(CNY)、状态。<b>已按单位字段统一换算为 kg / cm</b>；94 个型号中 74 个成功匹配到 SKU、68 个有有效重量</li>
+      <li><code>candidate_products.csv</code> — 已参考，但其「单品毛重kg」列存在 g/kg 混用错误（如 230.000、508.000），本报告未采用该列，改从 SKU 原表重算</li>
     </ul>
-  </section>
 
-  <footer>
-    建议方案：加拿大站先上4款正式SKU，太阳能/4G仅做小样验证，不进入首批库存和广告主预算。
-  </footer>
-</main>
+    <h4>二、Sorftime MCP（亚马逊实时数据，抓取时间 2026-07-11）</h4>
+    <ul>
+      <li><code>keyword_detail</code>（amzSite=CA / AU）— 关键词月搜索量、搜索结果竞品数量、首页 Coupon 占比、近 15 日前 3 页自然位 Top100 产品的销量与占比。查询词：security camera、outdoor security camera、indoor security camera、solar security camera、light bulb security camera、bulb camera、pet camera、bird feeder camera、hidden camera、4g security camera、cellular security camera</li>
+      <li><b>类目垄断系数计算口径</b> — CR5 = Sorftime关键词Top5产品销量占比合计；HHI样本指数 = Top5产品销量占比平方和。该指标用于判断搜索入口是否被少数品牌控制，不等同于完整市场份额。</li>
+      <li><b>新品推广难度指数</b> — 综合搜索样本量、Top5集中度、Amazon自营/强品牌压力、细分词完整度、售后复杂度构建的内部评估指标；不包含补贴差异。</li>
+      <li><code>keyword_extends</code>（CA）— light bulb security camera 的 20 个延伸词及各自月搜索量（含法语/西语词）</li>
+      <li><code>product_search</code>（amzSite=CA/AU，delivery_type=FBA）— 竞品 ASIN、价格、月销量、月销额、星级、评论数、<b>上架时间</b>、重量、<b>实收 FBA 费用</b>、类目路径、卖家国籍。共采集 ~70 个 ASIN，其中灯泡机赛道 10 个、太阳能/电池球机赛道 20 个、喂鸟器赛道 20 个、AU 站 20 个</li>
+      <li><code>category_search_from_product_name</code>（CA / AU）— 类目大盘：CA <b>Security &amp; Surveillance</b>（nodeid 3117686011）Top100 月销 53,910 / 月销额 C$5,554,097 / 均价 C$97.07 / 亚马逊自营销量占比 45.80% / 中国卖家占比 62%；AU <b>Video Monitors</b>（nodeid 8479738051）Top100 月销 7,457 / 月销额 A$485,982 / 均价 A$85.25 / 亚马逊自营 28.53%</li>
+    </ul>
+
+    <h4>三、亚马逊费率与合规（公开来源，2026 年口径）</h4>
+    <ul>
+      <li><b>佣金</b>：Consumer Electronics 8%，Tools &amp; Home Improvement / Pet Supplies / Home &amp; Garden 15%，Camera &amp; Photo 18%。来源：<code>sell.amazon.ca/pricing</code>（Amazon.ca 官方定价页）</li>
+      <li><b>FBA 配送费</b>：本模型<b>不采用二手费率表</b>，而是直接使用 Sorftime 抓取的 40 个在售 ASIN 的实收 FBA 费用（CAD）按重量分档拟合，已天然包含 2026-01-15 基础提价与 2026-04-17 起的 3.5% 燃油与物流附加费（该附加费适用于美国与加拿大全部 FBA 配送费，来源：Amazon Seller Central 2026 费率公告 / Goat Consulting、AMZ Prep 2026 费率解读）。校验样本见 §05</li>
+      <li><b>加拿大低价 FBA</b>：售价 &lt; C$14 的商品享受 C$0.80 的费率折扣（sell.amazon.ca/pricing）。本组合定价均高于该线，未适用</li>
+      <li><b>进口关税</b>：加拿大对数码相机/监控摄像头（HS 8525 项下）MFN 税率为 0%；GST 5%（注册后可作进项抵扣）。澳洲 GST 10%、低值门槛 A$1,000</li>
+      <li><b>汇率</b>：1 CNY = 0.2089 CAD（即 1 CAD ≈ 4.78 CNY），2026-07-10 中间价。来源：XE / MTFX / Currency.wiki 三源交叉一致（0.2087–0.2094 区间）</li>
+    </ul>
+
+    <h4>四、模型假设（非实测，需贵司复核）</h4>
+    <ul>
+      <li><b>头程运费 ¥22/kg</b>（计费重 = max(毛重, 体积重÷6000)）— 这是全报告唯一没有硬数据支撑的输入，<b>请用贵司货代的实际报价替换</b>。测算器已提供 ¥8–¥45 的滑块，可直接看到敏感度</li>
+      <li><b>清关杂费 1%</b>（按 CIF 计）</li>
+      <li><b>广告占比 20% / 退货售后 5%</b> 为默认值，均可调；行业消费电子退货率通常 5%–10%</li>
+      <li><b>销量爬坡</b>取自 Sorftime 实测竞品曲线的 50–60% 分位（详见 §07），非线性外推</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <span>安防摄像头 · 亚马逊加拿大 vs 澳大利亚 开站决策报告</span>
+  <span>数据截止 2026-07-11 · Sorftime MCP + 内部 SKU 档案</span>
+</footer>
+</div>
+
 <script>
-function fmt(n){return 'CAD ' + (Math.round(n*100)/100).toFixed(2)}
-function recalcFba(){
-  var adRate=parseFloat(document.getElementById('adRate')?.value||0)/100;
-  var returnRate=parseFloat(document.getElementById('returnRate')?.value||0)/100;
-  var returnLoss=parseFloat(document.getElementById('returnLoss')?.value||0);
-  var fx=parseFloat(document.getElementById('fxRate')?.value||5.2);
-  document.querySelectorAll('#fbaCalc tbody tr').forEach(function(row){
-    var cny=parseFloat(row.dataset.cny||0);
-    var price=parseFloat(row.querySelector('.price').value||0);
-    var refRate=parseFloat(row.querySelector('.refRate').value||0)/100;
-    var fba=parseFloat(row.querySelector('.fbaFee').value||0);
-    var inbound=parseFloat(row.querySelector('.inbound').value||0);
-    var purchase=cny/fx;
-    var referral=price*refRate;
-    var ad=price*adRate;
-    var ret=price*returnRate + returnLoss*returnRate;
-    var profit=price-purchase-referral-fba-inbound-ad-ret;
-    var margin=price>0 ? profit/price*100 : 0;
-    row.querySelector('.cad-cost').textContent='约 CAD '+purchase.toFixed(2);
-    row.querySelector('.adCost').textContent=fmt(ad);
-    row.querySelector('.returnCost').textContent=fmt(ret);
-    row.querySelector('.profit').textContent=fmt(profit);
-    row.querySelector('.profit').className='profit '+(profit>=10?'good':profit>=5?'warn':'risk');
-    row.querySelector('.margin').textContent=margin.toFixed(1)+'%';
-    row.querySelector('.margin').className='margin '+(margin>=25?'good':margin>=15?'warn':'risk');
+/* ---------------- data ---------------- */
+const SKUS=[
+ {n:"A1 灯泡机·白 <span style='color:#7A8895'>T-CP8040LF-W21V</span>",cost:27.0,kg:0.230,L:7.3,W:7.3,H:19.2,fba:6.78,price:34.99,ref:.08},
+ {n:"A2 灯泡机·黑 <span style='color:#7A8895'>T-CP8043LF-W21V</span>",cost:32.0,kg:0.233,L:8.5,W:8.5,H:18.0,fba:6.78,price:36.99,ref:.08},
+ {n:"A3 灯泡机·双频 <span style='color:#7A8895'>T-CP8050LF-W3M</span>",cost:33.0,kg:0.246,L:7.3,W:7.3,H:19.2,fba:6.78,price:44.99,ref:.08},
+ {n:"A4 灯泡机·双支装 <span style='color:#7A8895'>KIT-BULB2</span>",cost:54.0,kg:0.520,L:16,W:8.5,H:20.5,fba:7.30,price:59.99,ref:.08},
+ {n:"B 太阳能球机 <span style='color:#7A8895'>T-CQ4011S-W43J</span>",cost:124.2,kg:0.880,L:20.6,W:17.1,H:13.9,fba:8.70,price:79.99,ref:.08},
+ {n:"C 机器人机 <span style='color:#7A8895'>T-CP9036TF-W30V</span>",cost:63.5,kg:0.370,L:19.5,W:12.0,H:8.3,fba:7.30,price:49.99,ref:.08},
+];
+const FC=[{m:"M1",b:50,s:15,r:25,u:90,rev:4525,p:1085},{m:"M2",b:110,s:30,r:55,u:195,rev:9714,p:2343},
+{m:"M3",b:180,s:55,r:90,u:325,rev:16369,p:3920},{m:"M4",b:250,s:80,r:120,u:450,rev:22773,p:5442},
+{m:"M5",b:320,s:100,r:145,u:565,rev:28528,p:6836},{m:"M6",b:380,s:115,r:165,u:660,rev:33217,p:7983},
+{m:"M7",b:430,s:130,r:180,u:740,rev:37242,p:8958},{m:"M8",b:470,s:140,r:190,u:800,rev:40202,p:9686},
+{m:"M9",b:520,s:150,r:200,u:870,rev:43576,p:10532},{m:"M10",b:620,s:180,r:240,u:1040,rev:52126,p:12591},
+{m:"M11",b:700,s:200,r:280,u:1180,rev:59045,p:14269},{m:"M12",b:650,s:180,r:250,u:1080,rev:53871,p:13056}];
+
+/* ---------------- calculator ---------------- */
+const $=id=>document.getElementById(id);
+const DEF=SKUS.map(s=>s.price);          // 记住默认售价，供"恢复默认"使用
+const PRICE=SKUS.map(s=>s.price);        // 可编辑售价的当前状态
+
+/* 一次性搭好表格骨架：售价列是 <input>，其余是待填的数值单元格 */
+(function buildRows(){
+  let body="";
+  SKUS.forEach((s,i)=>{
+    body+=`<tr data-i="${i}">
+      <td>${s.n}</td>
+      <td class="n">¥${s.cost.toFixed(1)}</td>
+      <td class="n" data-c="bw"></td>
+      <td class="n" data-c="fr"></td>
+      <td class="n" data-c="landed"></td>
+      <td class="n"><span class="cur">C$</span><input class="pin" type="number" min="1" max="999" step="0.01"
+         value="${s.price.toFixed(2)}" aria-label="${s.n.replace(/<[^>]+>/g,'')} 售价"></td>
+      <td class="n">${s.fba.toFixed(2)}</td>
+      <td class="n" data-c="com"></td>
+      <td class="n" data-c="adv"></td>
+      <td class="n" data-c="ret"></td>
+      <td class="n" data-c="pf"></td>
+      <td class="n" data-c="mr"></td>
+    </tr>`;
   });
+  body+=`<tr class="tot" id="totRow"><td>组合合计</td><td class="n">—</td><td class="n">—</td><td class="n">—</td>
+    <td class="n" data-c="landed"></td><td class="n" data-c="price"></td><td class="n" data-c="fba"></td>
+    <td class="n" data-c="com"></td><td class="n" data-c="adv"></td><td class="n" data-c="ret"></td>
+    <td class="n" data-c="pf"></td><td class="n" data-c="mr"></td></tr>`;
+  $("calcBody").innerHTML=body;
+
+  $("calcBody").addEventListener("input",e=>{
+    if(!e.target.classList.contains("pin")) return;
+    const i=+e.target.closest("tr").dataset.i;
+    const v=parseFloat(e.target.value);
+    PRICE[i]=(isFinite(v)&&v>0)?v:0;
+    sync();
+  });
+})();
+
+function set(row,key,txt,cls){
+  const el=row.querySelector(`[data-c="${key}"]`);
+  if(!el) return;
+  el.textContent=txt;
+  el.className="n"+(cls?" "+cls:"");
 }
-document.querySelectorAll('#fbaCalc input,#adRate,#returnRate,#returnLoss,#fxRate').forEach(function(input){
-  input.addEventListener('input', recalcFba);
+
+function calc(ad,rt,fr,fx){
+  const rows=$("calcBody").querySelectorAll("tr[data-i]");
+  let tPrice=0,tLanded=0,tFba=0,tCom=0,tAdv=0,tRet=0,tPf=0;
+  SKUS.forEach((s,i)=>{
+    const row=rows[i], price=PRICE[i];
+    const bw=Math.max(s.kg,(s.L*s.W*s.H)/6000);
+    const frC=bw*fr, landed=((s.cost+frC)*1.01)/fx;
+    const com=price*s.ref, adv=price*ad, ret=price*rt;
+    const pf=price-landed-s.fba-com-adv-ret;
+    const mr=price>0?pf/price*100:0;
+    const cls=mr>=15?"pos":(mr>=5?"wrn":"neg");
+    set(row,"bw",bw.toFixed(3));
+    set(row,"fr","¥"+frC.toFixed(1));
+    set(row,"landed",landed.toFixed(2));
+    set(row,"com",com.toFixed(2));
+    set(row,"adv",adv.toFixed(2));
+    set(row,"ret",ret.toFixed(2));
+    set(row,"pf",price>0?pf.toFixed(2):"—",price>0?cls:"");
+    set(row,"mr",price>0?mr.toFixed(1)+"%":"—",price>0?cls:"");
+    tPrice+=price; tLanded+=landed; tFba+=s.fba; tCom+=com; tAdv+=adv; tRet+=ret; tPf+=pf;
+  });
+  const tr=$("totRow"), tmr=tPrice>0?tPf/tPrice*100:0;
+  const tcls=tmr>=15?"pos":(tmr>=5?"wrn":"neg");
+  set(tr,"landed",tLanded.toFixed(2));
+  set(tr,"price",tPrice.toFixed(2));
+  set(tr,"fba",tFba.toFixed(2));
+  set(tr,"com",tCom.toFixed(2));
+  set(tr,"adv",tAdv.toFixed(2));
+  set(tr,"ret",tRet.toFixed(2));
+  set(tr,"pf",tPf.toFixed(2),tcls);
+  set(tr,"mr",tmr.toFixed(1)+"%",tcls);
+  $("stress").textContent=`当前参数下，6 个 SKU 各卖 1 台的组合毛净利 C$${tPf.toFixed(2)}，加权净利率 ${tmr.toFixed(1)}%。售价可直接在表格里改，改完立即重算。`;
+}
+
+function sync(){
+  const ad=+$("sAd").value, rt=+$("sRt").value, fr=+$("sFr").value, fx=+$("sFx").value;
+  $("vAd").textContent=ad+"%"; $("vRt").textContent=rt+"%"; $("vFr").textContent="¥"+fr; $("vFx").textContent=fx.toFixed(2);
+  calc(ad/100,rt/100,fr,fx);
+}
+["sAd","sRt","sFr","sFx"].forEach(i=>$(i).addEventListener("input",sync));
+$("reset").addEventListener("click",()=>{
+  $("sAd").value=20; $("sRt").value=5; $("sFr").value=22; $("sFx").value=4.78;
+  SKUS.forEach((s,i)=>{ PRICE[i]=DEF[i]; });
+  $("calcBody").querySelectorAll(".pin").forEach((el,i)=>{ el.value=DEF[i].toFixed(2); });
+  sync();
 });
-recalcFba();
+sync();
+
+/* ---------------- versus bars ---------------- */
+const VS=[
+ {k:"security camera<small>月搜索量</small>",a:22938,b:10499,f:v=>v.toLocaleString()},
+ {k:"该词在架竞品数<small>供给侧</small>",a:70108,b:17022,f:v=>v.toLocaleString()},
+ {k:"outdoor security camera<small>首页 Top100 实销 / 月</small>",a:59744,b:1513,f:v=>v.toLocaleString()+" 台"},
+ {k:"竞品数 ÷ 月搜索<small>outdoor 赛道拥挤度（越低越好）</small>",a:5.85,b:12.34,f:v=>v.toFixed(2),inv:true},
+ {k:"类目 Top100 月销额<small>CA: Security&Surveillance / AU: Video Monitors</small>",a:5554097,b:485982,f:v=>"$"+(v/1e6).toFixed(2)+"M"},
+ {k:"灯泡机词群月搜索<small>light bulb camera 8 词合计</small>",a:20251,b:0,f:v=>v?v.toLocaleString():"无此热搜词"},
+ {k:"喂鸟器 bird feeder camera<small>月搜索量</small>",a:11528,b:0,f:v=>v?v.toLocaleString():"无此热搜词"},
+];
+$("vsbars").innerHTML=VS.map(r=>{
+  const mx=Math.max(r.a,r.b)||1;
+  const wa=Math.max(r.a/mx*100,r.a?2:0), wb=Math.max(r.b/mx*100,r.b?2:0);
+  const ca=r.inv?(r.a<r.b?"pos":""):"", cb=r.inv?(r.b<r.a?"pos":""):"";
+  return `<div class="vs-row">
+    <div class="bar l"><span class="val">${r.f(r.a)}</span><span class="fill" style="width:${wa}%"></span></div>
+    <div class="vs-lab">${r.k}</div>
+    <div class="bar r"><span class="fill" style="width:${wb}%"></span><span class="val">${r.b?r.f(r.b):'<span style="color:#A61E2C">无此热搜词</span>'}</span></div>
+  </div>`;}).join("");
+
+/* ---------------- ramp chart ---------------- */
+const RAMP=[{n:"Chpuss 2P",m:0.7,v:119,t:1},{n:"Visiocore 2P",m:0.9,v:212,t:1},{n:"Visiocore 黑2P",m:2.0,v:83,t:1},
+{n:"SYMYNELEC",m:2.3,v:379,t:1},{n:"LUNA HOME",m:9.4,v:578,t:1},{n:"Jennov",m:12.7,v:244,t:1},{n:"GBIUT 2P",m:21.1,v:245,t:1},
+{n:"Uniter",m:0.9,v:43,t:0},{n:"Kurain",m:1.2,v:87,t:0},{n:"Leibuu",m:2.3,v:76,t:0},{n:"Tziarp",m:5.1,v:190,t:0},
+{n:"blurams",m:3.8,v:42,t:0},{n:"ieGeek",m:14.9,v:142,t:0},{n:"aosu PTZ",m:38,v:850,t:0}];
+(function(){
+  const W=880,H=340,pad={l:52,r:20,t:14,b:38};
+  const xs=v=>pad.l+(Math.log(v+1)/Math.log(41))*(W-pad.l-pad.r);
+  const ys=v=>H-pad.b-(v/650)*(H-pad.t-pad.b);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="新品爬坡对比">`;
+  [0,150,300,450,600].forEach(t=>{s+=`<line x1="${pad.l}" y1="${ys(t)}" x2="${W-pad.r}" y2="${ys(t)}" stroke="#E2E8ED"/>
+    <text x="${pad.l-8}" y="${ys(t)+4}" font-family="IBM Plex Mono" font-size="10" fill="#7A8895" text-anchor="end">${t}</text>`;});
+  [1,2,3,6,12,24,40].forEach(t=>{s+=`<text x="${xs(t)}" y="${H-14}" font-family="IBM Plex Mono" font-size="10" fill="#7A8895" text-anchor="middle">${t}月</text>`;});
+  s+=`<text x="${pad.l-8}" y="${pad.t}" font-family="IBM Plex Mono" font-size="9.5" fill="#7A8895" text-anchor="end">台/月</text>`;
+  RAMP.forEach(d=>{
+    const c=d.t?"#B9243B":"#7A8895", r=6+Math.sqrt(d.v)/3.2;
+    s+=`<circle cx="${xs(d.m)}" cy="${ys(d.v)}" r="${r}" fill="${c}" fill-opacity="${d.t?.85:.5}" stroke="${c}" stroke-width="1.2"/>
+    <text x="${xs(d.m)}" y="${ys(d.v)-r-5}" font-family="IBM Plex Mono" font-size="9.5" fill="${c}" text-anchor="middle" font-weight="600">${d.n} ${d.v}</text>`;
+  });
+  s+=`<rect x="${xs(0.5)}" y="${pad.t}" width="${xs(3)-xs(0.5)}" height="${H-pad.t-pad.b}" fill="#B9243B" fill-opacity=".05"/>
+  <text x="${(xs(0.5)+xs(3))/2}" y="${pad.t+14}" font-family="Noto Sans SC" font-size="10.5" fill="#B9243B" text-anchor="middle">上架 ≤3 个月</text></svg>`;
+  document.getElementById("rampchart").innerHTML=s;
+})();
+
+/* ---------------- forecast chart + table ---------------- */
+(function(){
+  const W=880,H=330,pad={l:46,r:56,t:16,b:34},bw=(W-pad.l-pad.r)/12*0.6;
+  const mxU=1200, mxR=62000;
+  const yu=v=>H-pad.b-(v/mxU)*(H-pad.t-pad.b), yr=v=>H-pad.b-(v/mxR)*(H-pad.t-pad.b);
+  const cx=i=>pad.l+((W-pad.l-pad.r)/12)*(i+0.5);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="12个月销量与销售额预测">`;
+  [0,300,600,900,1200].forEach(t=>{s+=`<line x1="${pad.l}" y1="${yu(t)}" x2="${W-pad.r}" y2="${yu(t)}" stroke="#E2E8ED"/>
+    <text x="${pad.l-8}" y="${yu(t)+4}" font-family="IBM Plex Mono" font-size="10" fill="#7A8895" text-anchor="end">${t}</text>`;});
+  [0,20000,40000,60000].forEach(t=>{s+=`<text x="${W-pad.r+8}" y="${yr(t)+4}" font-family="IBM Plex Mono" font-size="10" fill="#0E141B">${t/1000}k</text>`;});
+  FC.forEach((d,i)=>{
+    const x=cx(i)-bw/2; let acc=0;
+    [["b","#B9243B"],["s","#E08A98"],["r","#7A8895"]].forEach(([k,c])=>{
+      const h=(d[k]/mxU)*(H-pad.t-pad.b); acc+=h;
+      s+=`<rect x="${x}" y="${H-pad.b-acc}" width="${bw}" height="${h}" fill="${c}"/>`;});
+    s+=`<text x="${cx(i)}" y="${H-14}" font-family="IBM Plex Mono" font-size="10" fill="#7A8895" text-anchor="middle">${d.m}</text>
+    <text x="${cx(i)}" y="${H-pad.b-acc-6}" font-family="IBM Plex Mono" font-size="9.5" fill="#3C4A57" text-anchor="middle">${d.u}</text>`;
+  });
+  s+=`<path d="${FC.map((d,i)=>(i?"L":"M")+cx(i)+" "+yr(d.rev)).join(" ")}" fill="none" stroke="#0E141B" stroke-width="2"/>`;
+  FC.forEach((d,i)=>{s+=`<circle cx="${cx(i)}" cy="${yr(d.rev)}" r="3.2" fill="#fff" stroke="#0E141B" stroke-width="1.8"/>`;});
+  s+=`</svg>`; document.getElementById("fcchart").innerHTML=s;
+
+  document.getElementById("fcBody").innerHTML=FC.map(d=>
+    `<tr><td><b>${d.m}</b></td><td class="n">${d.b}</td><td class="n">${d.s}</td><td class="n">${d.r}</td>
+    <td class="n"><b>${d.u}</b></td><td class="n">C$${d.rev.toLocaleString()}</td><td class="n pos">C$${d.p.toLocaleString()}</td></tr>`).join("")
+  +`<tr class="tot"><td>全年</td><td class="n">4,680</td><td class="n">1,375</td><td class="n">1,940</td><td class="n">7,995</td>
+    <td class="n">C$401,188</td><td class="n">C$96,701</td></tr>`;
+})();
 </script>
 </body>
 </html>
